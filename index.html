@@ -152,7 +152,7 @@ body{
 /* ── GRID ────────────────────────────────────────── */
 .grid{
   display:grid;
-  grid-template-columns:repeat(7,var(--col-w));
+  grid-template-columns:repeat(7,1fr);
   width:100%;
 }
 .col{
@@ -952,10 +952,18 @@ function drawCurve() {
   const fill = document.getElementById('waveFill');
   const dotsG = document.getElementById('waveDots');
 
-  // Column centers in viewBox coords (1820 wide, 7 cols of 260)
-  const vbW = 1820, vbH = 180;
-  const colW = vbW / 7;
-  const xs = STAGES.map((_,i) => colW * i + colW / 2);
+  // Derive column centres from actual DOM layout so curve always aligns
+  const vbH = 180;
+  const inner = document.getElementById('scrollInner');
+  const innerRect = inner.getBoundingClientRect();
+  const vbW = innerRect.width || 1820;
+  svg.setAttribute('viewBox', `0 0 ${vbW} ${vbH}`);
+
+  const domCols = document.querySelectorAll('#grid .col');
+  const xs = Array.from(domCols).map(col => {
+    const r = col.getBoundingClientRect();
+    return (r.left - innerRect.left) + r.width / 2;
+  });
   const ys = STAGES.map(s => (1 - s.emotionScore / 100) * 140 + 20);
 
   // Catmull-Rom to bezier
@@ -1242,6 +1250,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSummary();
   setupWaveObserver();
   setupScrollSync();
+
+  // Redraw curve on resize so it always stays aligned with columns
+  const ro = new ResizeObserver(() => {
+    if (document.getElementById('wavePath').getAttribute('d')) drawCurve();
+  });
+  ro.observe(document.getElementById('scrollInner'));
 
   // Animate columns in
   const cols = document.querySelectorAll('.col');
