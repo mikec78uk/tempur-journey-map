@@ -129,24 +129,18 @@ body{
   position:relative;
   border-bottom:1px solid var(--border);
   background:var(--bg);
+  overflow:hidden;
 }
-.wave-axis-labels{
+.wave-title{
   position:absolute;
-  left:0;top:0;bottom:0;width:52px;
-  display:flex;flex-direction:column;
-  justify-content:space-between;
-  padding:10px 8px;
-  pointer-events:none;
-  z-index:2;
+  left:20px;top:12px;
+  font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-muted);
+  pointer-events:none;z-index:2;
 }
-.wave-axis-label{
-  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
-}
-.wave-axis-label.pos{color:rgba(92,158,114,.6);}
-.wave-axis-label.neu{color:var(--text-muted);}
-.wave-axis-label.neg{color:rgba(176,84,80,.6);}
 .wave-svg{
   display:block;width:100%;height:180px;
+  overflow:visible;
 }
 
 /* ── GRID ────────────────────────────────────────── */
@@ -543,11 +537,7 @@ body{
 
     <!-- Wave -->
     <div class="wave-wrap" id="waveWrap">
-      <div class="wave-axis-labels">
-        <span class="wave-axis-label pos">Positive</span>
-        <span class="wave-axis-label neu">Neutral</span>
-        <span class="wave-axis-label neg">Negative</span>
-      </div>
+      <div class="wave-title">Customer Sentiment</div>
       <svg class="wave-svg" id="waveSvg" viewBox="0 0 1820 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="curveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -967,8 +957,14 @@ function drawCurve() {
   const ys = STAGES.map(s => (1 - s.emotionScore / 100) * 140 + 20);
 
   // Catmull-Rom to bezier
-  function pts(i) { return {x: xs[i], y: ys[i]}; }
-  function virtual(a, b) { return {x: 2*a.x - b.x, y: 2*a.y - b.y}; }
+  // Augment xs/ys with off-screen ghost points at same y — creates horizontal
+  // entry/exit so the line appears to bleed straight off both edges
+  const edge = vbW * 0.18; // how far beyond the viewport to extend
+  const allXs = [-edge, ...xs, vbW + edge];
+  const allYs = [ys[0], ...ys, ys[ys.length - 1]];
+  const n = allXs.length;
+
+  function pts(i) { return {x: allXs[i], y: allYs[i]}; }
 
   function segment(p0, p1, pm1, p2) {
     const cp1 = {x: p0.x + (p1.x - pm1.x)/6, y: p0.y + (p1.y - pm1.y)/6};
@@ -976,17 +972,17 @@ function drawCurve() {
     return `C ${cp1.x.toFixed(1)} ${cp1.y.toFixed(1)} ${cp2.x.toFixed(1)} ${cp2.y.toFixed(1)} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
   }
 
-  let d = `M ${xs[0].toFixed(1)} ${ys[0].toFixed(1)} `;
-  for (let i = 0; i < STAGES.length - 1; i++) {
-    const pm1 = i === 0 ? virtual(pts(0), pts(1)) : pts(i-1);
-    const p2 = i === STAGES.length - 2 ? virtual(pts(STAGES.length-1), pts(STAGES.length-2)) : pts(i+2);
+  let d = `M ${allXs[0].toFixed(1)} ${allYs[0].toFixed(1)} `;
+  for (let i = 0; i < n - 1; i++) {
+    const pm1 = i === 0 ? {x: allXs[0] - edge, y: allYs[0]} : pts(i - 1);
+    const p2  = i === n - 2 ? {x: allXs[n-1] + edge, y: allYs[n-1]} : pts(i + 2);
     d += segment(pts(i), pts(i+1), pm1, p2) + ' ';
   }
 
   path.setAttribute('d', d);
 
-  // Fill area
-  const fillD = d + ` L ${xs[STAGES.length-1].toFixed(1)} ${vbH} L ${xs[0].toFixed(1)} ${vbH} Z`;
+  // Fill area — drop to bottom at the true first/last column, not the ghost points
+  const fillD = d + ` L ${(vbW + edge).toFixed(1)} ${vbH} L ${(-edge).toFixed(1)} ${vbH} Z`;
   fill.setAttribute('d', fillD);
 
   // Dots
