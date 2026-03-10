@@ -558,17 +558,8 @@ body{
             <rect x="0" y="0" width="1820" height="180"/>
           </clipPath>
         </defs>
-        <!-- Zone lines -->
-        <line x1="0" y1="60" x2="1820" y2="60" stroke="rgba(92,158,114,.1)" stroke-width="1" stroke-dasharray="4,6"/>
-        <line x1="0" y1="90" x2="1820" y2="90" stroke="rgba(90,80,70,.25)" stroke-width="1" stroke-dasharray="2,8"/>
-        <line x1="0" y1="130" x2="1820" y2="130" stroke="rgba(176,84,80,.1)" stroke-width="1" stroke-dasharray="4,6"/>
-        <!-- Column dividers -->
-        <line x1="260" y1="0" x2="260" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-        <line x1="520" y1="0" x2="520" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-        <line x1="780" y1="0" x2="780" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-        <line x1="1040" y1="0" x2="1040" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-        <line x1="1300" y1="0" x2="1300" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-        <line x1="1560" y1="0" x2="1560" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+        <!-- Dynamic zone + column lines (drawn by drawCurve) -->
+        <g id="waveLines"/>
         <!-- Fill area -->
         <path id="waveFill" clip-path="url(#waveClip)" fill="url(#fillGrad)"/>
         <!-- Main curve -->
@@ -957,6 +948,20 @@ function drawCurve() {
   const ys = STAGES.map(s => (1 - s.emotionScore / 100) * 140 + 20);
 
   // Catmull-Rom to bezier
+  // Draw zone lines + column dividers from real DOM positions
+  const linesG = document.getElementById('waveLines');
+  const colDividers = xs.slice(1).map(x => {
+    // boundary sits halfway between adjacent column centres
+    const bx = x - (xs[1] - xs[0]) / 2;
+    return `<line x1="${bx.toFixed(1)}" y1="0" x2="${bx.toFixed(1)}" y2="${vbH}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
+  }).join('');
+  const zoneLines = [
+    `<line x1="0" y1="60" x2="${vbW}" y2="60" stroke="rgba(92,158,114,.1)"   stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="90" x2="${vbW}" y2="90" stroke="rgba(90,80,70,.25)"    stroke-width="1" stroke-dasharray="2,8"/>`,
+    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="rgba(176,84,80,.1)"  stroke-width="1" stroke-dasharray="4,6"/>`,
+  ].join('');
+  linesG.innerHTML = zoneLines + colDividers;
+
   // Augment xs/ys with off-screen ghost points at same y — creates horizontal
   // entry/exit so the line appears to bleed straight off both edges
   const edge = vbW * 0.18; // how far beyond the viewport to extend
