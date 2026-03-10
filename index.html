@@ -416,6 +416,22 @@ body{
   border-bottom:1px solid var(--border);
 }
 
+/* Modal touchpoints */
+.m-tp-groups{display:flex;flex-direction:column;gap:14px;}
+.m-tp-group-label{
+  font-size:10px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--text-muted);margin-bottom:7px;
+}
+.m-tp-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.m-tp-chip{
+  font-size:11.5px;padding:4px 12px;border-radius:20px;
+  border:1px solid;font-weight:500;letter-spacing:.01em;white-space:nowrap;
+}
+.m-tp-chip.digital{background:rgba(70,130,200,.1);border-color:rgba(70,130,200,.3);color:#7EB8E8;}
+.m-tp-chip.physical{background:rgba(200,146,70,.1);border-color:rgba(200,146,70,.3);color:var(--gold-light);}
+.m-tp-chip.human{background:rgba(160,100,200,.1);border-color:rgba(160,100,200,.3);color:#C49AE8;}
+.m-tp-chip.media{background:rgba(92,158,114,.1);border-color:rgba(92,158,114,.3);color:#7EC99A;}
+
 /* Modal doing */
 .m-doing-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
 .m-doing-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text);line-height:1.5;}
@@ -639,6 +655,11 @@ const STAGES = [
       {tag:"lo", text:"Becoming more aware of health benefits of sleep through podcasts and media"},
       {text:"Tempted by exposure to new sleep technology"},
     ],
+    touchpoints:[
+      {group:"Digital", type:"digital", items:["Google Search","Social Media","YouTube / TikTok","Podcasts"]},
+      {group:"Media", type:"media", items:["TV / Press","Display Advertising"]},
+      {group:"Physical", type:"physical", items:["Retail (Passing Traffic)"]},
+    ],
     takeaways:[],
     stats:[
       {n:"1 in 3", l:"UK adults report poor or disturbed sleep quality regularly"},
@@ -663,6 +684,11 @@ const STAGES = [
       {text:"Seeks friends' and family's recommendations"},
       {text:"Reads third-party reviews and aggregator articles"},
       {text:"Passive store visits while shopping for other things"},
+    ],
+    touchpoints:[
+      {group:"Digital", type:"digital", items:["Brand Website","Google Search","AI Tools","Social Media","Review Sites"]},
+      {group:"Physical", type:"physical", items:["Partner Stores"]},
+      {group:"Human", type:"human", items:["Word of Mouth"]},
     ],
     takeaways:[
       {title:"\u201cBest mattress\u2026\u201d Searches", body:"Curated lists are often used as a springboard for further research, providing structure and direction in an otherwise unknown market. Being featured is critical."},
@@ -691,6 +717,11 @@ const STAGES = [
       {text:"Develops own criteria based on accumulated research"},
       {text:"Contacts companies for clarifications or reassurance"},
     ],
+    touchpoints:[
+      {group:"Digital", type:"digital", items:["Brand Website","Retailer Sites","Trustpilot","Comparison Sites"]},
+      {group:"Human", type:"human", items:["Live Chat","Phone Support","Email"]},
+      {group:"Physical", type:"physical", items:["Showrooms"]},
+    ],
     takeaways:[
       {title:"Breaking the Buying Shortcut", body:"Range changes remove recognition cues, forcing customers to start from scratch and re-evaluate instead of reordering. Existing brand familiarity is disrupted."},
       {title:"Premium Support Should Reassure, Not Deflect", body:"High-value purchases require human reassurance. Redirecting customers to web pages when they seek direct answers creates dissonance and erodes trust."},
@@ -718,6 +749,11 @@ const STAGES = [
       {text:"Evaluates the 'feel' and firmness of different models"},
       {text:"Compares in-store experience with prior online research"},
       {text:"Engages with sales staff — some for advice, some actively avoid"},
+    ],
+    touchpoints:[
+      {group:"Physical", type:"physical", items:["Tempur Store","John Lewis","Dreams","DFS"]},
+      {group:"Human", type:"human", items:["Sales Advisor","Spine Assessment Tool"]},
+      {group:"Digital", type:"digital", items:["Website (Product Lookup)"]},
     ],
     takeaways:[
       {title:"The Crucial Role of In-Store Staff", body:"Knowledgeable staff play a crucial role in clarifying options and tailoring advice, strengthening conviction in the final choice. However, not all customers feel comfortable engaging with sales staff and prefer a self-directed experience."},
@@ -748,6 +784,11 @@ const STAGES = [
       {text:"Chooses preferred delivery date"},
       {text:"Receives order confirmation"},
     ],
+    touchpoints:[
+      {group:"Digital", type:"digital", items:["Brand Website","Retailer Website","Email Confirmation"]},
+      {group:"Physical", type:"physical", items:["In-Store Checkout"]},
+      {group:"Human", type:"human", items:["Phone / Chat Support","Finance Team"]},
+    ],
     takeaways:[
       {title:"Finance Calculator Is Difficult to Access", body:"On Tempur PDPs, the finance calculator is hidden behind a tooltip with no clear indication it exists. Requiring a checkbox before viewing repayment information creates an unnecessary barrier to a helpful purchase tool."},
     ],
@@ -777,6 +818,11 @@ const STAGES = [
       {text:"Unpacks and airs out the new mattress (24–72 hours)"},
       {text:"Reviews the provided aftercare and maintenance instructions"},
     ],
+    touchpoints:[
+      {group:"Human", type:"human", items:["Delivery Team","Customer Service"]},
+      {group:"Digital", type:"digital", items:["Email / SMS Tracking","Brand App"]},
+      {group:"Physical", type:"physical", items:["Home Delivery"]},
+    ],
     takeaways:[],
     stats:[
       {n:"83%", l:"of customers say delivery experience significantly impacts overall brand perception"},
@@ -800,6 +846,11 @@ const STAGES = [
       {text:"Receives follow-up marketing and review requests"},
       {text:"Recommends product to friends or family"},
       {text:"Considers repeat purchase or complementary products"},
+    ],
+    touchpoints:[
+      {group:"Digital", type:"digital", items:["Email Marketing","Brand App","Social Media","Review Platforms"]},
+      {group:"Human", type:"human", items:["Customer Service"]},
+      {group:"Physical", type:"physical", items:["Retail (Accessory Purchase)"]},
     ],
     takeaways:[],
     stats:[
@@ -1000,6 +1051,19 @@ function renderModalBody(s) {
     </li>
   `).join('');
 
+  const touchpointsHtml = s.touchpoints && s.touchpoints.length
+    ? `<div class="m-tp-groups">
+        ${s.touchpoints.map(g => `
+          <div class="m-tp-group">
+            <div class="m-tp-group-label">${g.group}</div>
+            <div class="m-tp-chips">
+              ${g.items.map(item => `<span class="m-tp-chip ${g.type}">${item}</span>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>`
+    : '<p style="font-size:12px;color:var(--text-muted);font-style:italic;">No touchpoints identified.</p>';
+
   const tkwyHtml = s.takeaways.length
     ? s.takeaways.map(t => `
       <div class="m-tkwy">
@@ -1059,6 +1123,11 @@ function renderModalBody(s) {
         <div class="m-sec">
           <div class="m-sec-title">What customers are doing</div>
           <ul class="m-doing-list">${doingHtml}</ul>
+        </div>
+
+        <div class="m-sec">
+          <div class="m-sec-title">Touchpoints</div>
+          ${touchpointsHtml}
         </div>
 
         ${quotesHtml ? `
