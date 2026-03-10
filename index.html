@@ -948,6 +948,10 @@ function drawCurve() {
   const ys = STAGES.map(s => (1 - s.emotionScore / 100) * 140 + 20);
 
   // Catmull-Rom to bezier
+  // Keep clipPath rect in sync with current viewBox width
+  const clipRect = document.querySelector('#waveClip rect');
+  if (clipRect) clipRect.setAttribute('width', vbW);
+
   // Draw zone lines + column dividers from real DOM positions
   const linesG = document.getElementById('waveLines');
   const colDividers = xs.slice(1).map(x => {
