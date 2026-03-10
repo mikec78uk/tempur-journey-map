@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Tempur – Digital Purchase Experience Map · Q1 2026</title>
+<style>
+:root {
+  --bg: #090909;
+  --bg-card: #121212;
+  --bg-hover: #181818;
+  --bg-modal: #0F0F0F;
+  --gold: #C89246;
+  --gold-light: #E8B870;
+  --gold-dim: rgba(200,146,70,.12);
+  --gold-border: rgba(200,146,70,.22);
+  --text: #F0EBE3;
+  --text-sub: #8A8278;
+  --text-muted: #5E574E;
+  --border: #1E1E1E;
+  --green: #5C9E72;
+  --green-dim: rgba(92,158,114,.1);
+  --red: #B05450;
+  --col-w: 260px;
+  --hdr: 64px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  font-size:13px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ── HEADER ─────────────────────────────────────── */
+.site-hdr{
+  position:sticky;top:0;z-index:200;
+  height:var(--hdr);
+  background:rgba(9,9,9,.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  padding:0 28px;gap:20px;
+}
+.hdr-logo{
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
+}
+.hdr-logo img{height:26px;filter:brightness(1);transition:opacity .2s;}
+.hdr-logo img.hidden{display:none;}
+.hdr-logo-text{
+  font-size:15px;font-weight:600;letter-spacing:.06em;
+  color:var(--text);text-transform:uppercase;
+}
+.hdr-sep{width:1px;height:22px;background:var(--border);flex-shrink:0;}
+.hdr-meta{flex:1;min-width:0;}
+.hdr-title{
+  font-size:13px;font-weight:500;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.hdr-sub{
+  font-size:10px;color:var(--text-muted);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.hdr-nav{
+  display:flex;gap:4px;overflow-x:auto;flex-shrink:0;
+}
+.hdr-nav::-webkit-scrollbar{display:none;}
+.hdr-pill{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 11px;border-radius:5px;
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text-muted);
+  cursor:pointer;white-space:nowrap;
+  font-size:11px;font-family:inherit;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.hdr-pill:hover{border-color:var(--gold);color:var(--gold);}
+.hdr-pill.active{background:var(--gold);border-color:var(--gold);color:#000;font-weight:600;}
+.hdr-pill .pnum{font-weight:700;font-size:10px;}
+
+/* ── HERO BAND ───────────────────────────────────── */
+.hero{
+  padding:36px 28px 24px;
+  border-bottom:1px solid var(--border);
+}
+.hero-inner{display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;}
+.hero-left{}
+.hero-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px;
+}
+.hero-h1{
+  font-size:28px;font-weight:300;letter-spacing:.03em;
+  color:var(--text);line-height:1.2;margin-bottom:6px;
+}
+.hero-h1 strong{font-weight:600;}
+.hero-sub{font-size:13px;color:var(--text-sub);}
+.hero-pills{
+  display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;
+}
+.hero-pill{
+  font-size:11px;padding:4px 10px;border-radius:20px;
+  border:1px solid var(--border);color:var(--text-sub);
+}
+.hero-pill.gold{border-color:var(--gold-border);color:var(--gold-light);}
+
+/* ── SCROLL CONTAINER ────────────────────────────── */
+.scroll-wrap{
+  overflow-x:auto;
+  border-bottom:1px solid var(--border);
+}
+.scroll-wrap::-webkit-scrollbar{height:3px;}
+.scroll-wrap::-webkit-scrollbar-track{background:var(--bg);}
+.scroll-wrap::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+.scroll-inner{
+  min-width:calc(var(--col-w) * 7);
+  width:100%;
+}
+
+/* ── WAVE ────────────────────────────────────────── */
+.wave-wrap{
+  position:relative;
+  border-bottom:1px solid var(--border);
+  background:var(--bg);
+}
+.wave-axis-labels{
+  position:absolute;
+  left:0;top:0;bottom:0;width:52px;
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:10px 8px;
+  pointer-events:none;
+  z-index:2;
+}
+.wave-axis-label{
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+}
+.wave-axis-label.pos{color:rgba(92,158,114,.6);}
+.wave-axis-label.neu{color:var(--text-muted);}
+.wave-axis-label.neg{color:rgba(176,84,80,.6);}
+.wave-svg{
+  display:block;width:100%;height:180px;
+}
+
+/* ── GRID ────────────────────────────────────────── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(7,var(--col-w));
+  width:100%;
+}
+.col{
+  border-right:1px solid var(--border);
+  cursor:pointer;
+  display:flex;flex-direction:column;
+  transition:background .18s;
+  position:relative;
+}
+.col:last-child{border-right:none;}
+.col::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--gold);opacity:0;
+  transition:opacity .2s;
+}
+.col:hover{background:var(--bg-hover);}
+.col:hover::before{opacity:1;}
+
+/* Stage header */
+.col-hdr{
+  padding:20px 18px 16px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.col-num{
+  font-size:10px;font-weight:700;letter-spacing:.1em;
+  color:var(--gold);margin-bottom:12px;
+}
+.col-icon{
+  width:34px;height:34px;color:var(--gold);margin-bottom:10px;
+  opacity:.9;
+}
+.col-icon svg{width:100%;height:100%;}
+.col-name{
+  font-size:13px;font-weight:600;color:var(--text);
+  margin-bottom:6px;line-height:1.3;
+}
+.col-overview{
+  font-size:11px;color:var(--text-sub);line-height:1.5;
+}
+
+/* Section */
+.col-sec{
+  padding:14px 18px;
+  border-bottom:1px solid var(--border);
+}
+.col-sec:last-of-type{border-bottom:none;}
+.sec-lbl{
+  font-size:9px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--text-muted);
+  margin-bottom:9px;
+}
+
+/* Doing list */
+.doing-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.doing-item{
+  display:flex;align-items:flex-start;gap:7px;
+  font-size:11.5px;color:var(--text);line-height:1.4;
+}
+.doing-dot{
+  flex-shrink:0;width:4px;height:4px;border-radius:50%;
+  background:var(--gold);margin-top:5px;
+}
+.tag{
+  display:inline-flex;align-items:center;
+  font-size:8.5px;font-weight:700;letter-spacing:.06em;
+  padding:1px 5px;border-radius:3px;flex-shrink:0;
+  margin-top:1px;
+}
+.tag.hi{background:rgba(176,84,80,.18);color:#D97070;}
+.tag.lo{background:rgba(92,158,114,.15);color:#7BC492;}
+
+/* Takeaway card */
+.tkwy-card{
+  background:var(--gold-dim);
+  border:1px solid var(--gold-border);
+  border-radius:6px;padding:10px 11px;margin-bottom:7px;
+}
+.tkwy-card:last-child{margin-bottom:0;}
+.tkwy-title{font-size:11px;font-weight:600;color:var(--gold-light);margin-bottom:3px;}
+.tkwy-body{font-size:10.5px;color:var(--text-sub);line-height:1.45;}
+
+/* Stats */
+.stat-row{display:flex;flex-direction:column;gap:2px;margin-bottom:10px;}
+.stat-row:last-child{margin-bottom:0;}
+.stat-n{
+  font-size:26px;font-weight:200;color:var(--gold-light);
+  letter-spacing:-.02em;line-height:1;
+}
+.stat-l{font-size:11px;color:var(--text-sub);line-height:1.35;}
+
+/* CTA */
+.col-cta{
+  margin-top:auto;
+  padding:13px 18px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+}
+.cta-text{
+  font-size:10.5px;font-weight:600;
+  color:var(--gold);letter-spacing:.05em;
+}
+.cta-arrow{color:var(--gold);font-size:14px;line-height:1;}
+
+/* ── SUMMARY ─────────────────────────────────────── */
+.summary{
+  padding:52px 28px;
+  background:var(--bg-card);
+  border-top:1px solid var(--border);
+}
+.summary-hdr{margin-bottom:32px;}
+.summary-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px;
+}
+.summary-h2{
+  font-size:22px;font-weight:300;color:var(--text);
+  margin-bottom:6px;
+}
+.summary-sub{font-size:13px;color:var(--text-sub);}
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:14px;
+}
+.sum-card{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:10px;padding:20px;
+  transition:border-color .2s,transform .2s;
+}
+.sum-card:hover{border-color:var(--gold-border);transform:translateY(-2px);}
+.sum-icon{width:26px;height:26px;color:var(--gold);margin-bottom:12px;}
+.sum-icon svg{width:100%;height:100%;}
+.sum-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;}
+.sum-body{font-size:12px;color:var(--text-sub);line-height:1.5;}
+
+/* ── FOOTER ──────────────────────────────────────── */
+.site-ftr{
+  padding:20px 28px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.ftr-meta{font-size:11px;color:var(--text-muted);}
+.ftr-tag{
+  font-size:9.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;
+  background:var(--gold-dim);border:1px solid var(--gold-border);
+  color:var(--gold-light);padding:3px 8px;border-radius:4px;
+}
+
+/* ── MODAL ───────────────────────────────────────── */
+.m-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:300;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s;
+}
+.m-overlay.open{opacity:1;pointer-events:all;}
+.modal{
+  position:fixed;left:0;right:0;bottom:0;
+  top:4vh;
+  background:var(--bg-modal);
+  border-radius:14px 14px 0 0;
+  border-top:1px solid var(--border);
+  z-index:301;
+  transform:translateY(100%);
+  transition:transform .46s cubic-bezier(.32,.72,0,1);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.modal.open{transform:translateY(0);}
+
+/* Modal top nav */
+.m-topnav{
+  display:flex;align-items:center;
+  padding:14px 24px;
+  border-bottom:1px solid var(--border);
+  gap:8px;overflow-x:auto;flex-shrink:0;
+}
+.m-topnav::-webkit-scrollbar{display:none;}
+.m-stage-pill{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 11px;border-radius:5px;
+  background:transparent;border:1px solid var(--border);
+  color:var(--text-muted);cursor:pointer;white-space:nowrap;
+  font-size:11px;font-family:inherit;
+  transition:all .15s;
+}
+.m-stage-pill:hover{border-color:var(--gold);color:var(--gold);}
+.m-stage-pill.active{background:var(--gold);border-color:var(--gold);color:#000;font-weight:700;}
+.m-topnav-spacer{flex:1;}
+.m-close{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg-card);border:1px solid var(--border);
+  color:var(--text);cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-family:inherit;
+  transition:border-color .2s,color .2s;
+}
+.m-close:hover{border-color:#B05450;color:#B05450;}
+
+/* Modal header */
+.m-hdr{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;
+  padding:24px 28px 20px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;gap:16px;
+}
+.m-hdr-left{display:flex;align-items:flex-start;gap:16px;flex:1;min-width:0;}
+.m-icon{width:46px;height:46px;color:var(--gold);flex-shrink:0;}
+.m-icon svg{width:100%;height:100%;}
+.m-info{flex:1;min-width:0;}
+.m-num{
+  font-size:10px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:4px;
+}
+.m-name{
+  font-size:22px;font-weight:300;color:var(--text);
+  margin-bottom:8px;letter-spacing:.02em;line-height:1.2;
+}
+.m-overview{
+  font-size:13px;color:var(--text-sub);line-height:1.65;
+  max-width:660px;
+}
+.m-hdr-nav{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.m-nav-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg-card);border:1px solid var(--border);
+  color:var(--text-sub);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-family:inherit;
+  transition:all .2s;
+}
+.m-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.m-nav-btn:disabled{opacity:.3;cursor:default;}
+
+/* Modal body */
+.m-body{
+  flex:1;overflow-y:auto;
+  padding:28px;
+}
+.m-body::-webkit-scrollbar{width:3px;}
+.m-body::-webkit-scrollbar-track{background:transparent;}
+.m-body::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+.m-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+}
+.m-sec{margin-bottom:28px;}
+.m-sec-title{
+  font-size:9.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-muted);
+  margin-bottom:14px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+
+/* Modal doing */
+.m-doing-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.m-doing-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text);line-height:1.5;}
+.m-doing-dot{
+  flex-shrink:0;width:6px;height:6px;border-radius:50%;
+  background:var(--gold);margin-top:5px;
+}
+
+/* Modal takeaway */
+.m-tkwy{
+  background:var(--gold-dim);
+  border:1px solid var(--gold-border);
+  border-radius:8px;padding:16px;margin-bottom:10px;
+}
+.m-tkwy:last-child{margin-bottom:0;}
+.m-tkwy-title{font-size:13px;font-weight:600;color:var(--gold-light);margin-bottom:5px;}
+.m-tkwy-body{font-size:12.5px;color:var(--text-sub);line-height:1.6;}
+
+/* Modal stats */
+.m-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.m-stat-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:8px;padding:16px;
+}
+.m-stat-n{
+  font-size:34px;font-weight:200;color:var(--gold-light);
+  letter-spacing:-.03em;line-height:1;margin-bottom:6px;
+}
+.m-stat-l{font-size:12px;color:var(--text-sub);line-height:1.4;}
+
+/* Modal quotes */
+.m-quote{
+  border-left:2px solid var(--gold);
+  padding:12px 16px;
+  background:rgba(200,146,70,.04);
+  border-radius:0 6px 6px 0;
+  margin-bottom:10px;
+}
+.m-quote:last-child{margin-bottom:0;}
+.m-quote-text{font-size:13px;font-style:italic;color:var(--text);line-height:1.65;}
+.m-quote-attr{font-size:11px;color:var(--text-muted);margin-top:5px;}
+
+/* Modal opportunities */
+.m-opp{
+  background:var(--green-dim);
+  border:1px solid rgba(92,158,114,.2);
+  border-radius:8px;padding:16px;margin-bottom:10px;
+}
+.m-opp:last-child{margin-bottom:0;}
+.m-opp-title{font-size:13px;font-weight:600;color:#7BC492;margin-bottom:5px;}
+.m-opp-body{font-size:12.5px;color:var(--text-sub);line-height:1.6;}
+
+/* Responsive */
+@media(max-width:768px){
+  .hdr-nav{display:none;}
+  .m-grid{grid-template-columns:1fr;}
+  .m-body{padding:18px;}
+  .m-hdr{padding:18px;flex-wrap:wrap;}
+  .m-stat-grid{grid-template-columns:1fr 1fr;}
+  .summary-grid{grid-template-columns:1fr 1fr;}
+  .hero-h1{font-size:22px;}
+}
+@media(max-width:480px){
+  .summary-grid{grid-template-columns:1fr;}
+  .m-stat-grid{grid-template-columns:1fr;}
+}
+
+/* Animation helpers */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeUp .5s ease both;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ HEADER -->
+<header class="site-hdr">
+  <div class="hdr-logo">
+    <img id="logo-img" src="https://uk.tempur.com/on/demandware.static/-/Sites-tem_uk-Library/default/dweae2548d/images/site_logos/tempur-logo-white.svg" alt="Tempur" onerror="this.classList.add('hidden');document.getElementById('logo-txt').style.display='block'"/>
+    <span id="logo-txt" style="display:none" class="hdr-logo-text">TEMPUR</span>
+  </div>
+  <div class="hdr-sep"></div>
+  <div class="hdr-meta">
+    <div class="hdr-title">Digital Purchase Experience Map</div>
+    <div class="hdr-sub">Q1 2026 · Draft</div>
+  </div>
+  <nav class="hdr-nav" id="hdrNav"></nav>
+</header>
+
+<!-- ═══════════════════════════════════════ HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Experience Map · Q1 2026</div>
+      <h1 class="hero-h1">Digital <strong>Purchase Journey</strong></h1>
+      <p class="hero-sub">How customers discover, evaluate and commit to a Tempur mattress — from first trigger to long-term advocacy.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">7 Journey Stages</span>
+        <span class="hero-pill gold">Customer Emotion Curve</span>
+        <span class="hero-pill">Key Takeaways &amp; Opportunities</span>
+        <span class="hero-pill">Research-Based Insights</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SCROLL CONTAINER -->
+<div class="scroll-wrap" id="scrollWrap">
+  <div class="scroll-inner" id="scrollInner">
+
+    <!-- Wave -->
+    <div class="wave-wrap" id="waveWrap">
+      <div class="wave-axis-labels">
+        <span class="wave-axis-label pos">Positive</span>
+        <span class="wave-axis-label neu">Neutral</span>
+        <span class="wave-axis-label neg">Negative</span>
+      </div>
+      <svg class="wave-svg" id="waveSvg" viewBox="0 0 1820 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="curveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#A07030"/>
+            <stop offset="35%" stop-color="#E8B870"/>
+            <stop offset="65%" stop-color="#C89246"/>
+            <stop offset="100%" stop-color="#E8B870"/>
+          </linearGradient>
+          <linearGradient id="fillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#C89246" stop-opacity=".18"/>
+            <stop offset="100%" stop-color="#C89246" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <clipPath id="waveClip">
+            <rect x="0" y="0" width="1820" height="180"/>
+          </clipPath>
+        </defs>
+        <!-- Zone lines -->
+        <line x1="0" y1="60" x2="1820" y2="60" stroke="rgba(92,158,114,.1)" stroke-width="1" stroke-dasharray="4,6"/>
+        <line x1="0" y1="90" x2="1820" y2="90" stroke="rgba(90,80,70,.25)" stroke-width="1" stroke-dasharray="2,8"/>
+        <line x1="0" y1="130" x2="1820" y2="130" stroke="rgba(176,84,80,.1)" stroke-width="1" stroke-dasharray="4,6"/>
+        <!-- Column dividers -->
+        <line x1="260" y1="0" x2="260" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+        <line x1="520" y1="0" x2="520" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+        <line x1="780" y1="0" x2="780" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+        <line x1="1040" y1="0" x2="1040" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+        <line x1="1300" y1="0" x2="1300" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+        <line x1="1560" y1="0" x2="1560" y2="180" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+        <!-- Fill area -->
+        <path id="waveFill" clip-path="url(#waveClip)" fill="url(#fillGrad)"/>
+        <!-- Main curve -->
+        <path id="wavePath" fill="none" stroke="url(#curveGrad)" stroke-width="2.5" stroke-linecap="round" filter="url(#glow)"/>
+        <!-- Dots group -->
+        <g id="waveDots"/>
+      </svg>
+    </div>
+
+    <!-- Stage grid -->
+    <div class="grid" id="grid"></div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SUMMARY -->
+<section class="summary">
+  <div class="summary-hdr">
+    <div class="summary-eyebrow">Key Findings</div>
+    <h2 class="summary-h2">Journey Summary</h2>
+    <p class="summary-sub">High-level insights distilled across all seven stages of the Tempur digital purchase journey.</p>
+  </div>
+  <div class="summary-grid" id="summaryGrid"></div>
+</section>
+
+<!-- ═══════════════════════════════════════ FOOTER -->
+<footer class="site-ftr">
+  <p class="ftr-meta">© 2026 Tempur-Pedic International · Experience Map · Q1 2026 · Confidential</p>
+  <span class="ftr-tag">Draft — Not for distribution</span>
+</footer>
+
+<!-- ═══════════════════════════════════════ MODAL -->
+<div class="m-overlay" id="overlay">
+  <div class="modal" id="modal">
+    <div class="m-topnav" id="mTopNav"></div>
+    <div class="m-hdr" id="mHdr"></div>
+    <div class="m-body" id="mBody"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ SCRIPT -->
+<script>
+/* ── ICONS ─────────────────────────────────────── */
+const IC = {
+  awareness: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.5-1.3 4.7-3.2 6V17a1 1 0 0 1-1 1H9.2a1 1 0 0 1-1-1v-2c-1.9-1.3-3.2-3.5-3.2-6a7 7 0 0 1 7-7z"/><path d="M9.2 21h5.6"/><path d="M11 17.5v.5m2-.5v.5"/><path d="M12 6v3m-1.5-1.5 3 3"/></svg>`,
+  research: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7.5"/><line x1="20.5" y1="20.5" x2="16.3" y2="16.3"/><line x1="8.5" y1="11" x2="13.5" y2="11"/><line x1="11" y1="8.5" x2="11" y2="13.5"/></svg>`,
+  comparison: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/><path d="M16 6h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-3"/><rect x="8" y="3" width="8" height="18" rx="1"/><line x1="11" y1="9" x2="13" y2="9"/><line x1="11" y1="12" x2="13" y2="12"/><line x1="11" y1="15" x2="13" y2="15"/></svg>`,
+  physical: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><rect x="9" y="12" width="6" height="9" rx=".5"/><circle cx="12" cy="8" r="1.5"/></svg>`,
+  decision: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="7" y1="15" x2="9" y2="15"/><line x1="11" y1="15" x2="15" y2="15"/></svg>`,
+  delivery: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3H1v13h15V3z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+  postpurchase: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  // Summary icons
+  lifecycle: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>`,
+  digital: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  people: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  friction: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+  finance: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  instore: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  advocacy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+};
+
+/* ── DATA ────────────────────────────────────────── */
+const STAGES = [
+  {
+    id:0, num:"01 / 07", shortNum:"01", name:"Awareness\xa0/ Trigger",
+    shortName:"Awareness", icon:"awareness",
+    emotionScore:38, emotionLabel:"Anxious / Urgent",
+    overview:"Purchases are predominantly triggered by life transitions or acute discomfort, as opposed to casual upgrading.",
+    doing:[
+      {tag:"hi", text:"Moving into new property (Date Driven)"},
+      {text:"Experiencing poor sleep or physical discomfort"},
+      {text:"Undergoing home renovations"},
+      {text:"Noticing old mattress deteriorating"},
+      {tag:"lo", text:"Becoming more aware of health benefits of sleep through podcasts and media"},
+      {text:"Tempted by exposure to new sleep technology"},
+    ],
+    takeaways:[],
+    stats:[
+      {n:"1 in 3", l:"UK adults report poor or disturbed sleep quality regularly"},
+      {n:"7–10 yrs", l:"Average mattress lifespan before customers consider replacement"},
+    ],
+    quotes:[],
+    opportunities:[
+      {title:"Intercept the trigger moment", body:"Target users showing signals of life transitions — moving home, renovation planning — with contextual sleep health messaging across relevant digital channels."},
+      {title:"Sleep health education", body:"Build top-of-funnel awareness through long-form content partnerships with podcasts and wellness platforms to capture low-urgency shoppers early in their consideration."},
+    ]
+  },
+  {
+    id:1, num:"02 / 07", shortNum:"02", name:"Initial Research",
+    shortName:"Research", icon:"research",
+    emotionScore:62, emotionLabel:"Hopeful / Engaged",
+    overview:"Digital is not always the first step — but often quickly follows and predominantly involves broad searches, AI tools, and a review of various brand and retailer websites.",
+    doing:[
+      {text:"Performs high-level web search (e.g. \"Best mattress...\")"},
+      {text:"Uses AI tools (ChatGPT, Copilot et al.) for recommendations"},
+      {text:"Browses general retailer and D2C brand websites"},
+      {text:"Looks at social media (YouTube, TikTok) reviews"},
+      {text:"Seeks friends' and family's recommendations"},
+      {text:"Reads third-party reviews and aggregator articles"},
+      {text:"Passive store visits while shopping for other things"},
+    ],
+    takeaways:[
+      {title:"\u201cBest mattress\u2026\u201d Searches", body:"Curated lists are often used as a springboard for further research, providing structure and direction in an otherwise unknown market. Being featured is critical."},
+    ],
+    stats:[
+      {n:"48%", l:"of early-stage researchers consult AI tools for mattress recommendations"},
+      {n:"3–5", l:"average number of websites visited before shortlisting begins"},
+    ],
+    quotes:[],
+    opportunities:[
+      {title:"Optimise for AI discovery", body:"Ensure Tempur content is structured to surface well in AI-generated recommendation outputs — particularly for queries around comfort, back support, and premium quality."},
+      {title:"Capture with curated content", body:"Create definitive 'best mattress for [need]' content that intercepts early search intent and positions Tempur as the authority before competitor research begins."},
+    ]
+  },
+  {
+    id:2, num:"03 / 07", shortNum:"03", name:"Deep Dive\xa0/ Comparison",
+    shortName:"Comparison", icon:"comparison",
+    emotionScore:45, emotionLabel:"Overwhelmed / Frustrated",
+    overview:"Customers evaluate mattresses based on a combination of core comfort factors (firmness, cooling), practical aspects (price, delivery), and qualitative assurances (brand reputation, reviews, warranty).",
+    doing:[
+      {text:"Visits specific brand websites (Tempur, Simba, Emma)"},
+      {text:"Narrows options by size, firmness, features (cooling, depth, material)"},
+      {text:"Reads customer reviews on brand/retailer sites and Trustpilot"},
+      {text:"Reads product descriptions in detail"},
+      {text:"Compares prices, offers, warranties, and trial periods"},
+      {text:"Develops own criteria based on accumulated research"},
+      {text:"Contacts companies for clarifications or reassurance"},
+    ],
+    takeaways:[
+      {title:"Breaking the Buying Shortcut", body:"Range changes remove recognition cues, forcing customers to start from scratch and re-evaluate instead of reordering. Existing brand familiarity is disrupted."},
+      {title:"Premium Support Should Reassure, Not Deflect", body:"High-value purchases require human reassurance. Redirecting customers to web pages when they seek direct answers creates dissonance and erodes trust."},
+      {title:"Assumptions Replace Guidance", body:"When depth selection lacks clear explanation, customers default to guesswork — choosing based on price or familiarity rather than sleeping habits or body type."},
+    ],
+    stats:[
+      {n:"38%", l:"feel overwhelmed by the number of options during the comparison phase"},
+      {n:"2–3 wks", l:"average time spent comparing before a shortlist is formed"},
+    ],
+    quotes:[],
+    opportunities:[
+      {title:"Guided depth selection tool", body:"Implement an interactive quiz helping customers select the right model based on sleeping habits and body type — reducing guesswork and increasing purchase confidence."},
+      {title:"Accessible human support", body:"Make live chat or callback prominently available during the comparison phase. Human contact at this stage significantly increases conversion rates for premium products."},
+    ]
+  },
+  {
+    id:3, num:"04 / 07", shortNum:"04", name:"Physical Testing\xa0(Optional)",
+    shortName:"In-Store", icon:"physical",
+    emotionScore:72, emotionLabel:"Confident / Engaged",
+    overview:"Many customers research online but still value in-store trials to confirm comfort before committing to a significant purchase decision.",
+    doing:[
+      {text:"Visits physical stores (John Lewis, Dreams, DFS, Benson for Beds, Tempur store)"},
+      {text:"Takes part in specialised assessments (e.g. spine alignment at Tempur or Sleepmatch at Dreams)"},
+      {text:"Tries a friend's or family member's mattress"},
+      {text:"Evaluates the 'feel' and firmness of different models"},
+      {text:"Compares in-store experience with prior online research"},
+      {text:"Engages with sales staff — some for advice, some actively avoid"},
+    ],
+    takeaways:[
+      {title:"The Crucial Role of In-Store Staff", body:"Knowledgeable staff play a crucial role in clarifying options and tailoring advice, strengthening conviction in the final choice. However, not all customers feel comfortable engaging with sales staff and prefer a self-directed experience."},
+    ],
+    stats:[
+      {n:"67%", l:"of premium mattress buyers visit at least one store before purchasing"},
+      {n:"2×", l:"increase in purchase confidence reported after a physical in-store trial"},
+    ],
+    quotes:[],
+    opportunities:[
+      {title:"Connect store experience to digital journey", body:"Enable customers to save in-store assessment results and continue their journey online seamlessly — bridging the physical and digital experience."},
+      {title:"Self-service in-store tools", body:"Provide tablet-based assessment tools for customers who prefer not to engage with sales staff, capturing the same guidance benefit in a self-directed format."},
+    ]
+  },
+  {
+    id:4, num:"05 / 07", shortNum:"05", name:"Decision\xa0&amp; Purchase",
+    shortName:"Purchase", icon:"decision",
+    emotionScore:35, emotionLabel:"Anxious / High Stakes",
+    overview:"Most customers ultimately purchase online, valuing convenience and the feeling of not being pressured. The moment of financial commitment carries significant anxiety.",
+    doing:[
+      {text:"Chooses preferred mattress and retailer (influenced by budget and delivery)"},
+      {text:"Compares final shortlist based on all accumulated criteria"},
+      {text:"Influenced by promotional offers — Black Friday, free accessories"},
+      {text:"Discusses final choices with partner to align on preferences and budget"},
+      {text:"Compares prices across online and offline channels"},
+      {text:"Places order online"},
+      {text:"Selects payment option — outright purchase or finance"},
+      {text:"Chooses preferred delivery date"},
+      {text:"Receives order confirmation"},
+    ],
+    takeaways:[
+      {title:"Finance Calculator Is Difficult to Access", body:"On Tempur PDPs, the finance calculator is hidden behind a tooltip with no clear indication it exists. Requiring a checkbox before viewing repayment information creates an unnecessary barrier to a helpful purchase tool."},
+    ],
+    stats:[
+      {n:"61%", l:"complete the final purchase online, even after conducting in-store research"},
+      {n:"1 in 4", l:"purchases are influenced by a promotional offer or seasonal sale event"},
+    ],
+    quotes:[
+      {text:"I feel like the choosing and the financial transaction, ordering — these use different parts of my brain.", attr:"— Customer research participant"},
+      {text:"[Ordering in-store] is a nightmare — I'm like, just give me the paper and I can sign it. I think online is better in that sense.", attr:"— Customer research participant"},
+    ],
+    opportunities:[
+      {title:"Streamline finance discovery", body:"Surface finance options prominently on PDPs without friction — allow customers to explore payment plans before committing, removing the checkbox barrier entirely."},
+      {title:"Reduce purchase anxiety", body:"Reinforce the trial period and no-quibble returns policy prominently at the moment of checkout to reduce perceived financial risk and increase conversion."},
+    ]
+  },
+  {
+    id:5, num:"06 / 07", shortNum:"06", name:"Delivery\xa0&amp; Set Up",
+    shortName:"Delivery", icon:"delivery",
+    emotionScore:55, emotionLabel:"Anticipatory / Mixed",
+    overview:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that taints the all-important first impression.",
+    doing:[
+      {text:"Monitors delivery status and updates"},
+      {text:"Prepares space for new mattress; considers old mattress disposal"},
+      {text:"Receives delivery updates and notifications"},
+      {text:"Receives delivery, potentially with white-glove installation and old mattress removal"},
+      {text:"Unpacks and airs out the new mattress (24–72 hours)"},
+      {text:"Reviews the provided aftercare and maintenance instructions"},
+    ],
+    takeaways:[],
+    stats:[
+      {n:"83%", l:"of customers say delivery experience significantly impacts overall brand perception"},
+      {n:"24–72h", l:"recommended airing period before first use — an opportunity for anticipation-building communication"},
+    ],
+    quotes:[],
+    opportunities:[
+      {title:"Proactive delivery communication", body:"Send personalised, step-by-step 'what to expect' content ahead of delivery — including airing guidance and setup tips — to reduce anxiety and build anticipation."},
+      {title:"Premium disposal service", body:"Offer a white-glove old mattress collection service to reduce the logistical burden and reinforce the premium Tempur brand promise through the full end-to-end experience."},
+    ]
+  },
+  {
+    id:6, num:"07 / 07", shortNum:"07", name:"Post-Purchase\xa0&amp; Enjoyment",
+    shortName:"Enjoyment", icon:"postpurchase",
+    emotionScore:80, emotionLabel:"Satisfied / Relieved",
+    overview:"The journey often ends in relief and satisfaction, but long-term sentiment can be tempered by logistical issues. Satisfaction at this stage drives advocacy and repeat purchase.",
+    doing:[
+      {text:"Sleeps on and acclimates to new mattress"},
+      {text:"Monitors comfort, sleep quality, and physical symptoms (e.g. back pain)"},
+      {text:"Checks aftercare and maintenance instructions"},
+      {text:"Receives follow-up marketing and review requests"},
+      {text:"Recommends product to friends or family"},
+      {text:"Considers repeat purchase or complementary products"},
+    ],
+    takeaways:[],
+    stats:[
+      {n:"61%", l:"of highly satisfied customers recommend the product to friends or family"},
+      {n:"120 nights", l:"Tempur's trial period — providing a full comfort assessment window"},
+    ],
+    quotes:[],
+    opportunities:[
+      {title:"Sleep quality check-ins", body:"Offer an optional sleep quality check-in at 30, 60, and 90 days. Monitor satisfaction signals and intervene proactively before dissatisfaction or return requests develop."},
+      {title:"Build structured advocacy loops", body:"Create a referral programme timed around peak satisfaction moments (days 30–60), when customers are most likely to recommend to friends and family."},
+    ]
+  },
+];
+
+const SUMMARY_CARDS = [
+  {icon:"lifecycle", title:"Lifecycle-Triggered Demand", body:"Purchases are driven by life transitions and discomfort rather than casual upgrades — making contextual targeting at trigger moments essential."},
+  {icon:"digital", title:"Digital-First Research", body:"AI tools, brand websites and social media dominate early research. Tempur's visibility in AI-generated recommendations is a critical and emerging battleground."},
+  {icon:"people", title:"High-Complexity Evaluation", body:"Customers spend 2–3 weeks comparing across multiple sources and criteria. Clear guidance and tools that reduce decision complexity are high-value interventions."},
+  {icon:"instore", title:"Physical Testing Still Matters", body:"67% of buyers visit a store before purchasing. The in-store experience plays a pivotal role in building conviction — but not all customers engage with staff."},
+  {icon:"finance", title:"Purchase Anxiety is Real", body:"The financial commitment creates significant anxiety. Finance options, trial periods and returns policies need to be surfaced clearly at the point of decision — not hidden."},
+  {icon:"friction", title:"Delivery Experience is Make-or-Break", body:"83% of customers say delivery significantly impacts brand perception. Proactive communication and premium white-glove services can transform this critical touchpoint."},
+  {icon:"advocacy", title:"Satisfaction Drives Advocacy", body:"61% of satisfied customers recommend Tempur to others. Structured check-in programmes and referral incentives timed around peak satisfaction can significantly amplify word-of-mouth."},
+  {icon:"digital", title:"Online Purchase Dominates", body:"61% complete their final purchase online even after in-store research. The digital checkout experience must be frictionless, reassuring and finance-accessible."},
+];
+
+/* ── RENDER HEADER NAV ───────────────────────────── */
+function renderHeaderNav() {
+  const nav = document.getElementById('hdrNav');
+  nav.innerHTML = STAGES.map(s => `
+    <button class="hdr-pill" data-id="${s.id}" onclick="openModal(${s.id})">
+      <span class="pnum">${s.shortNum}</span>
+      <span>${s.shortName}</span>
+    </button>
+  `).join('');
+}
+
+/* ── RENDER GRID COLUMNS ─────────────────────────── */
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = STAGES.map(s => {
+    const tkwyHtml = s.takeaways.length
+      ? s.takeaways.slice(0,2).map(t => `
+        <div class="tkwy-card">
+          <div class="tkwy-title">${t.title}</div>
+          <div class="tkwy-body">${t.body}</div>
+        </div>
+      `).join('')
+      : '<div style="font-size:11px;color:var(--text-muted);font-style:italic;">No stage-specific takeaways — see full analysis for opportunities.</div>';
+
+    const statsHtml = s.stats.map(st => `
+      <div class="stat-row">
+        <div class="stat-n">${st.n}</div>
+        <div class="stat-l">${st.l}</div>
+      </div>
+    `).join('');
+
+    const tkwySection = s.takeaways.length > 0
+      ? `<div class="col-sec"><div class="sec-lbl">Key Takeaways</div>${tkwyHtml}</div>`
+      : `<div class="col-sec"><div class="sec-lbl">Key Takeaways</div>${tkwyHtml}</div>`;
+
+    return `
+      <div class="col" data-id="${s.id}" onclick="openModal(${s.id})">
+        <div class="col-hdr">
+          <div class="col-num">${s.num}</div>
+          <div class="col-icon">${IC[s.icon]}</div>
+          <div class="col-name">${s.name}</div>
+          <div class="col-overview">${s.overview}</div>
+        </div>
+        ${tkwySection}
+        <div class="col-sec">
+          <div class="sec-lbl">Key Stats</div>
+          ${statsHtml}
+        </div>
+        <div class="col-cta">
+          <span class="cta-text">View full analysis</span>
+          <span class="cta-arrow">↗</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ── RENDER SUMMARY ──────────────────────────────── */
+function renderSummary() {
+  const grid = document.getElementById('summaryGrid');
+  grid.innerHTML = SUMMARY_CARDS.map(c => `
+    <div class="sum-card">
+      <div class="sum-icon">${IC[c.icon]}</div>
+      <div class="sum-title">${c.title}</div>
+      <div class="sum-body">${c.body}</div>
+    </div>
+  `).join('');
+}
+
+/* ── DRAW EMOTION CURVE ──────────────────────────── */
+function drawCurve() {
+  const svg = document.getElementById('waveSvg');
+  const path = document.getElementById('wavePath');
+  const fill = document.getElementById('waveFill');
+  const dotsG = document.getElementById('waveDots');
+
+  // Column centers in viewBox coords (1820 wide, 7 cols of 260)
+  const vbW = 1820, vbH = 180;
+  const colW = vbW / 7;
+  const xs = STAGES.map((_,i) => colW * i + colW / 2);
+  const ys = STAGES.map(s => (1 - s.emotionScore / 100) * 140 + 20);
+
+  // Catmull-Rom to bezier
+  function pts(i) { return {x: xs[i], y: ys[i]}; }
+  function virtual(a, b) { return {x: 2*a.x - b.x, y: 2*a.y - b.y}; }
+
+  function segment(p0, p1, pm1, p2) {
+    const cp1 = {x: p0.x + (p1.x - pm1.x)/6, y: p0.y + (p1.y - pm1.y)/6};
+    const cp2 = {x: p1.x - (p2.x - p0.x)/6, y: p1.y - (p2.y - p0.y)/6};
+    return `C ${cp1.x.toFixed(1)} ${cp1.y.toFixed(1)} ${cp2.x.toFixed(1)} ${cp2.y.toFixed(1)} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
+  }
+
+  let d = `M ${xs[0].toFixed(1)} ${ys[0].toFixed(1)} `;
+  for (let i = 0; i < STAGES.length - 1; i++) {
+    const pm1 = i === 0 ? virtual(pts(0), pts(1)) : pts(i-1);
+    const p2 = i === STAGES.length - 2 ? virtual(pts(STAGES.length-1), pts(STAGES.length-2)) : pts(i+2);
+    d += segment(pts(i), pts(i+1), pm1, p2) + ' ';
+  }
+
+  path.setAttribute('d', d);
+
+  // Fill area
+  const fillD = d + ` L ${xs[STAGES.length-1].toFixed(1)} ${vbH} L ${xs[0].toFixed(1)} ${vbH} Z`;
+  fill.setAttribute('d', fillD);
+
+  // Dots
+  dotsG.innerHTML = STAGES.map((s, i) => {
+    const x = xs[i].toFixed(1);
+    const y = ys[i].toFixed(1);
+    const scoreColor = s.emotionScore >= 65 ? '#5C9E72' : s.emotionScore <= 45 ? '#B05450' : '#C89246';
+    return `
+      <g class="wave-dot" data-id="${i}" style="cursor:pointer" onclick="openModal(${i})">
+        <circle cx="${x}" cy="${y}" r="9" fill="${scoreColor}" fill-opacity=".12" stroke="${scoreColor}" stroke-opacity=".3" stroke-width="1"/>
+        <circle cx="${x}" cy="${y}" r="4.5" fill="${scoreColor}"/>
+        <text x="${x}" y="${(parseFloat(y) - 13).toFixed(1)}" text-anchor="middle" font-size="9" fill="${scoreColor}" font-family="system-ui,sans-serif" font-weight="600">${s.emotionScore}%</text>
+      </g>
+    `;
+  }).join('');
+
+  // Animate line draw
+  const totalLen = path.getTotalLength ? path.getTotalLength() : 2000;
+  path.style.strokeDasharray = totalLen;
+  path.style.strokeDashoffset = totalLen;
+  path.style.transition = 'stroke-dashoffset 2s cubic-bezier(.4,0,.2,1)';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      path.style.strokeDashoffset = 0;
+    });
+  });
+}
+
+/* ── MODAL ───────────────────────────────────────── */
+let currentStage = 0;
+
+function renderModalTopNav(activeId) {
+  const nav = document.getElementById('mTopNav');
+  nav.innerHTML = STAGES.map(s => `
+    <button class="m-stage-pill ${s.id===activeId?'active':''}" onclick="openModal(${s.id})">
+      <span>${s.shortNum}</span>
+      <span>${s.shortName}</span>
+    </button>
+  `).join('') + `
+    <div class="m-topnav-spacer"></div>
+    <button class="m-close" onclick="closeModal()" title="Close">✕</button>
+  `;
+}
+
+function renderModalHeader(s) {
+  const hdr = document.getElementById('mHdr');
+  hdr.innerHTML = `
+    <div class="m-hdr-left">
+      <div class="m-icon">${IC[s.icon]}</div>
+      <div class="m-info">
+        <div class="m-num">${s.num} · ${s.emotionLabel}</div>
+        <div class="m-name">${s.name}</div>
+        <div class="m-overview">${s.overview}</div>
+      </div>
+    </div>
+    <div class="m-hdr-nav">
+      <button class="m-nav-btn" onclick="openModal(${s.id-1})" ${s.id===0?'disabled':''} title="Previous stage">←</button>
+      <button class="m-nav-btn" onclick="openModal(${s.id+1})" ${s.id===STAGES.length-1?'disabled':''} title="Next stage">→</button>
+    </div>
+  `;
+}
+
+function renderModalBody(s) {
+  const body = document.getElementById('mBody');
+
+  const doingHtml = s.doing.map(d => `
+    <li class="m-doing-item">
+      <span class="m-doing-dot"></span>
+      <span>${d.tag ? `<span class="tag ${d.tag}">${d.tag==='hi'?'HIGH URGENCY':'LOW URGENCY'}</span> ` : ''}${d.text}</span>
+    </li>
+  `).join('');
+
+  const tkwyHtml = s.takeaways.length
+    ? s.takeaways.map(t => `
+      <div class="m-tkwy">
+        <div class="m-tkwy-title">${t.title}</div>
+        <div class="m-tkwy-body">${t.body}</div>
+      </div>
+    `).join('')
+    : '<p style="font-size:12px;color:var(--text-muted);font-style:italic;">No specific takeaways identified for this stage.</p>';
+
+  const statsHtml = `
+    <div class="m-stat-grid">
+      ${s.stats.map(st => `
+        <div class="m-stat-card">
+          <div class="m-stat-n">${st.n}</div>
+          <div class="m-stat-l">${st.l}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  const quotesHtml = s.quotes.length
+    ? s.quotes.map(q => `
+      <div class="m-quote">
+        <div class="m-quote-text">"${q.text}"</div>
+        <div class="m-quote-attr">${q.attr}</div>
+      </div>
+    `).join('')
+    : '';
+
+  const oppsHtml = s.opportunities.map(o => `
+    <div class="m-opp">
+      <div class="m-opp-title">${o.title}</div>
+      <div class="m-opp-body">${o.body}</div>
+    </div>
+  `).join('');
+
+  // Emotion indicator
+  const score = s.emotionScore;
+  const scoreColor = score >= 65 ? '#5C9E72' : score <= 45 ? '#B05450' : '#C89246';
+  const scoreLabel = score >= 65 ? 'Positive' : score <= 45 ? 'Negative' : 'Neutral';
+
+  body.innerHTML = `
+    <div class="m-grid">
+      <div>
+        <div class="m-sec">
+          <div class="m-sec-title">Customer Emotion</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;width:${score}%;background:${scoreColor};border-radius:3px;transition:width 1s ease .2s;"></div>
+            </div>
+            <div style="font-size:20px;font-weight:200;color:${scoreColor};line-height:1;">${score}%</div>
+            <div style="font-size:11px;color:${scoreColor};font-weight:600;text-transform:uppercase;letter-spacing:.08em;">${scoreLabel}</div>
+          </div>
+          <div style="font-size:12px;color:var(--text-sub);">${s.emotionLabel}</div>
+        </div>
+
+        <div class="m-sec">
+          <div class="m-sec-title">What customers are doing</div>
+          <ul class="m-doing-list">${doingHtml}</ul>
+        </div>
+
+        ${quotesHtml ? `
+        <div class="m-sec">
+          <div class="m-sec-title">Customer Voice</div>
+          ${quotesHtml}
+        </div>` : ''}
+      </div>
+
+      <div>
+        <div class="m-sec">
+          <div class="m-sec-title">Key Stats</div>
+          ${statsHtml}
+        </div>
+
+        <div class="m-sec">
+          <div class="m-sec-title">Key Takeaways</div>
+          ${tkwyHtml}
+        </div>
+
+        <div class="m-sec">
+          <div class="m-sec-title">Opportunities &amp; Recommendations</div>
+          ${oppsHtml}
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Animate emotion bar
+  const bar = body.querySelector('[style*="width:0"]');
+  if (bar) {
+    setTimeout(() => { bar.style.width = score + '%'; }, 50);
+  }
+}
+
+function openModal(id) {
+  if (id < 0 || id >= STAGES.length) return;
+  currentStage = id;
+  const s = STAGES[id];
+  renderModalTopNav(id);
+  renderModalHeader(s);
+  renderModalBody(s);
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('mBody').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+
+  // Update header nav
+  document.querySelectorAll('.hdr-pill').forEach(p => {
+    p.classList.toggle('active', parseInt(p.dataset.id) === id);
+  });
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+  document.querySelectorAll('.hdr-pill').forEach(p => p.classList.remove('active'));
+}
+
+// Close on overlay click
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) closeModal();
+});
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('modal').classList.contains('open')) return;
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowRight') openModal(currentStage + 1);
+  if (e.key === 'ArrowLeft') openModal(currentStage - 1);
+});
+
+/* ── INTERSECTION OBSERVER for wave animation ─── */
+function setupWaveObserver() {
+  const wrap = document.getElementById('waveWrap');
+  if (!wrap) return;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        drawCurve();
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.1});
+  obs.observe(wrap);
+}
+
+/* ── SCROLL SYNC (highlight nav pill on scroll) ── */
+function setupScrollSync() {
+  const wrap = document.getElementById('scrollWrap');
+  const cols = document.querySelectorAll('.col');
+  if (!wrap || !cols.length) return;
+  wrap.addEventListener('scroll', () => {
+    const wrapRect = wrap.getBoundingClientRect();
+    const center = wrapRect.left + wrapRect.width / 2;
+    let activeId = 0;
+    cols.forEach((col, i) => {
+      const r = col.getBoundingClientRect();
+      if (r.left <= center && r.right >= center) activeId = i;
+    });
+    document.querySelectorAll('.hdr-pill').forEach(p => {
+      p.classList.toggle('active', parseInt(p.dataset.id) === activeId);
+    });
+  }, {passive: true});
+}
+
+/* ── INIT ─────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  renderHeaderNav();
+  renderGrid();
+  renderSummary();
+  setupWaveObserver();
+  setupScrollSync();
+
+  // Animate columns in
+  const cols = document.querySelectorAll('.col');
+  cols.forEach((col, i) => {
+    col.style.opacity = '0';
+    col.style.transform = 'translateY(12px)';
+    setTimeout(() => {
+      col.style.transition = 'opacity .4s ease, transform .4s ease';
+      col.style.opacity = '1';
+      col.style.transform = 'translateY(0)';
+    }, i * 60 + 200);
+  });
+
+  // Animate summary cards
+  const sumCards = document.querySelectorAll('.sum-card');
+  const sumObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = 'fadeUp .5s ease both';
+        sumObs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.1});
+  sumCards.forEach(c => sumObs.observe(c));
+});
+</script>
+</body>
+</html>
