@@ -1023,12 +1023,12 @@ function drawCurve() {
   const colDividers = xs.slice(1).map(x => {
     // boundary sits halfway between adjacent column centres
     const bx = x - (xs[1] - xs[0]) / 2;
-    return `<line x1="${bx.toFixed(1)}" y1="0" x2="${bx.toFixed(1)}" y2="${vbH}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
+    return `<line x1="${bx.toFixed(1)}" y1="0" x2="${bx.toFixed(1)}" y2="${vbH}" stroke="rgba(0,0,0,.06)" stroke-width="1"/>`;
   }).join('');
   const zoneLines = [
-    `<line x1="0" y1="60" x2="${vbW}" y2="60" stroke="rgba(92,158,114,.1)"   stroke-width="1" stroke-dasharray="4,6"/>`,
-    `<line x1="0" y1="90" x2="${vbW}" y2="90" stroke="rgba(90,80,70,.25)"    stroke-width="1" stroke-dasharray="2,8"/>`,
-    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="rgba(176,84,80,.1)"  stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="60" x2="${vbW}" y2="60" stroke="rgba(26,127,68,.15)"   stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="90" x2="${vbW}" y2="90" stroke="rgba(0,0,0,.1)"         stroke-width="1" stroke-dasharray="2,8"/>`,
+    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="rgba(192,57,43,.12)"  stroke-width="1" stroke-dasharray="4,6"/>`,
   ].join('');
   linesG.innerHTML = zoneLines + colDividers;
 
@@ -1060,13 +1060,14 @@ function drawCurve() {
   const fillD = d + ` L ${(vbW + edge).toFixed(1)} ${vbH} L ${(-edge).toFixed(1)} ${vbH} Z`;
   fill.setAttribute('d', fillD);
 
-  // Dots
+  // Dots — rendered hidden, staggered in as line draws
+  const DRAW_DUR = 1800; // ms — keep in sync with transition below
   dotsG.innerHTML = STAGES.map((s, i) => {
     const x = xs[i].toFixed(1);
     const y = ys[i].toFixed(1);
-    const scoreColor = s.emotionScore >= 65 ? '#5C9E72' : s.emotionScore <= 45 ? '#B05450' : '#C89246';
+    const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#9A6E00';
     return `
-      <g class="wave-dot" data-id="${i}" style="cursor:pointer" onclick="openModal(${i})">
+      <g class="wave-dot" data-id="${i}" style="cursor:pointer;opacity:0;transform-origin:${x}px ${y}px;transform:scale(0.4)" onclick="openModal(${i})">
         <circle cx="${x}" cy="${y}" r="9" fill="${scoreColor}" fill-opacity=".12" stroke="${scoreColor}" stroke-opacity=".3" stroke-width="1"/>
         <circle cx="${x}" cy="${y}" r="4.5" fill="${scoreColor}"/>
         <text x="${x}" y="${(parseFloat(y) - 13).toFixed(1)}" text-anchor="middle" font-size="9" fill="${scoreColor}" font-family="system-ui,sans-serif" font-weight="600">${s.emotionScore}%</text>
@@ -1074,14 +1075,35 @@ function drawCurve() {
     `;
   }).join('');
 
+  // Hide fill initially
+  fill.style.opacity = '0';
+
   // Animate line draw
   const totalLen = path.getTotalLength ? path.getTotalLength() : 2000;
   path.style.strokeDasharray = totalLen;
   path.style.strokeDashoffset = totalLen;
-  path.style.transition = 'stroke-dashoffset 2s cubic-bezier(.4,0,.2,1)';
+  path.style.transition = `stroke-dashoffset ${DRAW_DUR}ms cubic-bezier(.4,0,.2,1)`;
+
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       path.style.strokeDashoffset = 0;
+
+      // Stagger dots in as line draws through each column
+      const dots = dotsG.querySelectorAll('.wave-dot');
+      dots.forEach((dot, i) => {
+        const delay = (i / (STAGES.length - 1)) * DRAW_DUR * 0.85;
+        setTimeout(() => {
+          dot.style.transition = 'opacity 0.35s ease, transform 0.35s cubic-bezier(.34,1.56,.64,1)';
+          dot.style.opacity = '1';
+          dot.style.transform = 'scale(1)';
+        }, delay);
+      });
+
+      // Fade fill in after line completes
+      setTimeout(() => {
+        fill.style.transition = 'opacity 0.6s ease';
+        fill.style.opacity = '1';
+      }, DRAW_DUR * 0.9);
     });
   });
 }
