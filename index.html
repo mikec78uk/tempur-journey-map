@@ -426,13 +426,35 @@ body{
 .m-tp-chip.human{background:rgba(160,100,200,.1);border-color:rgba(160,100,200,.3);color:#C49AE8;}
 .m-tp-chip.media{background:rgba(92,158,114,.1);border-color:rgba(92,158,114,.3);color:#7EC99A;}
 
-/* Modal doing */
-.m-doing-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
-.m-doing-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text);line-height:1.5;}
-.m-doing-dot{
-  flex-shrink:0;width:6px;height:6px;border-radius:50%;
-  background:var(--gold);margin-top:5px;
+/* Modal doing strip */
+.m-doing-strip{
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+  padding:16px 24px 20px;
 }
+.m-doing-strip-label{
+  font-size:9px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:12px;
+}
+.m-doing-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:8px;
+}
+.m-doing-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:8px;padding:11px 14px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.m-doing-card.hi{border-color:rgba(176,84,80,.35);background:rgba(176,84,80,.05);}
+.m-doing-card.lo{border-color:rgba(200,146,70,.2);background:rgba(200,146,70,.04);}
+.m-doing-card-badge{
+  font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 6px;border-radius:3px;align-self:flex-start;
+}
+.m-doing-card-badge.hi{color:#C07070;background:rgba(176,84,80,.15);}
+.m-doing-card-badge.lo{color:var(--gold);background:rgba(200,146,70,.12);}
+.m-doing-card-text{font-size:12.5px;color:var(--text);line-height:1.45;}
 
 /* Modal takeaway */
 .m-tkwy{
@@ -596,6 +618,7 @@ body{
   <div class="modal" id="modal">
     <div class="m-topnav" id="mTopNav"></div>
     <div class="m-hdr" id="mHdr"></div>
+    <div class="m-doing-strip" id="mDoingStrip"></div>
     <div class="m-body" id="mBody"></div>
   </div>
 </div>
@@ -1057,12 +1080,19 @@ function renderModalHeader(s) {
 function renderModalBody(s) {
   const body = document.getElementById('mBody');
 
-  const doingHtml = s.doing.map(d => `
-    <li class="m-doing-item">
-      <span class="m-doing-dot"></span>
-      <span>${d.tag ? `<span class="tag ${d.tag}">${d.tag==='hi'?'HIGH URGENCY':'LOW URGENCY'}</span> ` : ''}${d.text}</span>
-    </li>
-  `).join('');
+  // Horizontal doing strip (sits between header and body)
+  const doingStrip = document.getElementById('mDoingStrip');
+  doingStrip.innerHTML = `
+    <div class="m-doing-strip-label">What customers are doing</div>
+    <div class="m-doing-cards">
+      ${s.doing.map(d => `
+        <div class="m-doing-card${d.tag ? ' ' + d.tag : ''}">
+          ${d.tag ? `<span class="m-doing-card-badge ${d.tag}">${d.tag === 'hi' ? 'High Urgency' : 'Low Urgency'}</span>` : ''}
+          <span class="m-doing-card-text">${d.text}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
 
   const touchpointsHtml = s.touchpoints && s.touchpoints.length
     ? `<div class="m-tp-groups">
@@ -1131,11 +1161,6 @@ function renderModalBody(s) {
             <div style="font-size:11px;color:${scoreColor};font-weight:600;text-transform:uppercase;letter-spacing:.08em;">${scoreLabel}</div>
           </div>
           <div style="font-size:12px;color:var(--text-sub);">${s.emotionLabel}</div>
-        </div>
-
-        <div class="m-sec">
-          <div class="m-sec-title">What customers are doing</div>
-          <ul class="m-doing-list">${doingHtml}</ul>
         </div>
 
         <div class="m-sec">
