@@ -629,6 +629,20 @@ body{
         <g id="waveDots"/>
       </svg>
     </div>
+    <!-- Wave tooltip -->
+    <div id="waveTip" style="
+      position:fixed;pointer-events:none;z-index:250;
+      background:#fff;border:1px solid #E5E5EA;border-radius:10px;
+      box-shadow:0 4px 16px rgba(0,0,0,.12);
+      padding:10px 14px;min-width:160px;max-width:220px;
+      opacity:0;transform:translateY(4px);
+      transition:opacity .18s ease,transform .18s ease;
+    ">
+      <div id="waveTipStage" style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#AEAEB2;margin-bottom:3px;"></div>
+      <div id="waveTipScore" style="font-size:20px;font-weight:200;line-height:1;margin-bottom:4px;"></div>
+      <div id="waveTipLabel" style="font-size:12px;font-weight:600;margin-bottom:4px;"></div>
+      <div id="waveTipDesc" style="font-size:11.5px;color:#6E6E73;line-height:1.5;"></div>
+    </div>
 
     <!-- Stage grid -->
     <div class="grid" id="grid"></div>
@@ -1060,52 +1074,101 @@ function drawCurve() {
   const fillD = d + ` L ${(vbW + edge).toFixed(1)} ${vbH} L ${(-edge).toFixed(1)} ${vbH} Z`;
   fill.setAttribute('d', fillD);
 
-  // Dots — rendered hidden, staggered in as line draws
-  const DRAW_DUR = 1800; // ms — keep in sync with transition below
+  // Dots — hidden initially, staggered in as line draws
+  const DRAW_DUR = 1800;
   dotsG.innerHTML = STAGES.map((s, i) => {
     const x = xs[i].toFixed(1);
     const y = ys[i].toFixed(1);
     const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#9A6E00';
     return `
-      <g class="wave-dot" data-id="${i}" style="cursor:pointer;opacity:0;transform-origin:${x}px ${y}px;transform:scale(0.4)" onclick="openModal(${i})">
-        <circle cx="${x}" cy="${y}" r="9" fill="${scoreColor}" fill-opacity=".12" stroke="${scoreColor}" stroke-opacity=".3" stroke-width="1"/>
+      <g class="wave-dot" data-id="${i}" data-stage="${i}" style="cursor:pointer;opacity:0" onclick="openModal(${i})">
+        <circle cx="${x}" cy="${y}" r="18" fill="transparent"/>
+        <circle cx="${x}" cy="${y}" r="9" fill="${scoreColor}" fill-opacity=".15" stroke="${scoreColor}" stroke-opacity=".35" stroke-width="1.5"/>
         <circle cx="${x}" cy="${y}" r="4.5" fill="${scoreColor}"/>
-        <text x="${x}" y="${(parseFloat(y) - 13).toFixed(1)}" text-anchor="middle" font-size="9" fill="${scoreColor}" font-family="system-ui,sans-serif" font-weight="600">${s.emotionScore}%</text>
+        <text x="${x}" y="${(parseFloat(y) - 14).toFixed(1)}" text-anchor="middle" font-size="9.5" fill="${scoreColor}" font-family="-apple-system,system-ui,sans-serif" font-weight="700">${s.emotionScore}%</text>
       </g>
     `;
   }).join('');
 
   // Hide fill initially
   fill.style.opacity = '0';
+  fill.style.transition = 'none';
 
-  // Animate line draw
-  const totalLen = path.getTotalLength ? path.getTotalLength() : 2000;
+  // ── Line draw animation ──────────────────────────
+  // Force a clean state with no transition, then measure
+  path.style.transition = 'none';
+  path.style.strokeDasharray = '';
+  path.style.strokeDashoffset = '';
+
+  // Flush the above style changes to the browser before measuring
+  path.getBoundingClientRect();
+
+  const totalLen = path.getTotalLength ? path.getTotalLength() : 3000;
   path.style.strokeDasharray = totalLen;
   path.style.strokeDashoffset = totalLen;
+
+  // Another flush so the hidden state is painted before we add the transition
+  path.getBoundingClientRect();
+
   path.style.transition = `stroke-dashoffset ${DRAW_DUR}ms cubic-bezier(.4,0,.2,1)`;
+  path.style.strokeDashoffset = 0;
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      path.style.strokeDashoffset = 0;
+  // Stagger dots in as line reaches each column
+  const dots = dotsG.querySelectorAll('.wave-dot');
+  dots.forEach((dot, i) => {
+    const delay = (i / (STAGES.length - 1)) * DRAW_DUR * 0.82;
+    setTimeout(() => {
+      dot.style.transition = 'opacity 0.3s ease';
+      dot.style.opacity = '1';
+    }, delay);
+  });
 
-      // Stagger dots in as line draws through each column
-      const dots = dotsG.querySelectorAll('.wave-dot');
-      dots.forEach((dot, i) => {
-        const delay = (i / (STAGES.length - 1)) * DRAW_DUR * 0.85;
-        setTimeout(() => {
-          dot.style.transition = 'opacity 0.35s ease, transform 0.35s cubic-bezier(.34,1.56,.64,1)';
-          dot.style.opacity = '1';
-          dot.style.transform = 'scale(1)';
-        }, delay);
-      });
+  // Fade fill in after line completes
+  setTimeout(() => {
+    fill.style.transition = 'opacity 0.7s ease';
+    fill.style.opacity = '1';
+  }, DRAW_DUR * 0.88);
 
-      // Fade fill in after line completes
-      setTimeout(() => {
-        fill.style.transition = 'opacity 0.6s ease';
-        fill.style.opacity = '1';
-      }, DRAW_DUR * 0.9);
+  // ── Dot tooltips ─────────────────────────────────
+  const tip     = document.getElementById('waveTip');
+  const tipStage = document.getElementById('waveTipStage');
+  const tipScore = document.getElementById('waveTipScore');
+  const tipLabel = document.getElementById('waveTipLabel');
+  const tipDesc  = document.getElementById('waveTipDesc');
+
+  dots.forEach((dot, i) => {
+    const s = STAGES[i];
+    const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#9A6E00';
+
+    dot.addEventListener('mouseenter', (ev) => {
+      tipStage.textContent = `${String(i+1).padStart(2,'0')} / 07 · ${s.name}`;
+      tipScore.textContent = s.emotionScore + '%';
+      tipScore.style.color = scoreColor;
+      tipLabel.textContent = s.emotionLabel || '';
+      tipLabel.style.color = scoreColor;
+      tipDesc.textContent = s.emotionDesc || s.overview || '';
+      positionTip(ev);
+      tip.style.opacity = '1';
+      tip.style.transform = 'translateY(0)';
+    });
+    dot.addEventListener('mousemove', positionTip);
+    dot.addEventListener('mouseleave', () => {
+      tip.style.opacity = '0';
+      tip.style.transform = 'translateY(4px)';
     });
   });
+
+  function positionTip(ev) {
+    const tw = tip.offsetWidth || 200;
+    const th = tip.offsetHeight || 90;
+    let left = ev.clientX - tw / 2;
+    let top  = ev.clientY - th - 16;
+    if (left < 8) left = 8;
+    if (left + tw > window.innerWidth - 8) left = window.innerWidth - tw - 8;
+    if (top < 8) top = ev.clientY + 20;
+    tip.style.left = left + 'px';
+    tip.style.top  = top + 'px';
+  }
 }
 
 /* ── MODAL ───────────────────────────────────────── */
