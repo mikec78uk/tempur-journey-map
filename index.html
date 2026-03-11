@@ -1206,6 +1206,23 @@ function renderModalBody(s) {
     <div class="m-grid">
       <div>
         <div class="m-sec">
+          <div class="m-sec-title">Key Stats</div>
+          ${statsHtml}
+        </div>
+
+        <div class="m-sec">
+          <div class="m-sec-title">Key Takeaways</div>
+          ${tkwyHtml}
+        </div>
+
+        <div class="m-sec">
+          <div class="m-sec-title">Opportunities &amp; Recommendations</div>
+          ${oppsHtml}
+        </div>
+      </div>
+
+      <div>
+        <div class="m-sec">
           <div class="m-sec-title">Customer Emotion</div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
             <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
@@ -1227,23 +1244,6 @@ function renderModalBody(s) {
           <div class="m-sec-title">Customer Voice</div>
           ${quotesHtml}
         </div>` : ''}
-      </div>
-
-      <div>
-        <div class="m-sec">
-          <div class="m-sec-title">Key Stats</div>
-          ${statsHtml}
-        </div>
-
-        <div class="m-sec">
-          <div class="m-sec-title">Key Takeaways</div>
-          ${tkwyHtml}
-        </div>
-
-        <div class="m-sec">
-          <div class="m-sec-title">Opportunities &amp; Recommendations</div>
-          ${oppsHtml}
-        </div>
       </div>
     </div>
   `;
