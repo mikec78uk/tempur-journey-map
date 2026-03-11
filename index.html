@@ -11,10 +11,10 @@
   --bg-card: #FFFFFF;
   --bg-hover: #EBEBED;
   --bg-modal: #FFFFFF;
-  --gold: #9A6E00;
-  --gold-light: #B8860B;
-  --gold-dim: rgba(154,110,0,.07);
-  --gold-border: rgba(154,110,0,.18);
+  --gold: #1A6FA8;
+  --gold-light: #2E8FCC;
+  --gold-dim: rgba(26,111,168,.07);
+  --gold-border: rgba(26,111,168,.18);
   --text: #1D1D1F;
   --text-sub: #6E6E73;
   --text-muted: #AEAEB2;
@@ -429,7 +429,7 @@ body{
   border:1px solid;font-weight:500;letter-spacing:.01em;white-space:nowrap;
 }
 .m-tp-chip.digital{background:rgba(46,117,173,.08);border-color:rgba(46,117,173,.25);color:#1E5A99;}
-.m-tp-chip.physical{background:rgba(154,110,0,.08);border-color:rgba(154,110,0,.22);color:var(--gold);}
+.m-tp-chip.physical{background:rgba(26,111,168,.08);border-color:rgba(26,111,168,.22);color:var(--gold);}
 .m-tp-chip.human{background:rgba(130,70,180,.08);border-color:rgba(130,70,180,.22);color:#7A3BAD;}
 .m-tp-chip.media{background:rgba(26,127,68,.08);border-color:rgba(26,127,68,.22);color:var(--green);}
 
@@ -449,7 +449,7 @@ body{
 }
 .m-doing-cards::-webkit-scrollbar{height:3px;}
 .m-doing-cards::-webkit-scrollbar-track{background:transparent;}
-.m-doing-cards::-webkit-scrollbar-thumb{background:rgba(200,146,70,.4);border-radius:2px;}
+.m-doing-cards::-webkit-scrollbar-thumb{background:rgba(26,111,168,.4);border-radius:2px;}
 .m-doing-card{
   flex:0 0 auto;width:190px;
   background:var(--bg-card);border:1px solid var(--border);
@@ -464,13 +464,13 @@ body{
   transform:translateY(-1px);
 }
 .m-doing-card.hi{border-color:rgba(192,57,43,.2);background:rgba(192,57,43,.03);}
-.m-doing-card.lo{border-color:rgba(154,110,0,.2);background:rgba(154,110,0,.03);}
+.m-doing-card.lo{border-color:rgba(26,111,168,.2);background:rgba(26,111,168,.03);}
 .m-doing-card-badge{
   font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   padding:2px 6px;border-radius:3px;align-self:flex-start;
 }
 .m-doing-card-badge.hi{color:var(--red);background:rgba(192,57,43,.1);}
-.m-doing-card-badge.lo{color:var(--gold);background:rgba(154,110,0,.1);}
+.m-doing-card-badge.lo{color:var(--gold);background:rgba(26,111,168,.1);}
 .m-doing-card-text{font-size:14px;color:var(--text);line-height:1.45;}
 .m-doing-arrow{
   flex:0 0 auto;display:flex;align-items:center;padding:0 8px;
@@ -536,7 +536,7 @@ body{
 .m-card-quote-text{font-size:14px;font-style:italic;color:var(--text);line-height:1.55;}
 .m-card-quote-attr{font-size:12.5px;color:var(--text-muted);margin-top:4px;display:flex;align-items:center;gap:6px;}
 .m-card-quote-type{font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:1px 6px;border-radius:3px;}
-.m-card-quote-type.customer{background:rgba(154,110,0,.12);color:var(--gold);}
+.m-card-quote-type.customer{background:rgba(26,111,168,.12);color:var(--gold);}
 .m-card-quote-type.stakeholder{background:rgba(74,144,196,.12);color:#2E75AD;}
 
 /* Responsive */
@@ -596,14 +596,14 @@ body{
       <svg class="wave-svg" id="waveSvg" viewBox="0 0 1820 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="curveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#A07030"/>
-            <stop offset="35%" stop-color="#E8B870"/>
-            <stop offset="65%" stop-color="#C89246"/>
-            <stop offset="100%" stop-color="#E8B870"/>
+            <stop offset="0%" stop-color="#1259A0"/>
+            <stop offset="35%" stop-color="#2E8FCC"/>
+            <stop offset="65%" stop-color="#1A6FA8"/>
+            <stop offset="100%" stop-color="#2E8FCC"/>
           </linearGradient>
           <linearGradient id="fillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#C89246" stop-opacity=".18"/>
-            <stop offset="100%" stop-color="#C89246" stop-opacity="0"/>
+            <stop offset="0%" stop-color="#1A6FA8" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#1A6FA8" stop-opacity="0"/>
           </linearGradient>
           <filter id="glow">
             <feGaussianBlur stdDeviation="2.5" result="blur"/>
@@ -1073,7 +1073,7 @@ function drawCurve() {
   dotsG.innerHTML = STAGES.map((s, i) => {
     const x = xs[i].toFixed(1);
     const y = ys[i].toFixed(1);
-    const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#9A6E00';
+    const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#1A6FA8';
     return `
       <g class="wave-dot" data-id="${i}" data-stage="${i}" style="cursor:pointer;opacity:0" onclick="openModal(${i})">
         <circle cx="${x}" cy="${y}" r="18" fill="transparent"/>
@@ -1132,7 +1132,7 @@ function drawCurve() {
 
   dots.forEach((dot, i) => {
     const s = STAGES[i];
-    const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#9A6E00';
+    const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#1A6FA8';
 
     dot.addEventListener('mouseenter', (ev) => {
       tipStage.textContent = `${String(i+1).padStart(2,'0')} / 07 · ${s.name}`;
@@ -1290,7 +1290,7 @@ function renderModalBody(s) {
 
   // Emotion indicator
   const score = s.emotionScore;
-  const scoreColor = score >= 65 ? '#5C9E72' : score <= 45 ? '#B05450' : '#C89246';
+  const scoreColor = score >= 65 ? '#1A7F44' : score <= 45 ? '#C0392B' : '#1A6FA8';
   const scoreLabel = score >= 65 ? 'Positive' : score <= 45 ? 'Negative' : 'Neutral';
 
   body.innerHTML = `
