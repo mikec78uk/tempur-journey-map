@@ -516,6 +516,17 @@ body{
 .m-opp-title{font-size:13px;font-weight:600;color:#7BC492;margin-bottom:5px;}
 .m-opp-body{font-size:12.5px;color:var(--text-sub);line-height:1.6;}
 
+/* Inline quotes within takeaway / opportunity cards */
+.m-card-quotes{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;gap:8px;}
+.m-card-quote{padding:9px 12px;border-radius:5px;border-left:2px solid;}
+.m-card-quote.customer{border-left-color:var(--gold);background:rgba(200,146,70,.06);}
+.m-card-quote.stakeholder{border-left-color:#6BA3BE;background:rgba(107,163,190,.06);}
+.m-card-quote-text{font-size:12px;font-style:italic;color:var(--text);line-height:1.55;}
+.m-card-quote-attr{font-size:10.5px;color:var(--text-muted);margin-top:4px;display:flex;align-items:center;gap:6px;}
+.m-card-quote-type{font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:1px 6px;border-radius:3px;}
+.m-card-quote-type.customer{background:rgba(200,146,70,.15);color:var(--gold-light);}
+.m-card-quote-type.stakeholder{background:rgba(107,163,190,.15);color:#8FC0D4;}
+
 /* Responsive */
 @media(max-width:768px){
   .hdr-nav{display:none;}
@@ -711,7 +722,9 @@ const STAGES = [
       {group:"Human", type:"human", items:["Word of Mouth"]},
     ],
     takeaways:[
-      {title:"\u201cBest mattress\u2026\u201d Searches", body:"Curated lists are often used as a springboard for further research, providing structure and direction in an otherwise unknown market. Being featured is critical."},
+      {title:"\u201cBest mattress\u2026\u201d Searches", body:"Curated lists are often used as a springboard for further research, providing structure and direction in an otherwise unknown market. Being featured is critical.", quotes:[
+        {text:"I just Googled 'best mattress UK' and went through the first three articles — that's how I made my shortlist.", attr:"Customer, 41 — Manchester", type:"customer"},
+      ]},
     ],
     stats:[
       {n:"48%", l:"of early-stage researchers consult AI tools for mattress recommendations"},
@@ -719,7 +732,9 @@ const STAGES = [
     ],
     quotes:[],
     opportunities:[
-      {title:"Optimise for AI discovery", body:"Ensure Tempur content is structured to surface well in AI-generated recommendation outputs — particularly for queries around comfort, back support, and premium quality."},
+      {title:"Optimise for AI discovery", body:"Ensure Tempur content is structured to surface well in AI-generated recommendation outputs — particularly for queries around comfort, back support, and premium quality.", quotes:[
+        {text:"Tempur wasn't surfacing in ChatGPT recommendations when we tested last quarter — that's a significant gap at the top of the funnel.", attr:"Digital Strategy Lead, Tempur UK", type:"stakeholder"},
+      ]},
       {title:"Capture with curated content", body:"Create definitive 'best mattress for [need]' content that intercepts early search intent and positions Tempur as the authority before competitor research begins."},
     ]
   },
@@ -1129,6 +1144,17 @@ function renderModalBody(s) {
       <div class="m-tkwy">
         <div class="m-tkwy-title">${t.title}</div>
         <div class="m-tkwy-body">${t.body}</div>
+        ${t.quotes && t.quotes.length ? `
+        <div class="m-card-quotes">
+          ${t.quotes.map(q => `
+          <div class="m-card-quote ${q.type}">
+            <div class="m-card-quote-text">"${q.text}"</div>
+            <div class="m-card-quote-attr">
+              <span class="m-card-quote-type ${q.type}">${q.type === 'stakeholder' ? 'Stakeholder' : 'Customer'}</span>
+              ${q.attr}
+            </div>
+          </div>`).join('')}
+        </div>` : ''}
       </div>
     `).join('')
     : '<p style="font-size:12px;color:var(--text-muted);font-style:italic;">No specific takeaways identified for this stage.</p>';
@@ -1157,6 +1183,17 @@ function renderModalBody(s) {
     <div class="m-opp">
       <div class="m-opp-title">${o.title}</div>
       <div class="m-opp-body">${o.body}</div>
+      ${o.quotes && o.quotes.length ? `
+      <div class="m-card-quotes">
+        ${o.quotes.map(q => `
+        <div class="m-card-quote ${q.type}">
+          <div class="m-card-quote-text">"${q.text}"</div>
+          <div class="m-card-quote-attr">
+            <span class="m-card-quote-type ${q.type}">${q.type === 'stakeholder' ? 'Stakeholder' : 'Customer'}</span>
+            ${q.attr}
+          </div>
+        </div>`).join('')}
+      </div>` : ''}
     </div>
   `).join('');
 
