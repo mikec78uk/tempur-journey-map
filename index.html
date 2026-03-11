@@ -1205,23 +1205,17 @@ function renderModalBody(s) {
   body.innerHTML = `
     <div class="m-grid">
       <div>
+        ${quotesHtml ? `
+        <div class="m-sec">
+          <div class="m-sec-title">Customer Voice</div>
+          ${quotesHtml}
+        </div>` : ''}
+
         <div class="m-sec">
           <div class="m-sec-title">Key Stats</div>
           ${statsHtml}
         </div>
 
-        <div class="m-sec">
-          <div class="m-sec-title">Key Takeaways</div>
-          ${tkwyHtml}
-        </div>
-
-        <div class="m-sec">
-          <div class="m-sec-title">Opportunities &amp; Recommendations</div>
-          ${oppsHtml}
-        </div>
-      </div>
-
-      <div>
         <div class="m-sec">
           <div class="m-sec-title">Customer Emotion</div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
@@ -1238,12 +1232,18 @@ function renderModalBody(s) {
           <div class="m-sec-title">Touchpoints</div>
           ${touchpointsHtml}
         </div>
+      </div>
 
-        ${quotesHtml ? `
+      <div>
         <div class="m-sec">
-          <div class="m-sec-title">Customer Voice</div>
-          ${quotesHtml}
-        </div>` : ''}
+          <div class="m-sec-title">Key Takeaways</div>
+          ${tkwyHtml}
+        </div>
+
+        <div class="m-sec">
+          <div class="m-sec-title">Opportunities &amp; Recommendations</div>
+          ${oppsHtml}
+        </div>
       </div>
     </div>
   `;
