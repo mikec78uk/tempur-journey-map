@@ -448,13 +448,13 @@ body{
   background:var(--bg-card);border:1px solid var(--border);
   border-radius:8px;padding:11px 14px;
   display:flex;flex-direction:column;gap:6px;
-  transition:border-color .15s,background .15s,transform .15s;
+  transition:border-color .15s,background .15s,box-shadow .15s;
   cursor:default;
 }
 .m-doing-card:hover{
-  border-color:rgba(200,146,70,.55);
-  background:rgba(200,146,70,.07);
-  transform:translateY(-2px);
+  border-color:rgba(200,146,70,.7);
+  background:rgba(200,146,70,.1);
+  box-shadow:0 0 0 1px rgba(200,146,70,.25), 0 4px 18px rgba(200,146,70,.18);
 }
 .m-doing-card:hover .m-doing-card-text{color:#fff;}
 .m-doing-card.hi{border-color:rgba(176,84,80,.35);background:rgba(176,84,80,.05);}
