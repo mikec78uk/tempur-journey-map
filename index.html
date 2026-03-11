@@ -7,21 +7,21 @@
 <title>Tempur – Digital Purchase Experience Map · Q1 2026</title>
 <style>
 :root {
-  --bg: #F5F5F7;
-  --bg-card: #FFFFFF;
-  --bg-hover: #EBEBED;
-  --bg-modal: #FFFFFF;
-  --gold: #9A6E00;
-  --gold-light: #B8860B;
-  --gold-dim: rgba(154,110,0,.07);
-  --gold-border: rgba(154,110,0,.18);
-  --text: #1D1D1F;
-  --text-sub: #6E6E73;
-  --text-muted: #AEAEB2;
-  --border: #E5E5EA;
-  --green: #1A7F44;
-  --green-dim: rgba(26,127,68,.07);
-  --red: #C0392B;
+  --bg: #090909;
+  --bg-card: #121212;
+  --bg-hover: #181818;
+  --bg-modal: #0F0F0F;
+  --gold: #C89246;
+  --gold-light: #E8B870;
+  --gold-dim: rgba(200,146,70,.12);
+  --gold-border: rgba(200,146,70,.22);
+  --text: #F0EBE3;
+  --text-sub: #8A8278;
+  --text-muted: #5E574E;
+  --border: #1E1E1E;
+  --green: #5C9E72;
+  --green-dim: rgba(92,158,114,.1);
+  --red: #B05450;
   --col-w: 260px;
   --hdr: 64px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
@@ -44,10 +44,9 @@ body{
 .site-hdr{
   position:sticky;top:0;z-index:200;
   height:var(--hdr);
-  background:rgba(255,255,255,.92);
+  background:rgba(9,9,9,.96);
   backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
-  box-shadow:var(--shadow-sm);
   display:flex;align-items:center;
   padding:0 28px;gap:20px;
 }
@@ -55,7 +54,7 @@ body{
   display:flex;align-items:center;gap:10px;
   flex-shrink:0;
 }
-.hdr-logo img{height:26px;filter:brightness(0);transition:opacity .2s;}
+.hdr-logo img{height:26px;filter:brightness(1);transition:opacity .2s;}
 .hdr-logo img.hidden{display:none;}
 .hdr-logo-text{
   font-size:15px;font-weight:600;letter-spacing:.06em;
@@ -221,15 +220,14 @@ body{
   padding:1px 5px;border-radius:3px;flex-shrink:0;
   margin-top:1px;
 }
-.tag.hi{background:rgba(192,57,43,.1);color:#C0392B;}
-.tag.lo{background:rgba(26,127,68,.1);color:#1A7F44;}
+.tag.hi{background:rgba(176,84,80,.18);color:#D97070;}
+.tag.lo{background:rgba(92,158,114,.15);color:#7BC492;}
 
 /* Takeaway card */
 .tkwy-card{
-  background:var(--bg-card);
-  border:1px solid var(--border);
+  background:var(--gold-dim);
+  border:1px solid var(--gold-border);
   border-radius:8px;padding:10px 11px;margin-bottom:7px;
-  box-shadow:var(--shadow-sm);
 }
 .tkwy-card:last-child{margin-bottom:0;}
 .tkwy-title{font-size:13px;font-weight:600;color:var(--gold);margin-bottom:3px;}
@@ -280,13 +278,12 @@ body{
   gap:14px;
 }
 .sum-card{
-  background:var(--bg-card);
+  background:var(--bg);
   border:1px solid var(--border);
   border-radius:12px;padding:20px;
-  box-shadow:var(--shadow-sm);
-  transition:box-shadow .2s,transform .2s;
+  transition:border-color .2s,transform .2s;
 }
-.sum-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.sum-card:hover{border-color:var(--gold-border);transform:translateY(-2px);}
 .sum-icon{width:26px;height:26px;color:var(--gold);margin-bottom:12px;}
 .sum-icon svg{width:100%;height:100%;}
 .sum-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:5px;}
@@ -310,7 +307,7 @@ body{
 /* ── MODAL ───────────────────────────────────────── */
 .m-overlay{
   position:fixed;inset:0;
-  background:rgba(0,0,0,.5);
+  background:rgba(0,0,0,.85);
   z-index:300;
   opacity:0;pointer-events:none;
   transition:opacity .3s;
@@ -352,13 +349,13 @@ body{
 .m-topnav-spacer{flex:1;}
 .m-close{
   width:34px;height:34px;border-radius:50%;
-  background:var(--bg);border:1px solid var(--border);
-  color:var(--text-sub);cursor:pointer;flex-shrink:0;
+  background:var(--bg-card);border:1px solid var(--border);
+  color:var(--text);cursor:pointer;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
   font-size:17px;font-family:inherit;
-  transition:background .2s,color .2s;
+  transition:border-color .2s,color .2s;
 }
-.m-close:hover{background:#FDECEA;color:var(--red);border-color:rgba(192,57,43,.2);}
+.m-close:hover{border-color:#B05450;color:#B05450;}
 
 /* Modal header */
 .m-hdr{
@@ -387,13 +384,13 @@ body{
 .m-hdr-nav{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .m-nav-btn{
   width:34px;height:34px;border-radius:50%;
-  background:var(--bg);border:1px solid var(--border);
+  background:var(--bg-card);border:1px solid var(--border);
   color:var(--text-sub);cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   font-size:15px;font-family:inherit;
   transition:all .2s;
 }
-.m-nav-btn:hover{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
+.m-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
 .m-nav-btn:disabled{opacity:.3;cursor:default;}
 
 /* Modal body */
@@ -428,15 +425,15 @@ body{
   font-size:11.5px;padding:4px 12px;border-radius:20px;
   border:1px solid;font-weight:500;letter-spacing:.01em;white-space:nowrap;
 }
-.m-tp-chip.digital{background:rgba(46,117,173,.08);border-color:rgba(46,117,173,.25);color:#1E5A99;}
-.m-tp-chip.physical{background:rgba(154,110,0,.08);border-color:rgba(154,110,0,.22);color:var(--gold);}
-.m-tp-chip.human{background:rgba(130,70,180,.08);border-color:rgba(130,70,180,.22);color:#7A3BAD;}
-.m-tp-chip.media{background:rgba(26,127,68,.08);border-color:rgba(26,127,68,.22);color:var(--green);}
+.m-tp-chip.digital{background:rgba(70,130,200,.1);border-color:rgba(70,130,200,.3);color:#7EB8E8;}
+.m-tp-chip.physical{background:rgba(200,146,70,.1);border-color:rgba(200,146,70,.3);color:var(--gold-light);}
+.m-tp-chip.human{background:rgba(160,100,200,.1);border-color:rgba(160,100,200,.3);color:#C49AE8;}
+.m-tp-chip.media{background:rgba(92,158,114,.1);border-color:rgba(92,158,114,.3);color:#7EC99A;}
 
 /* Modal doing strip */
 .m-doing-strip{
   border-bottom:1px solid var(--border);
-  background:var(--bg);
+  background:rgba(255,255,255,.02);
   padding:16px 24px 20px;
 }
 .m-doing-strip-label{
@@ -454,23 +451,24 @@ body{
   flex:0 0 auto;width:190px;
   background:var(--bg-card);border:1px solid var(--border);
   border-radius:10px;padding:11px 14px;
-  box-shadow:var(--shadow-sm);
   display:flex;flex-direction:column;gap:6px;
-  transition:box-shadow .15s,transform .15s;
+  transition:border-color .15s,background .15s,box-shadow .15s;
   cursor:default;
 }
 .m-doing-card:hover{
-  box-shadow:var(--shadow-md);
-  transform:translateY(-1px);
+  border-color:rgba(200,146,70,.7);
+  background:rgba(200,146,70,.1);
+  box-shadow:0 0 0 1px rgba(200,146,70,.25), 0 4px 18px rgba(200,146,70,.18);
 }
-.m-doing-card.hi{border-color:rgba(192,57,43,.2);background:rgba(192,57,43,.03);}
-.m-doing-card.lo{border-color:rgba(154,110,0,.2);background:rgba(154,110,0,.03);}
+.m-doing-card:hover .m-doing-card-text{color:#fff;}
+.m-doing-card.hi{border-color:rgba(176,84,80,.35);background:rgba(176,84,80,.05);}
+.m-doing-card.lo{border-color:rgba(200,146,70,.2);background:rgba(200,146,70,.04);}
 .m-doing-card-badge{
   font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   padding:2px 6px;border-radius:3px;align-self:flex-start;
 }
-.m-doing-card-badge.hi{color:var(--red);background:rgba(192,57,43,.1);}
-.m-doing-card-badge.lo{color:var(--gold);background:rgba(154,110,0,.1);}
+.m-doing-card-badge.hi{color:#C07070;background:rgba(176,84,80,.15);}
+.m-doing-card-badge.lo{color:var(--gold);background:rgba(200,146,70,.12);}
 .m-doing-card-text{font-size:14px;color:var(--text);line-height:1.45;}
 .m-doing-arrow{
   flex:0 0 auto;display:flex;align-items:center;padding:0 8px;
@@ -480,11 +478,9 @@ body{
 
 /* Modal takeaway */
 .m-tkwy{
-  background:var(--bg-card);
-  border:1px solid var(--border);
+  background:var(--gold-dim);
+  border:1px solid var(--gold-border);
   border-radius:10px;padding:16px;margin-bottom:10px;
-  box-shadow:var(--shadow-sm);
-  border-left:3px solid var(--gold);
 }
 .m-tkwy:last-child{margin-bottom:0;}
 .m-tkwy-title{font-size:15px;font-weight:600;color:var(--gold);margin-bottom:5px;}
@@ -495,7 +491,6 @@ body{
 .m-stat-card{
   background:var(--bg-card);border:1px solid var(--border);
   border-radius:10px;padding:16px;
-  box-shadow:var(--shadow-sm);
 }
 .m-stat-n{
   font-size:34px;font-weight:200;color:var(--gold);
@@ -507,10 +502,9 @@ body{
 .m-quote{
   border-left:3px solid var(--gold);
   padding:12px 16px;
-  background:var(--bg-card);
+  background:rgba(200,146,70,.04);
   border-radius:0 8px 8px 0;
   margin-bottom:10px;
-  box-shadow:var(--shadow-sm);
 }
 .m-quote:last-child{margin-bottom:0;}
 .m-quote-text{font-size:15px;font-style:italic;color:var(--text);line-height:1.65;}
@@ -518,26 +512,24 @@ body{
 
 /* Modal opportunities */
 .m-opp{
-  background:var(--bg-card);
-  border:1px solid var(--border);
+  background:var(--green-dim);
+  border:1px solid rgba(92,158,114,.2);
   border-radius:10px;padding:16px;margin-bottom:10px;
-  box-shadow:var(--shadow-sm);
-  border-left:3px solid var(--green);
 }
 .m-opp:last-child{margin-bottom:0;}
-.m-opp-title{font-size:15px;font-weight:600;color:var(--green);margin-bottom:5px;}
+.m-opp-title{font-size:15px;font-weight:600;color:#7BC492;margin-bottom:5px;}
 .m-opp-body{font-size:15px;color:var(--text-sub);line-height:1.6;}
 
 /* Inline quotes within takeaway / opportunity cards */
-.m-card-quotes{margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;}
+.m-card-quotes{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;gap:8px;}
 .m-card-quote{padding:9px 12px;border-radius:6px;border-left:2px solid;}
-.m-card-quote.customer{border-left-color:var(--gold);background:var(--gold-dim);}
-.m-card-quote.stakeholder{border-left-color:#4A90C4;background:rgba(74,144,196,.06);}
+.m-card-quote.customer{border-left-color:var(--gold);background:rgba(200,146,70,.06);}
+.m-card-quote.stakeholder{border-left-color:#6BA3BE;background:rgba(107,163,190,.06);}
 .m-card-quote-text{font-size:14px;font-style:italic;color:var(--text);line-height:1.55;}
 .m-card-quote-attr{font-size:12.5px;color:var(--text-muted);margin-top:4px;display:flex;align-items:center;gap:6px;}
 .m-card-quote-type{font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:1px 6px;border-radius:3px;}
-.m-card-quote-type.customer{background:rgba(154,110,0,.12);color:var(--gold);}
-.m-card-quote-type.stakeholder{background:rgba(74,144,196,.12);color:#2E75AD;}
+.m-card-quote-type.customer{background:rgba(200,146,70,.15);color:var(--gold-light);}
+.m-card-quote-type.stakeholder{background:rgba(107,163,190,.15);color:#8FC0D4;}
 
 /* Responsive */
 @media(max-width:768px){
@@ -626,16 +618,16 @@ body{
     <!-- Wave tooltip -->
     <div id="waveTip" style="
       position:fixed;pointer-events:none;z-index:250;
-      background:#fff;border:1px solid #E5E5EA;border-radius:10px;
-      box-shadow:0 4px 16px rgba(0,0,0,.12);
+      background:#1A1A1A;border:1px solid #2E2E2E;border-radius:10px;
+      box-shadow:0 8px 24px rgba(0,0,0,.5);
       padding:10px 14px;min-width:160px;max-width:220px;
       opacity:0;transform:translateY(4px);
       transition:opacity .18s ease,transform .18s ease;
     ">
-      <div id="waveTipStage" style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#AEAEB2;margin-bottom:3px;"></div>
+      <div id="waveTipStage" style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#5E574E;margin-bottom:3px;"></div>
       <div id="waveTipScore" style="font-size:20px;font-weight:200;line-height:1;margin-bottom:4px;"></div>
       <div id="waveTipLabel" style="font-size:12px;font-weight:600;margin-bottom:4px;"></div>
-      <div id="waveTipDesc" style="font-size:11.5px;color:#6E6E73;line-height:1.5;"></div>
+      <div id="waveTipDesc" style="font-size:11.5px;color:#8A8278;line-height:1.5;"></div>
     </div>
 
     <!-- Stage grid -->
@@ -1031,12 +1023,12 @@ function drawCurve() {
   const colDividers = xs.slice(1).map(x => {
     // boundary sits halfway between adjacent column centres
     const bx = x - (xs[1] - xs[0]) / 2;
-    return `<line x1="${bx.toFixed(1)}" y1="0" x2="${bx.toFixed(1)}" y2="${vbH}" stroke="rgba(0,0,0,.06)" stroke-width="1"/>`;
+    return `<line x1="${bx.toFixed(1)}" y1="0" x2="${bx.toFixed(1)}" y2="${vbH}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
   }).join('');
   const zoneLines = [
-    `<line x1="0" y1="60" x2="${vbW}" y2="60" stroke="rgba(26,127,68,.15)"   stroke-width="1" stroke-dasharray="4,6"/>`,
-    `<line x1="0" y1="90" x2="${vbW}" y2="90" stroke="rgba(0,0,0,.1)"         stroke-width="1" stroke-dasharray="2,8"/>`,
-    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="rgba(192,57,43,.12)"  stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="60" x2="${vbW}" y2="60" stroke="rgba(92,158,114,.1)"   stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="90" x2="${vbW}" y2="90" stroke="rgba(90,80,70,.25)"    stroke-width="1" stroke-dasharray="2,8"/>`,
+    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="rgba(176,84,80,.1)"  stroke-width="1" stroke-dasharray="4,6"/>`,
   ].join('');
   linesG.innerHTML = zoneLines + colDividers;
 
@@ -1073,7 +1065,7 @@ function drawCurve() {
   dotsG.innerHTML = STAGES.map((s, i) => {
     const x = xs[i].toFixed(1);
     const y = ys[i].toFixed(1);
-    const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#9A6E00';
+    const scoreColor = s.emotionScore >= 65 ? '#5C9E72' : s.emotionScore <= 45 ? '#B05450' : '#C89246';
     return `
       <g class="wave-dot" data-id="${i}" data-stage="${i}" style="cursor:pointer;opacity:0" onclick="openModal(${i})">
         <circle cx="${x}" cy="${y}" r="18" fill="transparent"/>
@@ -1132,7 +1124,7 @@ function drawCurve() {
 
   dots.forEach((dot, i) => {
     const s = STAGES[i];
-    const scoreColor = s.emotionScore >= 65 ? '#1A7F44' : s.emotionScore <= 45 ? '#C0392B' : '#9A6E00';
+    const scoreColor = s.emotionScore >= 65 ? '#5C9E72' : s.emotionScore <= 45 ? '#B05450' : '#C89246';
 
     dot.addEventListener('mouseenter', (ev) => {
       tipStage.textContent = `${String(i+1).padStart(2,'0')} / 07 · ${s.name}`;
