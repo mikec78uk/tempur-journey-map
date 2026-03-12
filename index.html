@@ -139,7 +139,7 @@ body{
   pointer-events:none;
   background:#1A1A1A;border:1px solid #2A2A2A;border-radius:8px;
   padding:8px 12px;min-width:110px;max-width:170px;
-  transform:translateX(-50%) translateY(calc(-100% - 14px));
+  transform:translateX(-50%) translateY(14px);
   opacity:0;transition:opacity .5s ease-in-out;
   z-index:20;
 }
@@ -1192,11 +1192,18 @@ function drawCurve() {
       wrapEl.appendChild(bubble);
     });
     wrapEl._bubblesCreated = true;
-    // Show all bubbles together after draw completes
+    // Staggered reveal: each bubble appears as the wave reaches its x position
+    const allBubbles = wrapEl.querySelectorAll('.wave-bubble');
+    let maxDelay = 0;
+    curvePoints.forEach((p, i) => {
+      const delay = (p.x / SVG_W) * DRAW_DUR;
+      if (delay > maxDelay) maxDelay = delay;
+      setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, delay);
+    });
+    // All dismiss together 3s after the last bubble appears
     setTimeout(() => {
-      wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.classList.add('show'));
-      setTimeout(() => wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.classList.remove('show')), 4000);
-    }, DRAW_DUR + 200);
+      wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.classList.remove('show'));
+    }, maxDelay + 3000);
   } else {
     // On resize redraws: just reposition existing bubbles
     const existing = wrapEl.querySelectorAll('.wave-bubble');
