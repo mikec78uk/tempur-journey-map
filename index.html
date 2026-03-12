@@ -1142,15 +1142,43 @@ function drawCurve() {
   path.style.transition = `stroke-dashoffset ${DRAW_DUR}ms cubic-bezier(.4,0,.2,1)`;
   path.style.strokeDashoffset = 0;
 
-  // Stagger dots in as line reaches each column, then trigger sonar
+  // Stagger dots in as line reaches each column, then trigger sonar + brief tooltip
   const dots = dotsG.querySelectorAll('.wave-dot');
+  let autoTipTimer = null;
   dots.forEach((dot, i) => {
+    const p = curvePoints[i];
     const delay = (i / (curvePoints.length - 1)) * DRAW_DUR * 0.82;
     setTimeout(() => {
       dot.style.transition = 'opacity 0.3s ease';
       dot.style.opacity = '1';
-      // Small pause then spring the dot in and start sonar ring
       setTimeout(() => dot.classList.add('in'), 50);
+
+      // Show tooltip briefly as each dot arrives
+      const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+      tipStage.textContent = `${String(p.stageIdx + 1).padStart(2,'0')} / 07 · ${p.stage.name}`;
+      tipLabel.textContent = p.em.label || '';
+      tipLabel.style.color = scoreColor;
+      tipDesc.textContent = p.em.desc || p.stage.overview || '';
+
+      // Position above the dot using its SVG bounding rect
+      const rect = dot.getBoundingClientRect();
+      const tw = tip.offsetWidth || 220;
+      let left = rect.left + rect.width / 2 - tw / 2;
+      let top  = rect.top - (tip.offsetHeight || 90) - 14;
+      if (left < 8) left = 8;
+      if (left + tw > window.innerWidth - 8) left = window.innerWidth - tw - 8;
+      if (top < 8) top = rect.bottom + 10;
+      tip.style.left = left + 'px';
+      tip.style.top  = top + 'px';
+      tip.style.opacity = '1';
+      tip.style.transform = 'translateY(0)';
+
+      // Auto-dismiss after 2.4s
+      clearTimeout(autoTipTimer);
+      autoTipTimer = setTimeout(() => {
+        tip.style.opacity = '0';
+        tip.style.transform = 'translateY(4px)';
+      }, 2400);
     }, delay);
   });
 
