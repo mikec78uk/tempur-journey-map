@@ -1532,9 +1532,14 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScrollSync();
 
   // Redraw curve on resize so it always stays aligned with columns
+  // Debounced to prevent equalizeColSections triggering an infinite observer loop
+  let roTimer = null;
   const ro = new ResizeObserver(() => {
-    if (document.getElementById('wavePath').getAttribute('d')) drawCurve();
-    equalizeColSections();
+    clearTimeout(roTimer);
+    roTimer = setTimeout(() => {
+      if (document.getElementById('wavePath').getAttribute('d')) drawCurve();
+      equalizeColSections();
+    }, 120);
   });
   ro.observe(document.getElementById('scrollInner'));
 
