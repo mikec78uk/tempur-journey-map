@@ -1176,34 +1176,37 @@ function drawCurve() {
   const wrapEl = document.getElementById('waveWrap');
   const SVG_W = 1820, SVG_H = 260;
 
-  // Remove any previous bubbles on redraw
-  wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.remove());
-
-  const bubbles = curvePoints.map((p, i) => {
-    const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
-    const bubble = document.createElement('div');
-    bubble.className = 'wave-bubble';
-    bubble.innerHTML = `
-      <div class="wb-stage">${p.stage.shortName || p.stage.name}</div>
-      <div class="wb-label" style="color:${scoreColor}">${p.em.label || ''}</div>
-      <div class="wb-desc">${p.em.desc || ''}</div>
-    `;
-    // Position relative to waveWrap using SVG coordinate mapping
-    const xPct = p.x / SVG_W * 100;
-    const yPct = p.y / SVG_H * 100;
-    bubble.style.left = xPct + '%';
-    bubble.style.top  = yPct + '%';
-    wrapEl.appendChild(bubble);
-    return bubble;
-  });
-
-  // After draw completes, show all bubbles simultaneously
-  // Query DOM live (ResizeObserver may have replaced the bubbles array)
-  setTimeout(() => {
-    wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.classList.add('show'));
-    // Auto-dismiss after 4s
-    setTimeout(() => wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.classList.remove('show')), 4000);
-  }, DRAW_DUR + 200);
+  if (!wrapEl._bubblesCreated) {
+    // Create bubbles once on first draw
+    curvePoints.forEach((p) => {
+      const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+      const bubble = document.createElement('div');
+      bubble.className = 'wave-bubble';
+      bubble.innerHTML = `
+        <div class="wb-stage">${p.stage.shortName || p.stage.name}</div>
+        <div class="wb-label" style="color:${scoreColor}">${p.em.label || ''}</div>
+        <div class="wb-desc">${p.em.desc || ''}</div>
+      `;
+      bubble.style.left = (p.x / SVG_W * 100) + '%';
+      bubble.style.top  = (p.y / SVG_H * 100) + '%';
+      wrapEl.appendChild(bubble);
+    });
+    wrapEl._bubblesCreated = true;
+    // Show all bubbles together after draw completes
+    setTimeout(() => {
+      wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.classList.add('show'));
+      setTimeout(() => wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.classList.remove('show')), 4000);
+    }, DRAW_DUR + 200);
+  } else {
+    // On resize redraws: just reposition existing bubbles
+    const existing = wrapEl.querySelectorAll('.wave-bubble');
+    curvePoints.forEach((p, i) => {
+      if (existing[i]) {
+        existing[i].style.left = (p.x / SVG_W * 100) + '%';
+        existing[i].style.top  = (p.y / SVG_H * 100) + '%';
+      }
+    });
+  }
 
   // ── Hover tooltip (shared, appears on mouse) ──────────────────
   const tip     = document.getElementById('waveTip');
