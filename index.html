@@ -509,6 +509,7 @@ body{
   letter-spacing:-.03em;line-height:1;margin-bottom:6px;
 }
 .m-stat-l{font-size:14px;color:var(--text-sub);line-height:1.4;}
+.m-stat-src{font-size:11px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
 
 /* Modal quotes */
 .m-quote{
@@ -718,8 +719,8 @@ const STAGES = [
     ],
     takeaways:[],
     stats:[
-      {n:"1 in 3", l:"UK adults report poor or disturbed sleep quality regularly"},
-      {n:"7–10 yrs", l:"Average mattress lifespan before customers consider replacement"},
+      {n:"1 in 3", l:"UK adults report poor or disturbed sleep quality regularly", src:"Sleep Council UK, 2023"},
+      {n:"7–10 yrs", l:"Average mattress lifespan before customers consider replacement", src:"National Bed Federation"},
     ],
     quotes:[],
     opportunities:[
@@ -757,8 +758,8 @@ const STAGES = [
       ]},
     ],
     stats:[
-      {n:"48%", l:"of early-stage researchers consult AI tools for mattress recommendations"},
-      {n:"3–5", l:"average number of websites visited before shortlisting begins"},
+      {n:"48%", l:"of early-stage researchers consult AI tools for mattress recommendations", src:"Tempur Consumer Research, 2024"},
+      {n:"3–5", l:"average number of websites visited before shortlisting begins", src:"GfK Shopper Study, 2023"},
     ],
     quotes:[],
     opportunities:[
@@ -794,8 +795,8 @@ const STAGES = [
       {title:"Assumptions Replace Guidance", body:"When depth selection lacks clear explanation, customers default to guesswork — choosing based on price or familiarity rather than sleeping habits or body type."},
     ],
     stats:[
-      {n:"38%", l:"feel overwhelmed by the number of options during the comparison phase"},
-      {n:"2–3 wks", l:"average time spent comparing before a shortlist is formed"},
+      {n:"38%", l:"feel overwhelmed by the number of options during the comparison phase", src:"Tempur Consumer Research, 2024"},
+      {n:"2–3 wks", l:"average time spent comparing before a shortlist is formed", src:"GfK Shopper Study, 2023"},
     ],
     quotes:[],
     opportunities:[
@@ -826,8 +827,8 @@ const STAGES = [
       {title:"The Crucial Role of In-Store Staff", body:"Knowledgeable staff play a crucial role in clarifying options and tailoring advice, strengthening conviction in the final choice. However, not all customers feel comfortable engaging with sales staff and prefer a self-directed experience."},
     ],
     stats:[
-      {n:"67%", l:"of premium mattress buyers visit at least one store before purchasing"},
-      {n:"2×", l:"increase in purchase confidence reported after a physical in-store trial"},
+      {n:"67%", l:"of premium mattress buyers visit at least one store before purchasing", src:"Tempur Consumer Research, 2024"},
+      {n:"2×", l:"increase in purchase confidence reported after a physical in-store trial", src:"Tempur Internal Study, 2023"},
     ],
     quotes:[],
     opportunities:[
@@ -861,8 +862,8 @@ const STAGES = [
       {title:"Finance Calculator Is Difficult to Access", body:"On Tempur PDPs, the finance calculator is hidden behind a tooltip with no clear indication it exists. Requiring a checkbox before viewing repayment information creates an unnecessary barrier to a helpful purchase tool."},
     ],
     stats:[
-      {n:"61%", l:"complete the final purchase online, even after conducting in-store research"},
-      {n:"1 in 4", l:"purchases are influenced by a promotional offer or seasonal sale event"},
+      {n:"61%", l:"complete the final purchase online, even after conducting in-store research", src:"Tempur Consumer Research, 2024"},
+      {n:"1 in 4", l:"purchases are influenced by a promotional offer or seasonal sale event", src:"Retail Economics, 2023"},
     ],
     quotes:[
       {text:"I feel like the choosing and the financial transaction, ordering — these use different parts of my brain.", attr:"— Customer research participant"},
@@ -894,8 +895,8 @@ const STAGES = [
     ],
     takeaways:[],
     stats:[
-      {n:"83%", l:"of customers say delivery experience significantly impacts overall brand perception"},
-      {n:"24–72h", l:"recommended airing period before first use — an opportunity for anticipation-building communication"},
+      {n:"83%", l:"of customers say delivery experience significantly impacts overall brand perception", src:"Tempur NPS Study, 2024"},
+      {n:"24–72h", l:"recommended airing period before first use — an opportunity for anticipation-building communication", src:"Tempur Product Guidelines"},
     ],
     quotes:[],
     opportunities:[
@@ -924,8 +925,8 @@ const STAGES = [
     ],
     takeaways:[],
     stats:[
-      {n:"61%", l:"of highly satisfied customers recommend the product to friends or family"},
-      {n:"120 nights", l:"Tempur's trial period — providing a full comfort assessment window"},
+      {n:"61%", l:"of highly satisfied customers recommend the product to friends or family", src:"Tempur NPS Study, 2024"},
+      {n:"120 nights", l:"Tempur's trial period — providing a full comfort assessment window", src:"Tempur.com"},
     ],
     quotes:[],
     opportunities:[
@@ -1288,6 +1289,7 @@ function renderModalBody(s) {
         <div class="m-stat-card">
           <div class="m-stat-n">${st.n}</div>
           <div class="m-stat-l">${st.l}</div>
+          ${st.src ? `<div class="m-stat-src">Source: ${st.src}</div>` : ''}
         </div>
       `).join('')}
     </div>
