@@ -1139,7 +1139,7 @@ function drawCurve() {
   // Another flush so the hidden state is painted before we add the transition
   path.getBoundingClientRect();
 
-  path.style.transition = `stroke-dashoffset ${DRAW_DUR}ms cubic-bezier(.4,0,.2,1)`;
+  path.style.transition = `stroke-dashoffset 0.65s cubic-bezier(0.4,0,0.2,1)`;
   path.style.strokeDashoffset = 0;
 
   // Stagger dots in as line reaches each column, then trigger sonar + brief tooltip
