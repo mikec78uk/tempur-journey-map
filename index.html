@@ -565,6 +565,8 @@ body{
 
 /* Animation helpers */
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dotPulse{0%,100%{r:9;opacity:.15}50%{r:13;opacity:.06}}
+@keyframes dotRingFade{0%,100%{r:14;opacity:.18}50%{r:20;opacity:0}}
 .animate-in{animation:fadeUp .5s ease both;}
 </style>
 </head>
@@ -1107,9 +1109,10 @@ function drawCurve() {
     const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
     return `
       <g class="wave-dot" data-id="${i}" data-stage="${p.stageIdx}" style="cursor:pointer;opacity:0" onclick="openModal(${p.stageIdx})">
-        <circle cx="${x}" cy="${y}" r="18" fill="transparent"/>
-        <circle cx="${x}" cy="${y}" r="9" fill="${scoreColor}" fill-opacity=".15" stroke="${scoreColor}" stroke-opacity=".35" stroke-width="1.5"/>
+        <circle class="dot-pulse-ring" cx="${x}" cy="${y}" r="9" fill="${scoreColor}" fill-opacity="0" stroke="${scoreColor}" stroke-opacity=".0" stroke-width="0"/>
+        <circle class="dot-halo" cx="${x}" cy="${y}" r="9" fill="${scoreColor}" fill-opacity=".15" stroke="${scoreColor}" stroke-opacity=".35" stroke-width="1.5"/>
         <circle cx="${x}" cy="${y}" r="4.5" fill="${scoreColor}"/>
+        <circle cx="${x}" cy="${y}" r="18" fill="transparent"/>
       </g>
     `;
   }).join('');
@@ -1137,13 +1140,28 @@ function drawCurve() {
   path.style.transition = `stroke-dashoffset ${DRAW_DUR}ms cubic-bezier(.4,0,.2,1)`;
   path.style.strokeDashoffset = 0;
 
-  // Stagger dots in as line reaches each column
+  // Stagger dots in as line reaches each column, then start pulse
   const dots = dotsG.querySelectorAll('.wave-dot');
   dots.forEach((dot, i) => {
     const delay = (i / (curvePoints.length - 1)) * DRAW_DUR * 0.82;
     setTimeout(() => {
-      dot.style.transition = 'opacity 0.3s ease';
+      dot.style.transition = 'opacity 0.4s ease';
       dot.style.opacity = '1';
+      // Start pulsing ring after dot appears
+      setTimeout(() => {
+        const ring = dot.querySelector('.dot-pulse-ring');
+        const halo = dot.querySelector('.dot-halo');
+        const scoreColor = ring.getAttribute('fill');
+        // Ripple ring expands and fades out
+        ring.setAttribute('stroke', scoreColor);
+        ring.setAttribute('stroke-opacity', '.5');
+        ring.setAttribute('stroke-width', '1.5');
+        ring.style.animation = `dotRingFade ${2.2 + i * 0.15}s ease-in-out ${i * 0.3}s infinite`;
+        ring.style.transformOrigin = `${ring.getAttribute('cx')}px ${ring.getAttribute('cy')}px`;
+        // Halo breathes
+        halo.style.animation = `dotPulse ${2.2 + i * 0.15}s ease-in-out ${i * 0.3}s infinite`;
+        halo.style.transformOrigin = `${halo.getAttribute('cx')}px ${halo.getAttribute('cy')}px`;
+      }, 400);
     }, delay);
   });
 
@@ -1172,11 +1190,15 @@ function drawCurve() {
       positionTip(ev);
       tip.style.opacity = '1';
       tip.style.transform = 'translateY(0)';
+      // Pause pulse on hover
+      dot.querySelectorAll('.dot-pulse-ring,.dot-halo').forEach(el => el.style.animationPlayState = 'paused');
     });
     dot.addEventListener('mousemove', positionTip);
     dot.addEventListener('mouseleave', () => {
       tip.style.opacity = '0';
       tip.style.transform = 'translateY(4px)';
+      // Resume pulse on leave
+      dot.querySelectorAll('.dot-pulse-ring,.dot-halo').forEach(el => el.style.animationPlayState = 'running');
     });
   });
 
