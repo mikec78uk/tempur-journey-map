@@ -644,7 +644,7 @@ body{
       box-shadow:0 8px 24px rgba(0,0,0,.5);
       padding:10px 14px;min-width:160px;max-width:220px;
       opacity:0;transform:translateY(4px);
-      transition:opacity .18s ease,transform .18s ease;
+      transition:opacity .5s ease-in-out,transform .5s ease-in-out;
     ">
       <div id="waveTipStage" style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#5E574E;margin-bottom:3px;"></div>
       <div id="waveTipLabel" style="font-size:12px;font-weight:600;margin-bottom:4px;"></div>
@@ -1178,7 +1178,7 @@ function drawCurve() {
       autoTipTimer = setTimeout(() => {
         tip.style.opacity = '0';
         tip.style.transform = 'translateY(4px)';
-      }, 2400);
+      }, 4000);
     }, delay);
   });
 
