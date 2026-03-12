@@ -233,6 +233,9 @@ body{
 .tp-vulnerable{background:rgba(176,84,80,.15);color:var(--red);border:1px solid rgba(176,84,80,.25);}
 .tp-neutral{background:rgba(200,146,70,.10);color:var(--text-sub);border:1px solid var(--gold-border);}
 .tp-mixed{background:rgba(200,146,70,.12);color:var(--gold);border:1px solid var(--gold-border);}
+.tp-competitive{background:rgba(100,140,200,.12);color:#7EB3E8;border:1px solid rgba(100,140,200,.25);}
+.tp-exposed{background:rgba(200,110,60,.13);color:#E8924A;border:1px solid rgba(200,110,60,.25);}
+.tp-strong,.tp-strongifsmooth{background:rgba(92,158,114,.15);color:var(--green);border:1px solid rgba(92,158,114,.25);}
 .tp-body{font-size:12px;color:var(--text-sub);line-height:1.45;}
 
 /* Takeaway card */
@@ -701,7 +704,7 @@ const STAGES = [
     id:0, num:"01 / 07", shortNum:"01", name:"Awareness\xa0/ Trigger",
     shortName:"Awareness", icon:"awareness",
     emotionScore:38, emotionLabel:"Anxious / Urgent",
-    tempur:{tag:"Mixed", body:"TEMPUR benefits from being a known brand, but it doesn’t drive the trigger."},
+    tempur:{tag:"Neutral", body:"TEMPUR benefits from being a known brand, but it doesn’t drive the trigger."},
     overview:"Purchases are predominantly triggered by life transitions or acute discomfort, as opposed to casual upgrading.",
     doing:[
       {tag:"hi", text:"Moving into new property (Date Driven)"},
@@ -728,7 +731,7 @@ const STAGES = [
     id:1, num:"02 / 07", shortNum:"02", name:"Initial Research",
     shortName:"Research", icon:"research",
     emotionScore:62, emotionLabel:"Hopeful / Engaged",
-    tempur:{tag:"Vulnerable", body:"TEMPUR shows up strongly, but customers are comparing lots of brands, retailers and reviews. AI tools reduce everything to simple feature lists."},
+    tempur:{tag:"Competitive", body:"TEMPUR shows up strongly, but customers are comparing lots of brands, retailers and reviews. AI tools reduce everything to simple feature lists."},
     emotions:[
       {score:80, label:"Excited / Hopeful",      position:0.05, desc:"Initial searches feel promising — options seem plentiful and the process feels manageable."},
       {score:20, label:"Overwhelmed / Confused",  position:0.95, desc:"Volume of information and lack of clear differentiation creates frustration and analysis paralysis."},
@@ -874,7 +877,7 @@ const STAGES = [
     id:5, num:"06 / 07", shortNum:"06", name:"Delivery\xa0&amp; Set Up",
     shortName:"Delivery", icon:"delivery",
     emotionScore:55, emotionLabel:"Anticipatory / Mixed",
-    tempur:{tag:"Mixed", body:"Delivery is where expectations are highest. If something goes wrong, trust drops quickly. When handled well it can become a huge brand asset."},
+    tempur:{tag:"Exposed", body:"Delivery is where expectations are highest. If something goes wrong, trust drops quickly. When handled well it can become a huge brand asset."},
     overview:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that taints the all-important first impression.",
     doing:[
       {text:"Monitors delivery status and updates"},
@@ -903,7 +906,7 @@ const STAGES = [
     id:6, num:"07 / 07", shortNum:"07", name:"Post-Purchase\xa0&amp; Enjoyment",
     shortName:"Enjoyment", icon:"postpurchase",
     emotionScore:80, emotionLabel:"Satisfied / Relieved",
-    tempur:{tag:"Advantage", body:"If delivery goes well and the mattress feels right, customers feel relief and justify the spend."},
+    tempur:{tag:"Strong (if smooth)", body:"If delivery goes well and the mattress feels right, customers feel relief and justify the spend."},
     overview:"The journey often ends in relief and satisfaction, but long-term sentiment can be tempered by logistical issues. Satisfaction at this stage drives advocacy and repeat purchase.",
     doing:[
       {text:"Sleeps on and acclimates to new mattress"},
@@ -987,7 +990,7 @@ function renderGrid() {
           <div class="sec-lbl">Key Stats</div>
           ${statsHtml}
         </div>
-        ${s.tempur ? `<div class="col-sec"><div class="sec-lbl">Tempur Position</div><div class="tp-tag tp-${s.tempur.tag.toLowerCase()}">${s.tempur.tag}</div><div class="tp-body">${s.tempur.body}</div></div>` : ''}
+        ${s.tempur ? `<div class="col-sec"><div class="sec-lbl">Tempur Position</div><div class="tp-tag tp-${s.tempur.tag.toLowerCase().replace(/[^a-z0-9]/g,'')}">${s.tempur.tag}</div><div class="tp-body">${s.tempur.body}</div></div>` : ''}
         <div class="col-cta">
           <span class="cta-text">View full analysis</span>
           <span class="cta-arrow">↗</span>
@@ -1343,7 +1346,7 @@ function renderModalBody(s) {
         <div class="m-sec">
           <div class="m-sec-title">Tempur Position</div>
           <div style="margin-bottom:10px;">
-            <span class="tp-tag tp-${s.tempur.tag.toLowerCase()}">${s.tempur.tag}</span>
+            <span class="tp-tag tp-${s.tempur.tag.toLowerCase().replace(/[^a-z0-9]/g,'')}">${s.tempur.tag}</span>
           </div>
           <div class="tp-body" style="font-size:14px;color:var(--text-sub);line-height:1.55;">${s.tempur.body}</div>
         </div>` : ''}
