@@ -1334,10 +1334,10 @@ function renderModalBody(s) {
           }).join('')}
         </div>
 
-        <div class="m-sec">
+        ${s.stats && s.stats.length ? `<div class="m-sec">
           <div class="m-sec-title">Key Stats</div>
           ${statsHtml}
-        </div>
+        </div>` : ''}
 
         ${s.tempur ? `
         <div class="m-sec">
