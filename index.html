@@ -701,7 +701,7 @@ const STAGES = [
     id:0, num:"01 / 07", shortNum:"01", name:"Awareness\xa0/ Trigger",
     shortName:"Awareness", icon:"awareness",
     emotionScore:38, emotionLabel:"Anxious / Urgent",
-    tempur:{tag:"Mixed", body:"Strong brand recognition in the premium segment, but limited presence in the trigger-phase media and moments that prompt initial consideration."},
+    tempur:{tag:"Mixed", body:"TEMPUR benefits from being a known brand, but it doesn’t drive the trigger."},
     overview:"Purchases are predominantly triggered by life transitions or acute discomfort, as opposed to casual upgrading.",
     doing:[
       {tag:"hi", text:"Moving into new property (Date Driven)"},
@@ -717,10 +717,7 @@ const STAGES = [
       {group:"Physical", type:"physical", items:["Retail (Passing Traffic)"]},
     ],
     takeaways:[],
-    stats:[
-      {n:"1 in 3", l:"UK adults report poor or disturbed sleep quality regularly", src:"Sleep Council UK, 2023"},
-      {n:"7–10 yrs", l:"Average mattress lifespan before customers consider replacement", src:"National Bed Federation"},
-    ],
+    stats:[],
     quotes:[],
     opportunities:[
       {title:"Intercept the trigger moment", body:"Target users showing signals of life transitions — moving home, renovation planning — with contextual sleep health messaging across relevant digital channels."},
@@ -731,7 +728,7 @@ const STAGES = [
     id:1, num:"02 / 07", shortNum:"02", name:"Initial Research",
     shortName:"Research", icon:"research",
     emotionScore:62, emotionLabel:"Hopeful / Engaged",
-    tempur:{tag:"Vulnerable", body:"Underrepresented in AI-generated recommendations and curated best-of lists that shape the early shortlist before brand websites are visited."},
+    tempur:{tag:"Vulnerable", body:"TEMPUR shows up strongly, but customers are comparing lots of brands, retailers and reviews. AI tools reduce everything to simple feature lists."},
     emotions:[
       {score:80, label:"Excited / Hopeful",      position:0.05, desc:"Initial searches feel promising — options seem plentiful and the process feels manageable."},
       {score:20, label:"Overwhelmed / Confused",  position:0.95, desc:"Volume of information and lack of clear differentiation creates frustration and analysis paralysis."},
@@ -757,8 +754,7 @@ const STAGES = [
       ]},
     ],
     stats:[
-      {n:"48%", l:"of early-stage researchers consult AI tools for mattress recommendations", src:"Tempur Consumer Research, 2024"},
-      {n:"3–5", l:"average number of websites visited before shortlisting begins", src:"GfK Shopper Study, 2023"},
+      {n:"48%", l:"of buyers chose TEMPUR because of previous experience or brand loyalty.", src:"Source: Post Purchase Survey March 2026"},
     ],
     quotes:[],
     opportunities:[
@@ -772,7 +768,7 @@ const STAGES = [
     id:2, num:"03 / 07", shortNum:"03", name:"Deep Dive\xa0/ Comparison",
     shortName:"Comparison", icon:"comparison",
     emotionScore:35, emotionLabel:"Overwhelmed / Frustrated",
-    tempur:{tag:"Vulnerable", body:"Premium price point and limited online trial options create friction during comparison; customers often benchmark Tempur against cheaper alternatives."},
+    tempur:{tag:"Vulnerable", body:"The differences between models is not always clear enough, so customers often fall back on price to decide."},
     overview:"Customers evaluate mattresses based on a combination of core comfort factors (firmness, cooling), practical aspects (price, delivery), and qualitative assurances (brand reputation, reviews, warranty).",
     doing:[
       {text:"Visits specific brand websites (Tempur, Simba, Emma)"},
@@ -794,8 +790,10 @@ const STAGES = [
       {title:"Assumptions Replace Guidance", body:"When depth selection lacks clear explanation, customers default to guesswork — choosing based on price or familiarity rather than sleeping habits or body type."},
     ],
     stats:[
-      {n:"38%", l:"feel overwhelmed by the number of options during the comparison phase", src:"Tempur Consumer Research, 2024"},
-      {n:"2–3 wks", l:"average time spent comparing before a shortlist is formed", src:"GfK Shopper Study, 2023"},
+      {n:"53%", l:"of purchases happen on the first visit.", src:"Source: GA4, Sessions Before Purchase (UK, Feb 2025–Feb 2026)"},
+      {n:"1 in 3", l:"of purchases happen after the second visit.", src:"Source: GA4, Sessions Before Purchase (UK, Feb 2025–Feb 2026)"},
+      {n:"2.1x", l:"better conversion on desktop.", src:"Source: GA4, CVR by Device (UK, Feb 2025–Feb 2026)"},
+      {n:"3 in 4", l:"sessions happen on mobile but conversion is better on desktop.", src:"Source: GA4, CVR by Device (UK, Feb 2025–Feb 2026)"},
     ],
     quotes:[],
     opportunities:[
@@ -807,7 +805,7 @@ const STAGES = [
     id:3, num:"04 / 07", shortNum:"04", name:"Physical Testing\xa0(Optional)",
     shortName:"In-Store", icon:"physical",
     emotionScore:80, emotionLabel:"Confident / Engaged",
-    tempur:{tag:"Advantage", body:"In-store trials consistently drive conversion — Tempur's physical comfort superiority is a compelling differentiator when experienced directly."},
+    tempur:{tag:"Advantage", body:"Trying the mattress in-store builds confidence and makes the product feel credible."},
     overview:"Many customers research online but still value in-store trials to confirm comfort before committing to a significant purchase decision.",
     doing:[
       {text:"Visits physical stores (John Lewis, Dreams, DFS, Benson for Beds, Tempur store)"},
@@ -826,8 +824,7 @@ const STAGES = [
       {title:"The Crucial Role of In-Store Staff", body:"Knowledgeable staff play a crucial role in clarifying options and tailoring advice, strengthening conviction in the final choice. However, not all customers feel comfortable engaging with sales staff and prefer a self-directed experience."},
     ],
     stats:[
-      {n:"67%", l:"of premium mattress buyers visit at least one store before purchasing", src:"Tempur Consumer Research, 2024"},
-      {n:"2×", l:"increase in purchase confidence reported after a physical in-store trial", src:"Tempur Internal Study, 2023"},
+      {n:"30.5k", l:"of sessions used store-related pages.", src:"Source: GA4, Store Locator (UK, Feb 2025–Feb 2026)"},
     ],
     quotes:[],
     opportunities:[
@@ -839,7 +836,7 @@ const STAGES = [
     id:4, num:"05 / 07", shortNum:"05", name:"Decision\xa0&amp; Purchase",
     shortName:"Purchase", icon:"decision",
     emotionScore:70, emotionLabel:"Anxious / High Stakes",
-    tempur:{tag:"Neutral", body:"The online purchase experience is functional but lacks confidence-building tools such as a visible finance calculator and side-by-side product comparison."},
+    tempur:{tag:"Mixed", body:"Most people prefer to buy online, but when items are at a premium price they want reassurance."},
     overview:"Most customers ultimately purchase online, valuing convenience and the feeling of not being pressured. The moment of financial commitment carries significant anxiety.",
     doing:[
       {text:"Chooses preferred mattress and retailer (influenced by budget and delivery)"},
@@ -861,8 +858,8 @@ const STAGES = [
       {title:"Finance Calculator Is Difficult to Access", body:"On Tempur PDPs, the finance calculator is hidden behind a tooltip with no clear indication it exists. Requiring a checkbox before viewing repayment information creates an unnecessary barrier to a helpful purchase tool."},
     ],
     stats:[
-      {n:"61%", l:"complete the final purchase online, even after conducting in-store research", src:"Tempur Consumer Research, 2024"},
-      {n:"1 in 4", l:"purchases are influenced by a promotional offer or seasonal sale event", src:"Retail Economics, 2023"},
+      {n:"38%", l:"of surveyed customers explicitly choose TEMPUR for comfort and product quality.", src:"Source: Post Purchase Survey March 2026"},
+      {n:"61%", l:"of surveyed customers said price was the main thing that nearly stopped them buying.", src:"Source: Post Purchase Survey March 2026"},
     ],
     quotes:[
       {text:"I feel like the choosing and the financial transaction, ordering — these use different parts of my brain.", attr:"— Customer research participant"},
@@ -877,7 +874,7 @@ const STAGES = [
     id:5, num:"06 / 07", shortNum:"06", name:"Delivery\xa0&amp; Set Up",
     shortName:"Delivery", icon:"delivery",
     emotionScore:55, emotionLabel:"Anticipatory / Mixed",
-    tempur:{tag:"Mixed", body:"Delivery standards are broadly positive but reliance on partner fulfilment introduces inconsistency at a high-stakes first physical touchpoint."},
+    tempur:{tag:"Mixed", body:"Delivery is where expectations are highest. If something goes wrong, trust drops quickly. When handled well it can become a huge brand asset."},
     overview:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that taints the all-important first impression.",
     doing:[
       {text:"Monitors delivery status and updates"},
@@ -907,7 +904,7 @@ const STAGES = [
     id:6, num:"07 / 07", shortNum:"07", name:"Post-Purchase\xa0&amp; Enjoyment",
     shortName:"Enjoyment", icon:"postpurchase",
     emotionScore:80, emotionLabel:"Satisfied / Relieved",
-    tempur:{tag:"Advantage", body:"High satisfaction drives strong advocacy, but structured retention and referral programmes remain underdeveloped — a missed opportunity to amplify organic word-of-mouth."},
+    tempur:{tag:"Advantage", body:"If delivery goes well and the mattress feels right, customers feel relief and justify the spend."},
     overview:"The journey often ends in relief and satisfaction, but long-term sentiment can be tempered by logistical issues. Satisfaction at this stage drives advocacy and repeat purchase.",
     doing:[
       {text:"Sleeps on and acclimates to new mattress"},
@@ -923,10 +920,7 @@ const STAGES = [
       {group:"Physical", type:"physical", items:["Retail (Accessory Purchase)"]},
     ],
     takeaways:[],
-    stats:[
-      {n:"61%", l:"of highly satisfied customers recommend the product to friends or family", src:"Tempur NPS Study, 2024"},
-      {n:"120 nights", l:"Tempur's trial period — providing a full comfort assessment window", src:"Tempur.com"},
-    ],
+    stats:[],
     quotes:[],
     opportunities:[
       {title:"Sleep quality check-ins", body:"Offer an optional sleep quality check-in at 30, 60, and 90 days. Monitor satisfaction signals and intervene proactively before dissatisfaction or return requests develop."},
