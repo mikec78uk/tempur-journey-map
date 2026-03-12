@@ -142,7 +142,7 @@ body{
   pointer-events:none;z-index:2;
 }
 .wave-svg{
-  display:block;width:100%;height:180px;
+  display:block;width:100%;height:260px;
   overflow:visible;
 }
 
@@ -223,6 +223,18 @@ body{
 .tag.hi{background:rgba(176,84,80,.18);color:#D97070;}
 .tag.lo{background:rgba(92,158,114,.15);color:#7BC492;}
 
+/* Tempur Position */
+.tp-tag{
+  display:inline-flex;align-items:center;
+  font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:4px;margin-bottom:7px;
+}
+.tp-advantage{background:rgba(92,158,114,.15);color:var(--green);border:1px solid rgba(92,158,114,.25);}
+.tp-vulnerable{background:rgba(176,84,80,.15);color:var(--red);border:1px solid rgba(176,84,80,.25);}
+.tp-neutral{background:rgba(200,146,70,.10);color:var(--text-sub);border:1px solid var(--gold-border);}
+.tp-mixed{background:rgba(200,146,70,.12);color:var(--gold);border:1px solid var(--gold-border);}
+.tp-body{font-size:12px;color:var(--text-sub);line-height:1.45;}
+
 /* Takeaway card */
 .tkwy-card{
   background:var(--gold-dim);
@@ -237,7 +249,7 @@ body{
 .stat-row{display:flex;flex-direction:column;gap:2px;margin-bottom:10px;}
 .stat-row:last-child{margin-bottom:0;}
 .stat-n{
-  font-size:26px;font-weight:200;color:var(--gold-light);
+  font-size:26px;font-weight:300;color:var(--gold-light);
   letter-spacing:-.02em;line-height:1;
 }
 .stat-l{font-size:13px;color:var(--text-sub);line-height:1.35;}
@@ -585,7 +597,7 @@ body{
     <!-- Wave -->
     <div class="wave-wrap" id="waveWrap">
       <div class="wave-title">Customer Sentiment</div>
-      <svg class="wave-svg" id="waveSvg" viewBox="0 0 1820 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="wave-svg" id="waveSvg" viewBox="0 0 1820 260" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="curveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="#A07030"/>
@@ -602,7 +614,7 @@ body{
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
           <clipPath id="waveClip">
-            <rect x="0" y="0" width="1820" height="180"/>
+            <rect x="0" y="0" width="1820" height="260"/>
           </clipPath>
         </defs>
         <!-- Dynamic zone + column lines (drawn by drawCurve) -->
@@ -689,6 +701,7 @@ const STAGES = [
     id:0, num:"01 / 07", shortNum:"01", name:"Awareness\xa0/ Trigger",
     shortName:"Awareness", icon:"awareness",
     emotionScore:38, emotionLabel:"Anxious / Urgent",
+    tempur:{tag:"Mixed", body:"Strong brand recognition in the premium segment, but limited presence in the trigger-phase media and moments that prompt initial consideration."},
     overview:"Purchases are predominantly triggered by life transitions or acute discomfort, as opposed to casual upgrading.",
     doing:[
       {tag:"hi", text:"Moving into new property (Date Driven)"},
@@ -718,6 +731,11 @@ const STAGES = [
     id:1, num:"02 / 07", shortNum:"02", name:"Initial Research",
     shortName:"Research", icon:"research",
     emotionScore:62, emotionLabel:"Hopeful / Engaged",
+    tempur:{tag:"Vulnerable", body:"Underrepresented in AI-generated recommendations and curated best-of lists that shape the early shortlist before brand websites are visited."},
+    emotions:[
+      {score:80, label:"Excited / Hopeful",      position:0.05, desc:"Initial searches feel promising — options seem plentiful and the process feels manageable."},
+      {score:20, label:"Overwhelmed / Confused",  position:0.95, desc:"Volume of information and lack of clear differentiation creates frustration and analysis paralysis."},
+    ],
     overview:"Digital is not always the first step — but often quickly follows and predominantly involves broad searches, AI tools, and a review of various brand and retailer websites.",
     doing:[
       {text:"Performs high-level web search (e.g. \"Best mattress...\")"},
@@ -753,7 +771,8 @@ const STAGES = [
   {
     id:2, num:"03 / 07", shortNum:"03", name:"Deep Dive\xa0/ Comparison",
     shortName:"Comparison", icon:"comparison",
-    emotionScore:45, emotionLabel:"Overwhelmed / Frustrated",
+    emotionScore:35, emotionLabel:"Overwhelmed / Frustrated",
+    tempur:{tag:"Vulnerable", body:"Premium price point and limited online trial options create friction during comparison; customers often benchmark Tempur against cheaper alternatives."},
     overview:"Customers evaluate mattresses based on a combination of core comfort factors (firmness, cooling), practical aspects (price, delivery), and qualitative assurances (brand reputation, reviews, warranty).",
     doing:[
       {text:"Visits specific brand websites (Tempur, Simba, Emma)"},
@@ -787,7 +806,8 @@ const STAGES = [
   {
     id:3, num:"04 / 07", shortNum:"04", name:"Physical Testing\xa0(Optional)",
     shortName:"In-Store", icon:"physical",
-    emotionScore:72, emotionLabel:"Confident / Engaged",
+    emotionScore:80, emotionLabel:"Confident / Engaged",
+    tempur:{tag:"Advantage", body:"In-store trials consistently drive conversion — Tempur's physical comfort superiority is a compelling differentiator when experienced directly."},
     overview:"Many customers research online but still value in-store trials to confirm comfort before committing to a significant purchase decision.",
     doing:[
       {text:"Visits physical stores (John Lewis, Dreams, DFS, Benson for Beds, Tempur store)"},
@@ -818,7 +838,8 @@ const STAGES = [
   {
     id:4, num:"05 / 07", shortNum:"05", name:"Decision\xa0&amp; Purchase",
     shortName:"Purchase", icon:"decision",
-    emotionScore:35, emotionLabel:"Anxious / High Stakes",
+    emotionScore:70, emotionLabel:"Anxious / High Stakes",
+    tempur:{tag:"Neutral", body:"The online purchase experience is functional but lacks confidence-building tools such as a visible finance calculator and side-by-side product comparison."},
     overview:"Most customers ultimately purchase online, valuing convenience and the feeling of not being pressured. The moment of financial commitment carries significant anxiety.",
     doing:[
       {text:"Chooses preferred mattress and retailer (influenced by budget and delivery)"},
@@ -856,6 +877,7 @@ const STAGES = [
     id:5, num:"06 / 07", shortNum:"06", name:"Delivery\xa0&amp; Set Up",
     shortName:"Delivery", icon:"delivery",
     emotionScore:55, emotionLabel:"Anticipatory / Mixed",
+    tempur:{tag:"Mixed", body:"Delivery standards are broadly positive but reliance on partner fulfilment introduces inconsistency at a high-stakes first physical touchpoint."},
     overview:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that taints the all-important first impression.",
     doing:[
       {text:"Monitors delivery status and updates"},
@@ -885,6 +907,7 @@ const STAGES = [
     id:6, num:"07 / 07", shortNum:"07", name:"Post-Purchase\xa0&amp; Enjoyment",
     shortName:"Enjoyment", icon:"postpurchase",
     emotionScore:80, emotionLabel:"Satisfied / Relieved",
+    tempur:{tag:"Advantage", body:"High satisfaction drives strong advocacy, but structured retention and referral programmes remain underdeveloped — a missed opportunity to amplify organic word-of-mouth."},
     overview:"The journey often ends in relief and satisfaction, but long-term sentiment can be tempered by logistical issues. Satisfaction at this stage drives advocacy and repeat purchase.",
     doing:[
       {text:"Sleeps on and acclimates to new mattress"},
@@ -971,6 +994,7 @@ function renderGrid() {
           <div class="sec-lbl">Key Stats</div>
           ${statsHtml}
         </div>
+        ${s.tempur ? `<div class="col-sec"><div class="sec-lbl">Tempur Position</div><div class="tp-tag tp-${s.tempur.tag.toLowerCase()}">${s.tempur.tag}</div><div class="tp-body">${s.tempur.body}</div></div>` : ''}
         <div class="col-cta">
           <span class="cta-text">View full analysis</span>
           <span class="cta-arrow">↗</span>
@@ -1000,23 +1024,40 @@ function drawCurve() {
   const dotsG = document.getElementById('waveDots');
 
   // Derive column centres from actual DOM layout so curve always aligns
-  const vbH = 180;
+  const vbH = 260;
   const inner = document.getElementById('scrollInner');
   const innerRect = inner.getBoundingClientRect();
   const vbW = innerRect.width || 1820;
   svg.setAttribute('viewBox', `0 0 ${vbW} ${vbH}`);
 
   const domCols = document.querySelectorAll('#grid .col');
-  const xs = Array.from(domCols).map(col => {
-    const r = col.getBoundingClientRect();
-    return (r.left - innerRect.left) + r.width / 2;
+  const colRects = Array.from(domCols).map(col => col.getBoundingClientRect());
+  const xs = colRects.map(r => (r.left - innerRect.left) + r.width / 2);
+  const colW = colRects[0] ? colRects[0].width : vbW / STAGES.length;
+  const INSET = colW * 0.18;
+
+  // Build flat ordered list of emotion points across all stages
+  const curvePoints = [];
+  STAGES.forEach((s, i) => {
+    const cx = xs[i];
+    const emotions = s.emotions
+      ? s.emotions
+      : [{ score: s.emotionScore, label: s.emotionLabel, position: 0.5, desc: s.emotionDesc || s.overview || '' }];
+    emotions.forEach(em => {
+      const colLeft  = cx - colW / 2 + INSET;
+      const colRight = cx + colW / 2 - INSET;
+      curvePoints.push({
+        x: colLeft + em.position * (colRight - colLeft),
+        y: (1 - em.score / 100) * 200 + 30,
+        stageIdx: i, stage: s, em
+      });
+    });
   });
-  const ys = STAGES.map(s => (1 - s.emotionScore / 100) * 140 + 20);
 
   // Catmull-Rom to bezier
   // Keep clipPath rect in sync with current viewBox width
   const clipRect = document.querySelector('#waveClip rect');
-  if (clipRect) clipRect.setAttribute('width', vbW);
+  if (clipRect) { clipRect.setAttribute('width', vbW); clipRect.setAttribute('height', vbH); }
 
   // Draw zone lines + column dividers from real DOM positions
   const linesG = document.getElementById('waveLines');
@@ -1026,17 +1067,18 @@ function drawCurve() {
     return `<line x1="${bx.toFixed(1)}" y1="0" x2="${bx.toFixed(1)}" y2="${vbH}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
   }).join('');
   const zoneLines = [
-    `<line x1="0" y1="60" x2="${vbW}" y2="60" stroke="rgba(92,158,114,.1)"   stroke-width="1" stroke-dasharray="4,6"/>`,
-    `<line x1="0" y1="90" x2="${vbW}" y2="90" stroke="rgba(90,80,70,.25)"    stroke-width="1" stroke-dasharray="2,8"/>`,
-    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="rgba(176,84,80,.1)"  stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="100" x2="${vbW}" y2="100" stroke="rgba(92,158,114,.1)"   stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="rgba(90,80,70,.25)"    stroke-width="1" stroke-dasharray="2,8"/>`,
+    `<line x1="0" y1="165" x2="${vbW}" y2="165" stroke="rgba(176,84,80,.1)"  stroke-width="1" stroke-dasharray="4,6"/>`,
   ].join('');
   linesG.innerHTML = zoneLines + colDividers;
 
-  // Augment xs/ys with off-screen ghost points at same y — creates horizontal
-  // entry/exit so the line appears to bleed straight off both edges
-  const edge = vbW * 0.18; // how far beyond the viewport to extend
-  const allXs = [-edge, ...xs, vbW + edge];
-  const allYs = [ys[0], ...ys, ys[ys.length - 1]];
+  // Augment with ghost entry/exit — entry at 50% so line dips into first stage
+  const edge = vbW * 0.18;
+  const entryY = (1 - 0.50) * 200 + 30; // 50% sentiment on left edge
+  const exitY  = curvePoints[curvePoints.length - 1].y;
+  const allXs = [-edge, ...curvePoints.map(p => p.x), vbW + edge];
+  const allYs = [entryY, ...curvePoints.map(p => p.y), exitY];
   const n = allXs.length;
 
   function pts(i) { return {x: allXs[i], y: allYs[i]}; }
@@ -1062,16 +1104,15 @@ function drawCurve() {
 
   // Dots — hidden initially, staggered in as line draws
   const DRAW_DUR = 1800;
-  dotsG.innerHTML = STAGES.map((s, i) => {
-    const x = xs[i].toFixed(1);
-    const y = ys[i].toFixed(1);
-    const scoreColor = s.emotionScore >= 65 ? '#5C9E72' : s.emotionScore <= 45 ? '#B05450' : '#C89246';
+  dotsG.innerHTML = curvePoints.map((p, i) => {
+    const x = p.x.toFixed(1);
+    const y = p.y.toFixed(1);
+    const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
     return `
-      <g class="wave-dot" data-id="${i}" data-stage="${i}" style="cursor:pointer;opacity:0" onclick="openModal(${i})">
+      <g class="wave-dot" data-id="${i}" data-stage="${p.stageIdx}" style="cursor:pointer;opacity:0" onclick="openModal(${p.stageIdx})">
         <circle cx="${x}" cy="${y}" r="18" fill="transparent"/>
         <circle cx="${x}" cy="${y}" r="9" fill="${scoreColor}" fill-opacity=".15" stroke="${scoreColor}" stroke-opacity=".35" stroke-width="1.5"/>
         <circle cx="${x}" cy="${y}" r="4.5" fill="${scoreColor}"/>
-        <text x="${x}" y="${(parseFloat(y) - 14).toFixed(1)}" text-anchor="middle" font-size="9.5" fill="${scoreColor}" font-family="-apple-system,system-ui,sans-serif" font-weight="700">${s.emotionScore}%</text>
       </g>
     `;
   }).join('');
@@ -1102,7 +1143,7 @@ function drawCurve() {
   // Stagger dots in as line reaches each column
   const dots = dotsG.querySelectorAll('.wave-dot');
   dots.forEach((dot, i) => {
-    const delay = (i / (STAGES.length - 1)) * DRAW_DUR * 0.82;
+    const delay = (i / (curvePoints.length - 1)) * DRAW_DUR * 0.82;
     setTimeout(() => {
       dot.style.transition = 'opacity 0.3s ease';
       dot.style.opacity = '1';
@@ -1123,16 +1164,16 @@ function drawCurve() {
   const tipDesc  = document.getElementById('waveTipDesc');
 
   dots.forEach((dot, i) => {
-    const s = STAGES[i];
-    const scoreColor = s.emotionScore >= 65 ? '#5C9E72' : s.emotionScore <= 45 ? '#B05450' : '#C89246';
+    const p = curvePoints[i];
+    const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
 
     dot.addEventListener('mouseenter', (ev) => {
-      tipStage.textContent = `${String(i+1).padStart(2,'0')} / 07 · ${s.name}`;
-      tipScore.textContent = s.emotionScore + '%';
+      tipStage.textContent = `${String(p.stageIdx + 1).padStart(2,'0')} / 07 · ${p.stage.name}`;
+      tipScore.textContent = p.em.score + '%';
       tipScore.style.color = scoreColor;
-      tipLabel.textContent = s.emotionLabel || '';
+      tipLabel.textContent = p.em.label || '';
       tipLabel.style.color = scoreColor;
-      tipDesc.textContent = s.emotionDesc || s.overview || '';
+      tipDesc.textContent = p.em.desc || p.stage.overview || '';
       positionTip(ev);
       tip.style.opacity = '1';
       tip.style.transform = 'translateY(0)';
@@ -1410,10 +1451,24 @@ function setupScrollSync() {
   }, {passive: true});
 }
 
+/* ── EQUALISE COLUMN SECTION HEIGHTS ────────────── */
+function equalizeColSections() {
+  const cols = [...document.querySelectorAll('#grid .col')];
+  if (!cols.length) return;
+  const maxLen = Math.max(...cols.map(c => c.children.length));
+  for (let i = 0; i < maxLen; i++) {
+    const cells = cols.map(c => c.children[i]).filter(Boolean);
+    cells.forEach(c => { c.style.height = ''; });
+    const maxH = Math.max(...cells.map(c => c.offsetHeight));
+    cells.forEach(c => { c.style.height = maxH + 'px'; });
+  }
+}
+
 /* ── INIT ─────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   renderHeaderNav();
   renderGrid();
+  equalizeColSections();
   renderSummary();
   setupWaveObserver();
   setupScrollSync();
@@ -1421,6 +1476,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Redraw curve on resize so it always stays aligned with columns
   const ro = new ResizeObserver(() => {
     if (document.getElementById('wavePath').getAttribute('d')) drawCurve();
+    equalizeColSections();
   });
   ro.observe(document.getElementById('scrollInner'));
 
