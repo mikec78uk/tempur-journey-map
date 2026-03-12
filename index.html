@@ -1192,18 +1192,14 @@ function drawCurve() {
       wrapEl.appendChild(bubble);
     });
     wrapEl._bubblesCreated = true;
-    // Staggered reveal: each bubble appears as the wave reaches its x position
+    // Staggered reveal and dismiss: each bubble appears then fades individually
     const allBubbles = wrapEl.querySelectorAll('.wave-bubble');
-    let maxDelay = 0;
+    const HOLD = 1400; // ms each bubble stays visible before fading
     curvePoints.forEach((p, i) => {
-      const delay = (p.x / SVG_W) * DRAW_DUR;
-      if (delay > maxDelay) maxDelay = delay;
-      setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, delay);
+      const showDelay = (p.x / SVG_W) * DRAW_DUR;
+      setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, showDelay);
+      setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.remove('show'); }, showDelay + HOLD);
     });
-    // All dismiss together 3s after the last bubble appears
-    setTimeout(() => {
-      wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.classList.remove('show'));
-    }, maxDelay + 3000);
   } else {
     // On resize redraws: just reposition existing bubbles
     const existing = wrapEl.querySelectorAll('.wave-bubble');
