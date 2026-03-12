@@ -132,8 +132,21 @@ body{
   position:relative;
   border-bottom:1px solid var(--border);
   background:var(--bg);
-  overflow:hidden;
+  overflow:visible;
 }
+.wave-bubble{
+  position:absolute;
+  pointer-events:none;
+  background:#1A1A1A;border:1px solid #2A2A2A;border-radius:8px;
+  padding:8px 12px;min-width:110px;max-width:170px;
+  transform:translateX(-50%) translateY(calc(-100% - 14px));
+  opacity:0;transition:opacity .5s ease-in-out;
+  z-index:20;
+}
+.wave-bubble.show{opacity:1;}
+.wb-stage{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:3px;}
+.wb-label{font-size:12px;font-weight:600;margin-bottom:3px;}
+.wb-desc{font-size:11px;color:var(--text-sub);line-height:1.45;}
 .wave-title{
   position:absolute;
   left:20px;top:12px;
@@ -1142,43 +1155,14 @@ function drawCurve() {
   path.style.transition = `stroke-dashoffset ${DRAW_DUR}ms cubic-bezier(.4,0,.2,1)`;
   path.style.strokeDashoffset = 0;
 
-  // Stagger dots in as line reaches each column, then trigger sonar + brief tooltip
+  // Stagger dots in as line reaches each column, then trigger sonar
   const dots = dotsG.querySelectorAll('.wave-dot');
-  let autoTipTimer = null;
   dots.forEach((dot, i) => {
-    const p = curvePoints[i];
     const delay = (i / (curvePoints.length - 1)) * DRAW_DUR * 0.82;
     setTimeout(() => {
       dot.style.transition = 'opacity 0.3s ease';
       dot.style.opacity = '1';
       setTimeout(() => dot.classList.add('in'), 50);
-
-      // Show tooltip briefly as each dot arrives
-      const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
-      tipStage.textContent = `${String(p.stageIdx + 1).padStart(2,'0')} / 07 · ${p.stage.name}`;
-      tipLabel.textContent = p.em.label || '';
-      tipLabel.style.color = scoreColor;
-      tipDesc.textContent = p.em.desc || p.stage.overview || '';
-
-      // Position above the dot using its SVG bounding rect
-      const rect = dot.getBoundingClientRect();
-      const tw = tip.offsetWidth || 220;
-      let left = rect.left + rect.width / 2 - tw / 2;
-      let top  = rect.top - (tip.offsetHeight || 90) - 14;
-      if (left < 8) left = 8;
-      if (left + tw > window.innerWidth - 8) left = window.innerWidth - tw - 8;
-      if (top < 8) top = rect.bottom + 10;
-      tip.style.left = left + 'px';
-      tip.style.top  = top + 'px';
-      tip.style.opacity = '1';
-      tip.style.transform = 'translateY(0)';
-
-      // Auto-dismiss after 2.4s
-      clearTimeout(autoTipTimer);
-      autoTipTimer = setTimeout(() => {
-        tip.style.opacity = '0';
-        tip.style.transform = 'translateY(4px)';
-      }, 4000);
     }, delay);
   });
 
@@ -1188,17 +1172,47 @@ function drawCurve() {
     fill.style.opacity = '1';
   }, DRAW_DUR * 0.88);
 
-  // ── Dot tooltips ─────────────────────────────────
+  // ── Per-dot bubble tooltips (all appear together after draw) ──
+  const wrapEl = document.getElementById('waveWrap');
+  const SVG_W = 1820, SVG_H = 260;
+
+  // Remove any previous bubbles on redraw
+  wrapEl.querySelectorAll('.wave-bubble').forEach(b => b.remove());
+
+  const bubbles = curvePoints.map((p, i) => {
+    const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+    const bubble = document.createElement('div');
+    bubble.className = 'wave-bubble';
+    bubble.innerHTML = `
+      <div class="wb-stage">${p.stage.shortName || p.stage.name}</div>
+      <div class="wb-label" style="color:${scoreColor}">${p.em.label || ''}</div>
+      <div class="wb-desc">${p.em.desc || ''}</div>
+    `;
+    // Position relative to waveWrap using SVG coordinate mapping
+    const xPct = p.x / SVG_W * 100;
+    const yPct = p.y / SVG_H * 100;
+    bubble.style.left = xPct + '%';
+    bubble.style.top  = yPct + '%';
+    wrapEl.appendChild(bubble);
+    return bubble;
+  });
+
+  // After draw completes, show all bubbles simultaneously
+  setTimeout(() => {
+    bubbles.forEach(b => b.classList.add('show'));
+    // Auto-dismiss after 4s
+    setTimeout(() => bubbles.forEach(b => b.classList.remove('show')), 4000);
+  }, DRAW_DUR + 200);
+
+  // ── Hover tooltip (shared, appears on mouse) ──────────────────
   const tip     = document.getElementById('waveTip');
   const tipStage = document.getElementById('waveTipStage');
-  const tipScore = document.getElementById('waveTipScore');
   const tipLabel = document.getElementById('waveTipLabel');
   const tipDesc  = document.getElementById('waveTipDesc');
 
   dots.forEach((dot, i) => {
     const p = curvePoints[i];
     const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
-
     dot.addEventListener('mouseenter', (ev) => {
       tipStage.textContent = `${String(p.stageIdx + 1).padStart(2,'0')} / 07 · ${p.stage.name}`;
       tipLabel.textContent = p.em.label || '';
