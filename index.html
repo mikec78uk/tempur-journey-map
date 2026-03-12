@@ -1105,7 +1105,7 @@ function drawCurve() {
   fill.setAttribute('d', fillD);
 
   // Dots — hidden initially, staggered in as line draws
-  const DRAW_DUR = 1800;
+  const DRAW_DUR = 3000;
   dotsG.innerHTML = curvePoints.map((p, i) => {
     const x = p.x.toFixed(1);
     const y = p.y.toFixed(1);
