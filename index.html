@@ -1185,7 +1185,6 @@ function drawCurve() {
       bubble.innerHTML = `
         <div class="wb-stage">${p.stage.shortName || p.stage.name}</div>
         <div class="wb-label" style="color:${scoreColor}">${p.em.label || ''}</div>
-        <div class="wb-desc">${p.em.desc || ''}</div>
       `;
       bubble.style.left = (p.x / SVG_W * 100) + '%';
       bubble.style.top  = (p.y / SVG_H * 100) + '%';
@@ -1194,7 +1193,7 @@ function drawCurve() {
     wrapEl._bubblesCreated = true;
     // Staggered reveal and dismiss: each bubble appears then fades individually
     const allBubbles = wrapEl.querySelectorAll('.wave-bubble');
-    const HOLD = 1400; // ms each bubble stays visible before fading
+    const HOLD = 2600; // ms each bubble stays visible before fading
     curvePoints.forEach((p, i) => {
       const showDelay = (p.x / SVG_W) * DRAW_DUR;
       setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, showDelay);
