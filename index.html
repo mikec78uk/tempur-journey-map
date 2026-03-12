@@ -415,7 +415,7 @@ body{
 .m-body::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
 .m-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr;
   gap:28px;
 }
 .m-sec{margin-bottom:28px;}
@@ -1334,11 +1334,6 @@ function renderModalBody(s) {
         </div>` : ''}
 
         <div class="m-sec">
-          <div class="m-sec-title">Key Stats</div>
-          ${statsHtml}
-        </div>
-
-        <div class="m-sec">
           <div class="m-sec-title">Customer Emotion</div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
             <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
@@ -1351,13 +1346,6 @@ function renderModalBody(s) {
         </div>
 
         <div class="m-sec">
-          <div class="m-sec-title">Touchpoints</div>
-          ${touchpointsHtml}
-        </div>
-      </div>
-
-      <div>
-        <div class="m-sec">
           <div class="m-sec-title">Key Takeaways</div>
           ${tkwyHtml}
         </div>
@@ -1365,6 +1353,25 @@ function renderModalBody(s) {
         <div class="m-sec">
           <div class="m-sec-title">Opportunities &amp; Recommendations</div>
           ${oppsHtml}
+        </div>
+
+        ${s.tempur ? `
+        <div class="m-sec">
+          <div class="m-sec-title">Tempur Position</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;">
+            <span class="tp-tag tp-${s.tempur.tag.toLowerCase()}" style="white-space:nowrap;">${s.tempur.tag}</span>
+          </div>
+          <div class="tp-body" style="font-size:14px;color:var(--text-sub);line-height:1.55;">${s.tempur.body}</div>
+        </div>` : ''}
+
+        <div class="m-sec">
+          <div class="m-sec-title">Key Stats</div>
+          ${statsHtml}
+        </div>
+
+        <div class="m-sec">
+          <div class="m-sec-title">Touchpoints</div>
+          ${touchpointsHtml}
         </div>
       </div>
     </div>
