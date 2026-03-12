@@ -1275,7 +1275,6 @@ function renderModalBody(s) {
             <div class="m-card-quote-text">"${q.text}"</div>
             <div class="m-card-quote-attr">
               <span class="m-card-quote-type ${q.type}">${q.type === 'stakeholder' ? 'Stakeholder' : 'Customer'}</span>
-              ${q.attr}
             </div>
           </div>`).join('')}
         </div>` : ''}
@@ -1314,7 +1313,6 @@ function renderModalBody(s) {
           <div class="m-card-quote-text">"${q.text}"</div>
           <div class="m-card-quote-attr">
             <span class="m-card-quote-type ${q.type}">${q.type === 'stakeholder' ? 'Stakeholder' : 'Customer'}</span>
-            ${q.attr}
           </div>
         </div>`).join('')}
       </div>` : ''}
