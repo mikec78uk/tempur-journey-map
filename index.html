@@ -984,7 +984,7 @@ function renderGrid() {
           <div class="tkwy-title">${t.title}</div>
           <div class="tkwy-body">${t.body}</div>
         </div>
-      `).join('') + (tkwyExtra > 0 ? `<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">+ ${tkwyExtra} more — open for full details</div>` : '')
+      `).join('') + (tkwyExtra > 0 ? `<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">+ ${tkwyExtra} more</div>` : '')
       : '<div style="font-size:11px;color:var(--text-muted);font-style:italic;">No stage-specific takeaways — see full analysis for opportunities.</div>';
 
     const statsHtml = s.stats.map(st => `
