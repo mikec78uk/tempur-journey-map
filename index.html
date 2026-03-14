@@ -7,18 +7,22 @@
 <title>Tempur – Digital Purchase Experience Map · Q1 2026</title>
 <style>
 :root {
-  --bg: #090909;
-  --bg-card: #121212;
-  --bg-hover: #181818;
-  --bg-modal: #0F0F0F;
+  --bg: #0C0B08;
+  --bg-card: #141310;
+  --bg-hover: #1A1815;
+  --bg-modal: #100F0C;
   --gold: #C89246;
   --gold-light: #E8B870;
   --gold-dim: rgba(200,146,70,.12);
   --gold-border: rgba(200,146,70,.22);
+  --accent: #C89246;
+  --accent-light: #E8B870;
+  --accent-dim: rgba(200,146,70,.12);
+  --accent-border: rgba(200,146,70,.22);
   --text: #F0EBE3;
   --text-sub: #8A8278;
   --text-muted: #5E574E;
-  --border: #1E1E1E;
+  --border: #1E1C18;
   --green: #5C9E72;
   --green-dim: rgba(92,158,114,.1);
   --red: #B05450;
@@ -27,6 +31,44 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
   --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
   --shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
+}
+/* ── THEME: Electric Blue ── */
+[data-theme="blue"] {
+  --bg: #0A0A0F;
+  --bg-card: #12131A;
+  --bg-hover: #1A1B24;
+  --bg-modal: #0D0E14;
+  --gold: #4F7EFF;
+  --gold-light: #7FA0FF;
+  --gold-dim: rgba(79,126,255,.12);
+  --gold-border: rgba(79,126,255,.25);
+  --accent: #4F7EFF;
+  --accent-light: #7FA0FF;
+  --accent-dim: rgba(79,126,255,.12);
+  --accent-border: rgba(79,126,255,.25);
+  --text: #E8EAED;
+  --text-sub: #7A8090;
+  --text-muted: #4A5060;
+  --border: #1C1E28;
+}
+/* ── THEME: Monochrome ── */
+[data-theme="mono"] {
+  --bg: #0D0D0D;
+  --bg-card: #161616;
+  --bg-hover: #1F1F1F;
+  --bg-modal: #111111;
+  --gold: #FFFFFF;
+  --gold-light: #CCCCCC;
+  --gold-dim: rgba(255,255,255,.07);
+  --gold-border: rgba(255,255,255,.15);
+  --accent: #FFFFFF;
+  --accent-light: #CCCCCC;
+  --accent-dim: rgba(255,255,255,.07);
+  --accent-border: rgba(255,255,255,.15);
+  --text: #F2F2F2;
+  --text-sub: #808080;
+  --text-muted: #4A4A4A;
+  --border: #222222;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -61,6 +103,15 @@ body{
   color:var(--text);text-transform:uppercase;
 }
 .hdr-sep{width:1px;height:22px;background:var(--border);flex-shrink:0;}
+.theme-switcher{display:flex;gap:4px;align-items:center;margin-left:12px;flex-shrink:0;}
+.theme-btn{
+  font-size:11px;font-weight:500;letter-spacing:.04em;
+  padding:4px 10px;border-radius:5px;border:1px solid var(--border);
+  background:transparent;color:var(--text-muted);cursor:pointer;
+  transition:all .2s;
+}
+.theme-btn:hover{color:var(--text);border-color:var(--accent);}
+.theme-btn.active{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent);}
 .hdr-meta{flex:1;min-width:0;}
 .hdr-title{
   font-size:13px;font-weight:500;color:var(--text);
@@ -600,6 +651,11 @@ body{
     <div class="hdr-sub">Q1 2026 · Draft</div>
   </div>
   <nav class="hdr-nav" id="hdrNav"></nav>
+  <div class="theme-switcher" id="themeSwitcher">
+    <button class="theme-btn active" data-theme="">Amber</button>
+    <button class="theme-btn" data-theme="blue">Blue</button>
+    <button class="theme-btn" data-theme="mono">Mono</button>
+  </div>
 </header>
 
 <!-- ═══════════════════════════════════════ HERO -->
@@ -1564,6 +1620,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 120);
   });
   ro.observe(document.getElementById('scrollInner'));
+
+  // Theme switcher
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      localStorage.setItem('tempur-theme', theme);
+    });
+  });
+  const savedTheme = localStorage.getItem('tempur-theme');
+  if (savedTheme !== null) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const savedBtn = document.querySelector(`.theme-btn[data-theme="${savedTheme}"]`);
+    if (savedBtn) { document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active')); savedBtn.classList.add('active'); }
+  }
 
   // Animate columns in
   const cols = document.querySelectorAll('.col');
