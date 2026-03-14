@@ -1106,8 +1106,6 @@ function renderSummary() {
   const grid = document.getElementById('summaryGrid');
   grid.innerHTML = SUMMARY_CARDS.map(c => `
     <div class="sum-card">
-      <div class="sum-icon">${IC[c.icon]}</div>
-      <div class="sum-title">${c.title}</div>
       <div class="sum-body">${c.body}</div>
     </div>
   `).join('');
