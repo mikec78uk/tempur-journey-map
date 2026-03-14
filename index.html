@@ -738,7 +738,11 @@ const STAGES = [
       {group:"Media", type:"media", items:["TV / Press","Display Advertising"]},
       {group:"Physical", type:"physical", items:["Retail (Passing Traffic)"]},
     ],
-    takeaways:[],
+    takeaways:[
+      {title:"Need, not want, drives the journey", body:"Mattress purchases are usually triggered by a real need such as moving house, poor sleep, discomfort, or an old mattress wearing out as opposed to casual upgrading.", quotes:["When you get a completion date, it kicks you into gear [to purchase a mattress].","We recently moved house, that's why we had to purchase a new mattress.","I found myself to have less and less sleep… I wake up two, three times in the night.","It's when you keep rolling back into the centre and you start to think that … actually, that's not normal."]},
+      {title:"TEMPUR often starts in consideration", body:"TEMPUR is often already in the customer's mind through past experience, recommendations, or familiarity, even if it didn't trigger the journey itself.", quotes:[]},
+      {title:"Greater sleep awareness can contribute", body:"Where casual upgrading was mentioned, it was because of an increasing awareness of the impact of sleep on health and wellbeing from various things such as podcasts.", quotes:["When you listen to podcasts and read articles, there's a lot of emphasis on the importance of sleep so I've just become more aware of it."]},
+    ],
     stats:[],
     quotes:[],
     opportunities:[
@@ -1325,11 +1329,9 @@ function renderModalBody(s) {
         ${t.quotes && t.quotes.length ? `
         <div class="m-card-quotes">
           ${t.quotes.map(q => `
-          <div class="m-card-quote ${q.type}">
-            <div class="m-card-quote-text">"${q.text}"</div>
-            <div class="m-card-quote-attr">
-              <span class="m-card-quote-type ${q.type}">${q.type === 'stakeholder' ? 'Stakeholder' : 'Customer'}</span>
-            </div>
+          <div class="m-card-quote customer">
+            <div class="m-card-quote-text">"${typeof q === 'string' ? q : q.text}"</div>
+            ${typeof q === 'object' && q.type ? `<div class="m-card-quote-attr"><span class="m-card-quote-type ${q.type}">${q.type === 'stakeholder' ? 'Stakeholder' : 'Customer'}</span></div>` : ''}
           </div>`).join('')}
         </div>` : ''}
       </div>
