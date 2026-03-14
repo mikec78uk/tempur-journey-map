@@ -101,29 +101,28 @@ body{
 .hero-left{}
 /* Summary band */
 .summary-band{
-  padding:32px 28px;
+  padding:16px 28px;
   border-bottom:1px solid var(--border);
   background:var(--bg);
 }
 .summary-inner{
-  max-width:960px;
-  border:1px solid var(--gold-border);
-  border-radius:12px;
-  padding:36px 48px;
-  background:var(--bg-card);
+  display:flex;align-items:baseline;gap:0;flex-wrap:wrap;
 }
 .summary-lbl{
-  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--gold);text-align:center;margin-bottom:24px;
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);white-space:nowrap;margin-right:16px;padding-top:1px;flex-shrink:0;
 }
-.summary-divider{
-  width:48px;height:1px;background:var(--gold-border);margin:20px auto;
+.summary-items{
+  display:flex;flex-wrap:wrap;align-items:center;gap:0;
 }
 .summary-item{
-  font-size:16px;font-weight:300;color:var(--text);line-height:1.6;
-  text-align:center;
+  font-size:12px;font-weight:300;color:var(--text-sub);line-height:1.5;
+  padding:2px 0;
 }
-.summary-item strong{font-weight:500;}
+.summary-sep{
+  width:1px;height:12px;background:var(--border);margin:0 12px;flex-shrink:0;
+  display:inline-block;vertical-align:middle;
+}
 .hero-eyebrow{
   font-size:10px;font-weight:700;letter-spacing:.14em;
   text-transform:uppercase;color:var(--gold);margin-bottom:8px;
@@ -647,20 +646,20 @@ body{
 <!-- ═══════════════════════════════════════ SUMMARY BAND -->
 <div class="summary-band">
   <div class="summary-inner">
-    <div class="summary-lbl">Summary</div>
-    <div class="summary-item">Mattress purchases are triggered by life events or pain,<br>more than casual browsing.</div>
-    <div class="summary-divider"></div>
-    <div class="summary-item">Customers build their own decision frameworks<br>across multiple sources, including AI.</div>
-    <div class="summary-divider"></div>
-    <div class="summary-item">In-store testing builds confidence, but online is<br>preferred for final purchase.</div>
-    <div class="summary-divider"></div>
-    <div class="summary-item">TEMPUR struggles to clearly differentiate its own range online.</div>
-    <div class="summary-divider"></div>
-    <div class="summary-item">Delivery execution disproportionately shapes brand perception.</div>
-    <div class="summary-divider"></div>
-    <div class="summary-item">Tempur's challenge is not desirability — it's justification.</div>
-    <div class="summary-divider"></div>
-    <div class="summary-item"><strong>People want the product. They just need confidence that the price is worth it.</strong></div>
+    <div class="summary-lbl">Key themes</div>
+    <div class="summary-items">
+      <span class="summary-item">Triggered by life events, not casual browsing</span>
+      <span class="summary-sep"></span>
+      <span class="summary-item">Decision frameworks built across multiple sources, including AI</span>
+      <span class="summary-sep"></span>
+      <span class="summary-item">In-store builds confidence; online preferred for purchase</span>
+      <span class="summary-sep"></span>
+      <span class="summary-item">TEMPUR struggles to differentiate its range online</span>
+      <span class="summary-sep"></span>
+      <span class="summary-item">Delivery execution disproportionately shapes brand perception</span>
+      <span class="summary-sep"></span>
+      <span class="summary-item">The challenge is justification, not desirability</span>
+    </div>
   </div>
 </div>
 
