@@ -1324,7 +1324,7 @@ function drawCurve() {
     });
     wrapEl._bubblesCreated = true;
     const allBubbles = wrapEl.querySelectorAll('.wave-bubble');
-    const HOLD = 2800;
+    const HOLD = 1600;
     function pathLengthAtX(targetX) {
       let lo = 0, hi = totalLen;
       for (let j = 0; j < 40; j++) {
@@ -1334,11 +1334,10 @@ function drawCurve() {
       return (lo + hi) / 2;
     }
     const showDelays = curvePoints.map(p => (bezierInverse(pathLengthAtX(p.x) / totalLen)) * DRAW_DUR);
-    const lastDelay = Math.max(...showDelays);
     curvePoints.forEach((p, i) => {
       setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, showDelays[i]);
+      setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.remove('show'); }, showDelays[i] + HOLD);
     });
-    setTimeout(() => { allBubbles.forEach(b => b.classList.remove('show')); }, lastDelay + HOLD);
   } else {
     // On resize redraws: just reposition existing bubbles
     const existing = wrapEl.querySelectorAll('.wave-bubble');
