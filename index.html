@@ -169,11 +169,13 @@ body{
   pointer-events:none;
   background:#1A1A1A;border:1px solid #2A2A2A;border-radius:8px;
   padding:8px 12px;min-width:110px;max-width:170px;
-  transform:translateX(-50%) translateY(14px);
-  opacity:0;transition:opacity .5s ease-in-out;
+  transform:translateX(-50%) translateY(22px);
+  opacity:0;
+  transition:opacity .5s cubic-bezier(0.25,0.46,0.45,0.94),
+             transform .5s cubic-bezier(0.34,1.56,0.64,1);
   z-index:20;
 }
-.wave-bubble.show{opacity:1;}
+.wave-bubble.show{opacity:1;transform:translateX(-50%) translateY(14px);}
 .wb-stage{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:3px;}
 .wb-label{font-size:12px;font-weight:600;margin-bottom:3px;}
 .wb-desc{font-size:11px;color:var(--text-sub);line-height:1.45;}
@@ -1276,14 +1278,25 @@ function drawCurve() {
       wrapEl.appendChild(bubble);
     });
     wrapEl._bubblesCreated = true;
-    // Staggered reveal and dismiss: each bubble appears then fades individually
+    // Use actual path length to each dot so tooltip appears exactly when the wave arrives
     const allBubbles = wrapEl.querySelectorAll('.wave-bubble');
-    const HOLD = 2600; // ms each bubble stays visible before fading
+    const HOLD = 2800;
+    const totalLen = path.getTotalLength();
+    function pathLengthAtX(targetX) {
+      let lo = 0, hi = totalLen;
+      for (let j = 0; j < 40; j++) {
+        const mid = (lo + hi) / 2;
+        if (path.getPointAtLength(mid).x < targetX) lo = mid; else hi = mid;
+      }
+      return (lo + hi) / 2;
+    }
+    const showDelays = curvePoints.map(p => (pathLengthAtX(p.x) / totalLen) * DRAW_DUR);
+    const lastDelay = Math.max(...showDelays);
     curvePoints.forEach((p, i) => {
-      const showDelay = (p.x / SVG_W) * DRAW_DUR;
-      setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, showDelay);
-      setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.remove('show'); }, showDelay + HOLD);
+      setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, showDelays[i]);
     });
+    // All dismiss together after last tooltip has been visible for HOLD ms
+    setTimeout(() => { allBubbles.forEach(b => b.classList.remove('show')); }, lastDelay + HOLD);
   } else {
     // On resize redraws: just reposition existing bubbles
     const existing = wrapEl.querySelectorAll('.wave-bubble');
