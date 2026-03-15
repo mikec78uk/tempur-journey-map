@@ -1278,7 +1278,8 @@ function drawCurve() {
       wrapEl.appendChild(bubble);
     });
     wrapEl._bubblesCreated = true;
-    // Use actual path length to each dot so tooltip appears exactly when the wave arrives
+    // Auto-reveal bubbles disabled — hover tooltips still work
+    /*
     const allBubbles = wrapEl.querySelectorAll('.wave-bubble');
     const HOLD = 2800;
     const totalLen = path.getTotalLength();
@@ -1295,8 +1296,8 @@ function drawCurve() {
     curvePoints.forEach((p, i) => {
       setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, showDelays[i]);
     });
-    // All dismiss together after last tooltip has been visible for HOLD ms
     setTimeout(() => { allBubbles.forEach(b => b.classList.remove('show')); }, lastDelay + HOLD);
+    */
   } else {
     // On resize redraws: just reposition existing bubbles
     const existing = wrapEl.querySelectorAll('.wave-bubble');
