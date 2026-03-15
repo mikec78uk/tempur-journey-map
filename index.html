@@ -1267,10 +1267,18 @@ function drawCurve() {
   path.style.strokeDashoffset = 0;
   setTimeout(() => { _waveAnimating = false; }, DRAW_DUR + 200);
 
-  // Stagger dots in as line reaches each column, then trigger sonar
+  // Appear each dot exactly when the wave line reaches it (path-length based)
   const dots = dotsG.querySelectorAll('.wave-dot');
+  function dotPathLengthAtX(targetX) {
+    let lo = 0, hi = totalLen;
+    for (let j = 0; j < 40; j++) {
+      const mid = (lo + hi) / 2;
+      if (path.getPointAtLength(mid).x < targetX) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
   dots.forEach((dot, i) => {
-    const delay = (i / (curvePoints.length - 1)) * DRAW_DUR * 0.82;
+    const delay = (dotPathLengthAtX(curvePoints[i].x) / totalLen) * DRAW_DUR;
     setTimeout(() => {
       dot.style.transition = 'opacity 0.3s ease';
       dot.style.opacity = '1';
