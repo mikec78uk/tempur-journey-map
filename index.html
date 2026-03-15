@@ -1112,7 +1112,10 @@ function renderSummary() {
 }
 
 /* ── DRAW EMOTION CURVE ──────────────────────────── */
+let _waveAnimating = false;
+let _suppressRedraw = false;
 function drawCurve() {
+  if (_waveAnimating || _suppressRedraw) return;
   const svg = document.getElementById('waveSvg');
   const path = document.getElementById('wavePath');
   const fill = document.getElementById('waveFill');
@@ -1232,8 +1235,10 @@ function drawCurve() {
   // Another flush so the hidden state is painted before we add the transition
   path.getBoundingClientRect();
 
+  _waveAnimating = true;
   path.style.transition = `stroke-dashoffset ${DRAW_DUR}ms cubic-bezier(.4,0,.2,1)`;
   path.style.strokeDashoffset = 0;
+  setTimeout(() => { _waveAnimating = false; }, DRAW_DUR + 200);
 
   // Stagger dots in as line reaches each column, then trigger sonar
   const dots = dotsG.querySelectorAll('.wave-dot');
@@ -1536,10 +1541,12 @@ function openModal(id) {
 }
 
 function closeModal() {
+  _suppressRedraw = true;
   document.getElementById('overlay').classList.remove('open');
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow = '';
   document.querySelectorAll('.hdr-pill').forEach(p => p.classList.remove('active'));
+  setTimeout(() => { _suppressRedraw = false; }, 300);
 }
 
 // Close on overlay click
