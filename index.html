@@ -1447,9 +1447,9 @@ function renderModalBody(s) {
         ${t.quotes && t.quotes.length ? `
         <div class="m-card-quotes">
           ${t.quotes.map(q => `
-          <div class="m-card-quote customer">
+          <div class="m-card-quote ${typeof q === 'object' && q.type ? q.type : 'customer'}">
             <div class="m-card-quote-text">"${typeof q === 'string' ? q : q.text}"</div>
-            ${typeof q === 'object' && q.type ? `<div class="m-card-quote-attr"><span class="m-card-quote-type ${q.type}">${q.type === 'stakeholder' ? 'Stakeholder' : 'Customer'}</span></div>` : ''}
+            <div class="m-card-quote-attr"><span class="m-card-quote-type ${typeof q === 'object' && q.type ? q.type : 'customer'}">${typeof q === 'object' && q.type === 'stakeholder' ? 'Stakeholder' : 'Customer'}</span></div>
           </div>`).join('')}
         </div>` : ''}
       </div>
