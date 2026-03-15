@@ -45,15 +45,7 @@ body{
 }
 
 /* ── HEADER ─────────────────────────────────────── */
-.site-hdr{
-  position:sticky;top:0;z-index:200;
-  height:var(--hdr);
-  background:rgba(9,9,9,.96);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;
-  padding:0 28px;gap:20px;
-}
+.site-hdr{display:none;}
 .hdr-logo{
   display:flex;align-items:center;gap:10px;
   flex-shrink:0;
@@ -91,7 +83,10 @@ body{
 
 /* ── HERO BAND ───────────────────────────────────── */
 .hero{
-  padding:36px 28px 24px;
+  position:sticky;top:0;z-index:200;
+  padding:16px 28px;
+  background:rgba(9,9,9,.96);
+  backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
 }
 .hero-inner{display:flex;align-items:flex-end;gap:0;flex-wrap:wrap;}
