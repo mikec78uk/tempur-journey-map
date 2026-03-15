@@ -982,7 +982,7 @@ const STAGES = [
   {
     id:5, num:"06 / 07", shortNum:"06", name:"Delivery\xa0&amp; Set Up",
     shortName:"Delivery", icon:"delivery",
-    emotionScore:55, emotionLabel:"Anticipatory / Mixed",
+    emotionScore:35, emotionLabel:"Anticipatory / Mixed",
     tempur:{tag:"Exposed", body:"Delivery is where expectations are highest. If something goes wrong, trust drops quickly. When handled well it can become a huge brand asset."},
     overview:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that taints the all-important first impression.",
     doing:[
@@ -1322,11 +1322,8 @@ function drawCurve() {
       wrapEl.appendChild(bubble);
     });
     wrapEl._bubblesCreated = true;
-    // Auto-reveal bubbles disabled — hover tooltips still work
-    /*
     const allBubbles = wrapEl.querySelectorAll('.wave-bubble');
     const HOLD = 2800;
-    const totalLen = path.getTotalLength();
     function pathLengthAtX(targetX) {
       let lo = 0, hi = totalLen;
       for (let j = 0; j < 40; j++) {
@@ -1335,13 +1332,12 @@ function drawCurve() {
       }
       return (lo + hi) / 2;
     }
-    const showDelays = curvePoints.map(p => (pathLengthAtX(p.x) / totalLen) * DRAW_DUR);
+    const showDelays = curvePoints.map(p => (bezierInverse(pathLengthAtX(p.x) / totalLen)) * DRAW_DUR);
     const lastDelay = Math.max(...showDelays);
     curvePoints.forEach((p, i) => {
       setTimeout(() => { if (allBubbles[i]) allBubbles[i].classList.add('show'); }, showDelays[i]);
     });
     setTimeout(() => { allBubbles.forEach(b => b.classList.remove('show')); }, lastDelay + HOLD);
-    */
   } else {
     // On resize redraws: just reposition existing bubbles
     const existing = wrapEl.querySelectorAll('.wave-bubble');
