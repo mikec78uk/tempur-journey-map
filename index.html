@@ -1267,8 +1267,17 @@ function drawCurve() {
   path.style.strokeDashoffset = 0;
   setTimeout(() => { _waveAnimating = false; }, DRAW_DUR + 200);
 
-  // Appear each dot exactly when the wave line reaches it (path-length based)
-  const dots = dotsG.querySelectorAll('.wave-dot');
+  // Invert cubic-bezier(.4,0,.2,1) to get true wall-clock time when line reaches each dot
+  // CSS bezierY(t) = 3(1-t)²t·y1 + 3(1-t)t²·y2 + t³  (y1=0, y2=1)
+  function bezierInverse(p) {
+    let lo = 0, hi = 1;
+    for (let j = 0; j < 60; j++) {
+      const mid = (lo + hi) / 2;
+      const val = 3*(1-mid)*(1-mid)*mid*0 + 3*(1-mid)*mid*mid*1 + mid*mid*mid;
+      if (val < p) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
   function dotPathLengthAtX(targetX) {
     let lo = 0, hi = totalLen;
     for (let j = 0; j < 40; j++) {
@@ -1277,8 +1286,10 @@ function drawCurve() {
     }
     return (lo + hi) / 2;
   }
+  const dots = dotsG.querySelectorAll('.wave-dot');
   dots.forEach((dot, i) => {
-    const delay = (dotPathLengthAtX(curvePoints[i].x) / totalLen) * DRAW_DUR;
+    const frac = dotPathLengthAtX(curvePoints[i].x) / totalLen;
+    const delay = bezierInverse(frac) * DRAW_DUR;
     setTimeout(() => {
       dot.style.transition = 'opacity 0.3s ease';
       dot.style.opacity = '1';
