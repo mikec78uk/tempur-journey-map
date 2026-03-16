@@ -1745,7 +1745,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hint.classList.remove('hidden');
       hint.style.right  = (window.innerWidth - r.right) + 'px';
       hint.style.top    = r.top + 'px';
-      hint.style.height = r.height + 'px';
+      hint.style.height = Math.min(r.height, 300) + 'px';
     }
   }
   scrollWrapEl.addEventListener('scroll', updateScrollHint, {passive:true});
