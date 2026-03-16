@@ -72,7 +72,7 @@ body{
   padding:5px 11px;border-radius:5px;
   background:transparent;
   border:1px solid var(--border);
-  color:var(--text-muted);
+  color:var(--gold);
   cursor:pointer;white-space:nowrap;
   font-size:11px;font-family:inherit;
   transition:border-color .2s,color .2s,background .2s;
@@ -152,19 +152,15 @@ body{
 }
 .scroll-hint.show{display:flex;opacity:1;}
 .scroll-hint-btn{
-  display:flex;flex-direction:row;align-items:center;gap:7px;
-  background:var(--gold);
-  border-radius:999px;
-  padding:8px 14px 8px 12px;
-  box-shadow:0 2px 12px rgba(0,0,0,.5);
+  display:flex;flex-direction:row;align-items:center;gap:5px;
 }
 .scroll-hint-btn svg{
-  width:15px;height:15px;color:#1A1209;flex-shrink:0;
+  width:14px;height:14px;color:var(--gold);flex-shrink:0;
   animation:scrollPulse 1.4s ease-in-out infinite;
 }
 .scroll-hint-btn span{
-  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
-  color:#1A1209;white-space:nowrap;
+  font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--gold);white-space:nowrap;
 }
 @keyframes scrollPulse{
   0%,100%{transform:translateX(0);}
@@ -204,7 +200,7 @@ body{
   position:absolute;
   left:20px;top:12px;
   font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--text-muted);
+  color:var(--gold);
   pointer-events:none;z-index:2;
 }
 .wave-svg{
@@ -266,7 +262,7 @@ body{
 .col-sec:last-of-type{border-bottom:none;}
 .sec-lbl{
   font-size:9px;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--text-muted);
+  text-transform:uppercase;color:var(--gold);
   margin-bottom:9px;
 }
 
@@ -377,7 +373,7 @@ body{
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:12px;
 }
-.ftr-meta{font-size:11px;color:var(--text-muted);}
+.ftr-meta{font-size:11px;color:var(--gold);}
 .ftr-vml{font-size:11px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:2px;}
 .ftr-tag{
   font-size:9.5px;font-weight:700;letter-spacing:.1em;
@@ -422,7 +418,7 @@ body{
   display:flex;align-items:center;gap:5px;
   padding:5px 11px;border-radius:5px;
   background:transparent;border:1px solid var(--border);
-  color:var(--text-muted);cursor:pointer;white-space:nowrap;
+  color:var(--gold);cursor:pointer;white-space:nowrap;
   font-size:11px;font-family:inherit;
   transition:all .15s;
 }
@@ -491,7 +487,7 @@ body{
 .m-sec{margin-bottom:28px;}
 .m-sec-title{
   font-size:10px;font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--text-muted);
+  text-transform:uppercase;color:var(--gold);
   margin-bottom:14px;padding-bottom:8px;
   border-bottom:1px solid var(--border);
 }
@@ -500,10 +496,10 @@ body{
 .m-tp-groups{display:flex;flex-direction:column;gap:14px;}
 .m-tp-group-label{
   font-size:10px;font-weight:600;text-transform:uppercase;
-  letter-spacing:.1em;color:var(--text-muted);margin-bottom:10px;
+  letter-spacing:.1em;color:var(--gold);margin-bottom:10px;
 }
 .m-tp-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
-.m-tp-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
+.m-tp-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gold);}
 .m-tp-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .m-tp-chips{display:flex;flex-wrap:wrap;gap:6px;}
 .m-tp-chip{
@@ -523,7 +519,7 @@ body{
 }
 .m-doing-strip-label{
   font-size:9px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--text-muted);margin-bottom:12px;
+  color:var(--gold);margin-bottom:12px;
 }
 .m-doing-cards{
   display:flex;flex-wrap:nowrap;align-items:stretch;
@@ -582,7 +578,7 @@ body{
   letter-spacing:-.03em;line-height:1;margin-bottom:6px;
 }
 .m-stat-l{font-size:14px;color:var(--text-sub);line-height:1.4;}
-.m-stat-src{font-size:11px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+.m-stat-src{font-size:11px;color:var(--gold);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
 
 /* Modal quotes */
 .m-quote{
@@ -594,7 +590,7 @@ body{
 }
 .m-quote:last-child{margin-bottom:0;}
 .m-quote-text{font-size:15px;font-style:italic;color:var(--text);line-height:1.65;}
-.m-quote-attr{font-size:13px;color:var(--text-muted);margin-top:5px;}
+.m-quote-attr{font-size:13px;color:var(--gold);margin-top:5px;}
 
 /* Modal opportunities */
 .m-opp{
@@ -612,7 +608,7 @@ body{
 .m-card-quote.customer{border-left-color:var(--gold);background:rgba(200,146,70,.06);}
 .m-card-quote.stakeholder{border-left-color:#6BA3BE;background:rgba(107,163,190,.06);}
 .m-card-quote-text{font-size:14px;font-style:italic;color:var(--text);line-height:1.55;}
-.m-card-quote-attr{font-size:12.5px;color:var(--text-muted);margin-top:4px;display:flex;align-items:center;gap:6px;}
+.m-card-quote-attr{font-size:12.5px;color:var(--gold);margin-top:4px;display:flex;align-items:center;gap:6px;}
 .m-card-quote-type{font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:1px 6px;border-radius:3px;}
 .m-card-quote-type.customer{background:rgba(200,146,70,.15);color:var(--gold-light);}
 .m-card-quote-type.stakeholder{background:rgba(107,163,190,.15);color:#8FC0D4;}
@@ -1125,7 +1121,7 @@ function renderGrid() {
           <div class="tkwy-title">${t.title}</div>
         </div>
       `).join('')
-      : '<div style="font-size:11px;color:var(--text-muted);font-style:italic;">No stage-specific takeaways — see full analysis for opportunities.</div>';
+      : '<div style="font-size:11px;color:var(--gold);font-style:italic;">No stage-specific takeaways — see full analysis for opportunities.</div>';
 
     const statsHtml = s.stats.map(st => `
       <div class="stat-row">
@@ -1496,7 +1492,7 @@ function renderModalBody(s) {
           </div>
         `).join('')}
       </div>`
-    : '<p style="font-size:12px;color:var(--text-muted);font-style:italic;">No touchpoints identified.</p>';
+    : '<p style="font-size:12px;color:var(--gold);font-style:italic;">No touchpoints identified.</p>';
 
   const tkwyHtml = s.takeaways.length
     ? s.takeaways.map(t => `
@@ -1513,7 +1509,7 @@ function renderModalBody(s) {
         </div>` : ''}
       </div>
     `).join('')
-    : '<p style="font-size:12px;color:var(--text-muted);font-style:italic;">No specific takeaways identified for this stage.</p>';
+    : '<p style="font-size:12px;color:var(--gold);font-style:italic;">No specific takeaways identified for this stage.</p>';
 
   const statsHtml = `
     <div class="m-stat-grid">
