@@ -754,7 +754,7 @@ const STAGES = [
   {
     id:0, num:"01 / 07", shortNum:"01", name:"Awareness\xa0/ Trigger",
     shortName:"Awareness", icon:"awareness",
-    emotionScore:38, emotionLabel:"Anxious / Urgent",
+    emotionScore:38, emotionLabel:"Anxious / Urgent", emotionDesc:"Starting to explore options and possibilities",
     tempur:{tag:"Neutral", body:"TEMPUR benefits from being a known brand, but it doesn’t drive the trigger."},
     overview:"Purchases are predominantly triggered by life transitions or acute discomfort, as opposed to casual upgrading.",
     doing:[
@@ -788,8 +788,8 @@ const STAGES = [
     emotionScore:62, emotionLabel:"Hopeful / Engaged",
     tempur:{tag:"Competitive", body:"TEMPUR shows up strongly, but customers are comparing lots of brands, retailers and reviews. AI tools reduce everything to simple feature lists."},
     emotions:[
-      {score:80, label:"Excited / Hopeful",      position:0.05, desc:"Initial searches feel promising — options seem plentiful and the process feels manageable."},
-      {score:20, label:"Overwhelmed / Confused",  position:0.95, desc:"Volume of information and lack of clear differentiation creates frustration and analysis paralysis."},
+      {score:80, label:"Hopeful / Curious",      position:0.05, desc:"Starting to explore options and possibilities"},
+      {score:20, label:"Overwhelmed / Unsure",  position:0.95, desc:"Too many choices make comparison harder"},
     ],
     overview:"Digital is not always the first step — but often quickly follows and predominantly involves broad searches, AI tools, and a review of various brand and retailer websites.",
     doing:[
@@ -838,7 +838,7 @@ const STAGES = [
   {
     id:2, num:"03 / 07", shortNum:"03", name:"Deep Dive\xa0/ Comparison",
     shortName:"Comparison", icon:"comparison",
-    emotionScore:35, emotionLabel:"Overwhelmed / Frustrated",
+    emotionScore:35, emotionLabel:"Cautiously Positive", emotionDesc:"Confidence grows, but doubt still lingers",
     tempur:{tag:"Vulnerable", body:"The differences between models is not always clear enough, so customers often fall back on price to decide."},
     overview:"Customers evaluate mattresses based on a combination of core comfort factors (firmness, cooling), practical aspects (price, delivery), and qualitative assurances (brand reputation, reviews, warranty).",
     doing:[
@@ -887,7 +887,7 @@ const STAGES = [
   {
     id:3, num:"04 / 07", shortNum:"04", name:"Physical Testing\xa0(Optional)",
     shortName:"In-Store", icon:"physical",
-    emotionScore:80, emotionLabel:"Confident / Engaged",
+    emotionScore:80, emotionLabel:"Reassured / Confident", emotionDesc:"Trying in person reduces doubt significantly",
     tempur:{tag:"Advantage", body:"Trying the mattress in-store builds confidence and makes the product feel credible."},
     overview:"Many customers research online but still value trying in-store to confirm comfort before committing to a significant purchase decision.",
     doing:[
@@ -925,7 +925,7 @@ const STAGES = [
   {
     id:4, num:"05 / 07", shortNum:"05", name:"Decision\xa0&amp; Purchase",
     shortName:"Purchase", icon:"decision",
-    emotionScore:70, emotionLabel:"Anxious / High Stakes",
+    emotionScore:70, emotionLabel:"Committed", emotionDesc:"Relief at deciding, nerves about spend",
     tempur:{tag:"Mixed", body:"Most people prefer to buy online, but when items are at a premium price they want reassurance."},
     overview:"Most customers ultimately purchase online, even after viewing in-store, citing convenience, the feeling of not being pressured and the ability to plan delivery dates accordingly",
     doing:[
@@ -981,7 +981,7 @@ const STAGES = [
   {
     id:5, num:"06 / 07", shortNum:"06", name:"Delivery\xa0&amp; Set Up",
     shortName:"Delivery", icon:"delivery",
-    emotionScore:35, emotionLabel:"Anticipatory / Mixed",
+    emotionScore:35, emotionLabel:"Anticipation → Frustration", emotionDesc:"Smooth delivery reassures; problems create frustration",
     tempur:{tag:"Exposed", body:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that can taint the whole experience."},
     overview:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that taints the all-important first impression.",
     doing:[
@@ -1022,7 +1022,7 @@ const STAGES = [
   {
     id:6, num:"07 / 07", shortNum:"07", name:"Post-Purchase\xa0&amp; Enjoyment",
     shortName:"Enjoyment", icon:"postpurchase",
-    emotionScore:80, emotionLabel:"Satisfied / Relieved",
+    emotionScore:80, emotionLabel:"Relieved / Satisfied", emotionDesc:"Product arrives and decision feels validated",
     tempur:{tag:"Strong (if smooth)", body:"If delivery goes well and the mattress feels right, customers feel relief and justify the spend."},
     overview:"The journey often ends in relief and satisfaction, but long-term sentiment can be tempered by logistical issues. Satisfaction at this stage drives advocacy and repeat purchase.",
     doing:[
