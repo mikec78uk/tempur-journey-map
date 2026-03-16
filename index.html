@@ -981,7 +981,7 @@ const STAGES = [
   {
     id:5, num:"06 / 07", shortNum:"06", name:"Delivery\xa0&amp; Set Up",
     shortName:"Delivery", icon:"delivery",
-    emotionScore:35, emotionLabel:"Anticipation → Frustration", emotionDesc:"Smooth delivery reassures; problems create frustration",
+    emotionScore:35, emotionLabel:"Anticipation → Frustration", emotionDesc:"Smooth delivery reassures; problems create frustration", emotionRange:true,
     tempur:{tag:"Exposed", body:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that can taint the whole experience."},
     overview:"The delivery experience is a critical touchpoint — it either validates the premium purchase decision or creates friction that taints the all-important first impression.",
     doing:[
@@ -1518,14 +1518,16 @@ function renderModalBody(s) {
       <div>
         <div class="m-sec">
           <div class="m-sec-title">Customer Emotion</div>
-          ${(s.emotions && s.emotions.length > 1 ? s.emotions : [{ score, label: s.emotionLabel, desc: s.emotionDesc }]).map(em => {
+          ${(s.emotions && s.emotions.length > 1 ? s.emotions : [{ score, label: s.emotionLabel, desc: s.emotionDesc, range: s.emotionRange }]).map(em => {
             const ec = em.score >= 65 ? '#5C9E72' : em.score <= 45 ? '#B05450' : '#C89246';
+            const bar = em.range
+              ? `<div style="height:5px;border-radius:3px;overflow:hidden;margin-bottom:6px;background:linear-gradient(to right,#5C9E72,#C89246,#B05450);"></div>`
+              : `<div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${em.score}%;background:${ec};border-radius:3px;transition:width 1s ease .2s;"></div></div>`;
+            const labelCol = em.range ? '#C89246' : ec;
             return `
               <div style="margin-bottom:14px;">
-                <div style="font-size:13px;font-weight:600;color:${ec};margin-bottom:6px;">${em.label || ''}</div>
-                <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px;">
-                  <div style="height:100%;width:${em.score}%;background:${ec};border-radius:3px;transition:width 1s ease .2s;"></div>
-                </div>
+                <div style="font-size:13px;font-weight:600;color:${labelCol};margin-bottom:6px;">${em.label || ''}</div>
+                ${bar}
                 ${em.desc ? `<div style="font-size:12px;color:var(--text-sub);line-height:1.5;">${em.desc}</div>` : ''}
               </div>`;
           }).join('')}
