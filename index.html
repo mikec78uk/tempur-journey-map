@@ -144,6 +144,34 @@ body{
   overflow-x:auto;
   border-bottom:1px solid var(--border);
 }
+.scroll-hint{
+  position:fixed;z-index:190;
+  pointer-events:none;
+  display:flex;align-items:center;
+  opacity:1;transition:opacity .4s ease;
+}
+.scroll-hint.hidden{opacity:0;}
+.scroll-hint-fade{
+  width:80px;height:100%;
+  background:linear-gradient(to right, transparent, rgba(9,9,9,.85) 70%);
+  display:flex;align-items:center;justify-content:flex-end;
+  padding-right:14px;
+}
+.scroll-hint-arrow{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+.scroll-hint-arrow svg{
+  width:18px;height:18px;color:var(--gold);
+  animation:scrollPulse 1.4s ease-in-out infinite;
+}
+.scroll-hint-arrow span{
+  font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--gold-light);opacity:.8;white-space:nowrap;
+}
+@keyframes scrollPulse{
+  0%,100%{transform:translateX(0);opacity:.5;}
+  50%{transform:translateX(5px);opacity:1;}
+}
 .scroll-wrap::-webkit-scrollbar{height:3px;}
 .scroll-wrap::-webkit-scrollbar-track{background:var(--bg);}
 .scroll-wrap::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
@@ -649,6 +677,14 @@ body{
 
 <!-- ═══════════════════════════════════════ SUMMARY BAND -->
 <!-- ═══════════════════════════════════════ SCROLL CONTAINER -->
+<div id="scrollHint" class="scroll-hint hidden" aria-hidden="true">
+  <div class="scroll-hint-fade">
+    <div class="scroll-hint-arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <span>Scroll</span>
+    </div>
+  </div>
+</div>
 <div class="scroll-wrap" id="scrollWrap">
   <div class="scroll-inner" id="scrollInner">
 
@@ -1695,6 +1731,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 120);
   });
   ro.observe(document.getElementById('scrollInner'));
+
+  // Scroll hint indicator
+  const scrollWrapEl = document.getElementById('scrollWrap');
+  const hint = document.getElementById('scrollHint');
+  function updateScrollHint() {
+    const r = scrollWrapEl.getBoundingClientRect();
+    const hasOverflow = scrollWrapEl.scrollWidth > scrollWrapEl.clientWidth + 4;
+    const atEnd = scrollWrapEl.scrollLeft + scrollWrapEl.clientWidth >= scrollWrapEl.scrollWidth - 4;
+    if (!hasOverflow || atEnd) {
+      hint.classList.add('hidden');
+    } else {
+      hint.classList.remove('hidden');
+      hint.style.right  = (window.innerWidth - r.right) + 'px';
+      hint.style.top    = r.top + 'px';
+      hint.style.height = r.height + 'px';
+    }
+  }
+  scrollWrapEl.addEventListener('scroll', updateScrollHint, {passive:true});
+  window.addEventListener('resize', updateScrollHint, {passive:true});
+  updateScrollHint();
+  setTimeout(updateScrollHint, 600);
 
   // Animate columns in
   const cols = document.querySelectorAll('.col');
