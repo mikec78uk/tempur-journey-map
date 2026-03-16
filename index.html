@@ -32,6 +32,18 @@
   --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
   --shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
 }
+[data-theme="light"]{
+  --bg:#FDFAF6;--bg-card:#F5F0E8;--bg-hover:#EDE6D8;--bg-modal:#F9F5EE;
+  --gold:#9C6D22;--gold-light:#7A520F;
+  --gold-dim:rgba(156,109,34,.10);--gold-border:rgba(156,109,34,.28);
+  --accent:#9C6D22;--accent-light:#7A520F;
+  --accent-dim:rgba(156,109,34,.10);--accent-border:rgba(156,109,34,.28);
+  --text:#1A1409;--text-sub:#4A4038;--text-muted:#6B5F52;
+  --border:#D8CEBC;--green:#2E7A4A;--green-dim:rgba(46,122,74,.12);--red:#8C2E2A;
+  --shadow-sm:0 1px 3px rgba(60,40,10,.10),0 1px 2px rgba(60,40,10,.06);
+  --shadow-md:0 4px 12px rgba(60,40,10,.10),0 2px 4px rgba(60,40,10,.06);
+  --shadow-lg:0 12px 40px rgba(60,40,10,.14),0 4px 12px rgba(60,40,10,.08);
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
@@ -206,6 +218,14 @@ body{
 .wave-svg{
   display:block;width:100%;height:260px;
   overflow:visible;margin-top:15px;
+}
+.wave-tip{
+  position:fixed;pointer-events:none;z-index:250;
+  background:#1A1A1A;border:1px solid #2E2E2E;border-radius:10px;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+  padding:10px 14px;min-width:160px;max-width:220px;
+  opacity:0;transform:translateY(4px);
+  transition:opacity .5s ease-in-out,transform .5s ease-in-out;
 }
 
 /* ── GRID ────────────────────────────────────────── */
@@ -636,6 +656,47 @@ body{
 .wave-dot.in .dot-ring{animation:dotSonar 2.4s ease-out infinite;}
 .wave-dot.in .dot-core{transform:scale(1);}
 .animate-in{animation:fadeUp .5s ease both;}
+
+/* ── THEME TOGGLE ────────────────────────────── */
+.hero-right{display:flex;align-items:center;gap:14px;}
+.theme-toggle{
+  display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;
+  background:transparent;border:1px solid var(--border);
+  color:var(--gold);cursor:pointer;flex-shrink:0;
+  transition:border-color .2s,background .2s;padding:0;font-family:inherit;
+}
+.theme-toggle:hover{border-color:var(--gold);background:var(--gold-dim);}
+.theme-icon{width:13px;height:13px;display:none;}
+.theme-icon--sun{display:block;}
+.theme-icon--moon{display:none;}
+[data-theme="light"] .theme-icon--sun{display:none;}
+[data-theme="light"] .theme-icon--moon{display:block;}
+
+/* ── LIGHT MODE HARDCODED OVERRIDES ─────────── */
+[data-theme="light"] .hero{background:rgba(253,250,246,.96);}
+[data-theme="light"] .hero-logo img{filter:brightness(0);}
+[data-theme="light"] .wave-bubble{background:#F5F0E8;border-color:#D8CEBC;}
+[data-theme="light"] .wave-tip{background:var(--bg-card);border-color:var(--border);box-shadow:0 8px 24px rgba(60,40,10,.18);}
+[data-theme="light"] .tag.hi{background:rgba(140,46,42,.12);color:#8C2E2A;}
+[data-theme="light"] .tag.lo{background:rgba(46,122,74,.12);color:#2E7A4A;}
+[data-theme="light"] .tp-competitive{background:rgba(47,110,160,.12);color:#2F6EA0;border-color:rgba(47,110,160,.25);}
+[data-theme="light"] .tp-exposed{background:rgba(140,64,16,.12);color:#8C4010;border-color:rgba(140,64,16,.25);}
+[data-theme="light"] .ftr-meta,[data-theme="light"] .ftr-vml{color:rgba(26,20,9,.45);}
+[data-theme="light"] .m-close:hover{border-color:#8C2E2A;color:#8C2E2A;}
+[data-theme="light"] .m-opp-title{color:#2E7A4A;}
+[data-theme="light"] .m-tp-chip.digital{background:rgba(47,110,160,.1);border-color:rgba(47,110,160,.3);color:#2F6EA0;}
+[data-theme="light"] .m-tp-chip.human{background:rgba(107,48,196,.1);border-color:rgba(107,48,196,.3);color:#6B30C4;}
+[data-theme="light"] .m-tp-chip.media{background:rgba(46,122,74,.1);border-color:rgba(46,122,74,.3);color:#2E7A4A;}
+[data-theme="light"] .m-doing-strip{background:rgba(0,0,0,.03);}
+[data-theme="light"] .m-doing-cards::-webkit-scrollbar-thumb{background:rgba(156,109,34,.5);}
+[data-theme="light"] .m-doing-card:hover{border-color:rgba(156,109,34,.7);background:rgba(156,109,34,.1);box-shadow:0 0 0 1px rgba(156,109,34,.25),0 4px 18px rgba(156,109,34,.18);}
+[data-theme="light"] .m-doing-card:hover .m-doing-card-text{color:#1A1409;}
+[data-theme="light"] .m-quote{background:rgba(156,109,34,.05);}
+[data-theme="light"] .m-card-quotes{border-top-color:rgba(0,0,0,.07);}
+[data-theme="light"] .m-card-quote.customer{background:rgba(156,109,34,.08);}
+[data-theme="light"] .m-card-quote.stakeholder{background:rgba(107,163,190,.08);}
+[data-theme="light"] .m-card-quote-type.stakeholder{background:rgba(47,96,128,.15);color:#2A6080;}
 </style>
 </head>
 <body>
@@ -668,11 +729,17 @@ body{
 
     </div>
     </div><!-- /.hero-brand -->
-    <div id="scrollHint" class="scroll-hint" aria-hidden="true">
-      <div class="scroll-hint-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        <span>Scroll</span>
+    <div class="hero-right">
+      <div id="scrollHint" class="scroll-hint" aria-hidden="true">
+        <div class="scroll-hint-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Scroll</span>
+        </div>
       </div>
+      <button id="themeToggle" class="theme-toggle" title="Toggle light / dark mode" aria-label="Toggle colour theme">
+        <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -688,14 +755,14 @@ body{
       <svg class="wave-svg" id="waveSvg" viewBox="0 0 1820 260" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="curveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#A07030"/>
-            <stop offset="35%" stop-color="#E8B870"/>
-            <stop offset="65%" stop-color="#C89246"/>
-            <stop offset="100%" stop-color="#E8B870"/>
+            <stop offset="0%" style="stop-color:var(--gold)"/>
+            <stop offset="35%" style="stop-color:var(--gold-light)"/>
+            <stop offset="65%" style="stop-color:var(--gold)"/>
+            <stop offset="100%" style="stop-color:var(--gold-light)"/>
           </linearGradient>
           <linearGradient id="fillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#C89246" stop-opacity=".18"/>
-            <stop offset="100%" stop-color="#C89246" stop-opacity="0"/>
+            <stop offset="0%" style="stop-color:var(--gold)" stop-opacity=".18"/>
+            <stop offset="100%" style="stop-color:var(--gold)" stop-opacity="0"/>
           </linearGradient>
           <filter id="glow">
             <feGaussianBlur stdDeviation="2.5" result="blur"/>
@@ -716,17 +783,10 @@ body{
       </svg>
     </div>
     <!-- Wave tooltip -->
-    <div id="waveTip" style="
-      position:fixed;pointer-events:none;z-index:250;
-      background:#1A1A1A;border:1px solid #2E2E2E;border-radius:10px;
-      box-shadow:0 8px 24px rgba(0,0,0,.5);
-      padding:10px 14px;min-width:160px;max-width:220px;
-      opacity:0;transform:translateY(4px);
-      transition:opacity .5s ease-in-out,transform .5s ease-in-out;
-    ">
-      <div id="waveTipStage" style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#5E574E;margin-bottom:3px;"></div>
+    <div id="waveTip" class="wave-tip">
+      <div id="waveTipStage" style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:3px;"></div>
       <div id="waveTipLabel" style="font-size:12px;font-weight:600;margin-bottom:4px;"></div>
-      <div id="waveTipDesc" style="font-size:11.5px;color:#8A8278;line-height:1.5;"></div>
+      <div id="waveTipDesc" style="font-size:11.5px;color:var(--text-sub);line-height:1.5;"></div>
     </div>
 
     <!-- Stage grid -->
@@ -1170,6 +1230,15 @@ function renderSummary() {
 /* ── DRAW EMOTION CURVE ──────────────────────────── */
 let _waveAnimating = false;
 let _suppressRedraw = false;
+
+function getScoreColor(score, isRange) {
+  const light = document.documentElement.getAttribute('data-theme') === 'light';
+  if (isRange) return light ? '#9C6D22' : '#C89246';
+  if (score >= 65) return light ? '#2E7A4A' : '#5C9E72';
+  if (score <= 45) return light ? '#8C2E2A' : '#B05450';
+  return light ? '#9C6D22' : '#C89246';
+}
+
 function drawCurve() {
   if (_waveAnimating || _suppressRedraw) return;
   const svg = document.getElementById('waveSvg');
@@ -1215,15 +1284,17 @@ function drawCurve() {
 
   // Draw zone lines + column dividers from real DOM positions
   const linesG = document.getElementById('waveLines');
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
   const colDividers = xs.slice(1).map(x => {
     // boundary sits halfway between adjacent column centres
     const bx = x - (xs[1] - xs[0]) / 2;
-    return `<line x1="${bx.toFixed(1)}" y1="0" x2="${bx.toFixed(1)}" y2="${vbH}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
+    const divStroke = isLight ? 'rgba(0,0,0,.07)' : 'rgba(255,255,255,.05)';
+    return `<line x1="${bx.toFixed(1)}" y1="0" x2="${bx.toFixed(1)}" y2="${vbH}" stroke="${divStroke}" stroke-width="1"/>`;
   }).join('');
   const zoneLines = [
-    `<line x1="0" y1="100" x2="${vbW}" y2="100" stroke="rgba(92,158,114,.1)"   stroke-width="1" stroke-dasharray="4,6"/>`,
-    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="rgba(90,80,70,.25)"    stroke-width="1" stroke-dasharray="2,8"/>`,
-    `<line x1="0" y1="165" x2="${vbW}" y2="165" stroke="rgba(176,84,80,.1)"  stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="100" x2="${vbW}" y2="100" stroke="${isLight?'rgba(46,122,74,.18)':'rgba(92,158,114,.1)'}"   stroke-width="1" stroke-dasharray="4,6"/>`,
+    `<line x1="0" y1="130" x2="${vbW}" y2="130" stroke="${isLight?'rgba(90,80,70,.2)':'rgba(90,80,70,.25)'}"    stroke-width="1" stroke-dasharray="2,8"/>`,
+    `<line x1="0" y1="165" x2="${vbW}" y2="165" stroke="${isLight?'rgba(140,46,42,.15)':'rgba(176,84,80,.1)'}"  stroke-width="1" stroke-dasharray="4,6"/>`,
   ].join('');
   linesG.innerHTML = zoneLines + colDividers;
 
@@ -1261,7 +1332,7 @@ function drawCurve() {
   dotsG.innerHTML = curvePoints.map((p, i) => {
     const x = p.x.toFixed(1);
     const y = p.y.toFixed(1);
-    const scoreColor = p.em.range ? '#C89246' : p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+    const scoreColor = getScoreColor(p.em.score, p.em.range);
     return `
       <g class="wave-dot" data-id="${i}" data-stage="${p.stageIdx}" style="cursor:pointer;opacity:0" onclick="openModal(${p.stageIdx})">
         <circle class="dot-ring" cx="${x}" cy="${y}" r="8" fill="${scoreColor}" fill-opacity=".18" stroke="${scoreColor}" stroke-opacity=".5" stroke-width="1"/>
@@ -1339,7 +1410,7 @@ function drawCurve() {
   if (!wrapEl._bubblesCreated) {
     // Create bubbles once on first draw
     curvePoints.forEach((p) => {
-      const scoreColor = p.em.range ? '#C89246' : p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+      const scoreColor = getScoreColor(p.em.score, p.em.range);
       const bubble = document.createElement('div');
       bubble.className = 'wave-bubble';
       bubble.innerHTML = `
@@ -1385,7 +1456,7 @@ function drawCurve() {
 
   dots.forEach((dot, i) => {
     const p = curvePoints[i];
-    const scoreColor = p.em.range ? '#C89246' : p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+    const scoreColor = getScoreColor(p.em.score, p.em.range);
     dot.addEventListener('mouseenter', (ev) => {
       tipStage.textContent = `${String(p.stageIdx + 1).padStart(2,'0')} / 07 · ${p.stage.name}`;
       tipLabel.textContent = p.em.label || '';
@@ -1551,7 +1622,7 @@ function renderModalBody(s) {
 
   // Emotion indicator
   const score = s.emotionScore;
-  const scoreColor = score >= 65 ? '#5C9E72' : score <= 45 ? '#B05450' : '#C89246';
+  const scoreColor = getScoreColor(score, false);
   const scoreLabel = score >= 65 ? 'Positive' : score <= 45 ? 'Negative' : 'Neutral';
 
   body.innerHTML = `
@@ -1560,11 +1631,11 @@ function renderModalBody(s) {
         <div class="m-sec">
           <div class="m-sec-title">Customer Emotion</div>
           ${(s.emotions && s.emotions.length > 1 ? s.emotions : [{ score, label: s.emotionLabel, desc: s.emotionDesc, range: s.emotionRange }]).map(em => {
-            const ec = em.score >= 65 ? '#5C9E72' : em.score <= 45 ? '#B05450' : '#C89246';
+            const ec = getScoreColor(em.score, em.range);
             const bar = em.range
-              ? `<div style="height:5px;border-radius:3px;overflow:hidden;margin-bottom:6px;background:linear-gradient(to right,#5C9E72,#C89246,#B05450);"></div>`
+              ? `<div style="height:5px;border-radius:3px;overflow:hidden;margin-bottom:6px;background:linear-gradient(to right,${getScoreColor(80,false)},${getScoreColor(50,true)},${getScoreColor(20,false)});"></div>`
               : `<div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="height:100%;width:${em.score}%;background:${ec};border-radius:3px;transition:width 1s ease .2s;"></div></div>`;
-            const labelCol = em.range ? '#C89246' : ec;
+            const labelCol = em.range ? getScoreColor(50, true) : ec;
             return `
               <div style="margin-bottom:14px;">
                 <div style="font-size:13px;font-weight:600;color:${labelCol};margin-bottom:6px;">${em.label || ''}</div>
@@ -1626,7 +1697,9 @@ function openModal(id) {
   renderModalHeader(s);
   renderModalBody(s);
   document.getElementById('overlay').classList.add('open');
-  document.getElementById('modal').classList.add('open');
+  const modalEl = document.getElementById('modal');
+  modalEl.classList.add('open');
+  modalEl.dataset.stageIdx = id;
   document.getElementById('mBody').scrollTop = 0;
   document.body.style.overflow = 'hidden';
 
@@ -1705,6 +1778,34 @@ function equalizeColSections() {
   }
 }
 
+function setupThemeToggle() {
+  const btn = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const waveWrapEl = document.getElementById('waveWrap');
+  const saved = localStorage.getItem('tempur-theme');
+  if (saved === 'light') html.setAttribute('data-theme', 'light');
+  btn.addEventListener('click', () => {
+    const isLight = html.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('tempur-theme', 'dark');
+    } else {
+      html.setAttribute('data-theme', 'light');
+      localStorage.setItem('tempur-theme', 'light');
+    }
+    if (waveWrapEl) {
+      waveWrapEl.querySelectorAll('.wave-bubble').forEach(b => b.remove());
+      waveWrapEl._bubblesCreated = false;
+    }
+    if (document.getElementById('wavePath').getAttribute('d')) drawCurve();
+    const modal = document.getElementById('modal');
+    if (modal && modal.classList.contains('open')) {
+      const idx = parseInt(modal.dataset.stageIdx || '0');
+      renderModalBody(STAGES[idx]);
+    }
+  });
+}
+
 /* ── INIT ─────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   renderHeaderNav();
@@ -1713,6 +1814,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSummary();
   setupWaveObserver();
   setupScrollSync();
+  setupThemeToggle();
 
   // Redraw curve on resize so it always stays aligned with columns
   // Debounced to prevent equalizeColSections triggering an infinite observer loop
