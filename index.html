@@ -474,8 +474,11 @@ body{
 .m-tp-groups{display:flex;flex-direction:column;gap:14px;}
 .m-tp-group-label{
   font-size:10px;font-weight:600;text-transform:uppercase;
-  letter-spacing:.1em;color:var(--text-muted);margin-bottom:7px;
+  letter-spacing:.1em;color:var(--text-muted);margin-bottom:10px;
 }
+.m-tp-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
+.m-tp-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
+.m-tp-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .m-tp-chips{display:flex;flex-wrap:wrap;gap:6px;}
 .m-tp-chip{
   font-size:11.5px;padding:4px 12px;border-radius:20px;
@@ -1436,8 +1439,20 @@ function renderModalBody(s) {
     </div>
   `;
 
+  const tpLegendDefs = [
+    {type:'digital',  label:'Digital',  color:'#7EB8E8'},
+    {type:'physical', label:'Physical', color:'#C89246'},
+    {type:'human',    label:'Human',    color:'#C49AE8'},
+    {type:'media',    label:'Media',    color:'#7EC99A'},
+  ];
+  const usedTypes = s.touchpoints ? [...new Set(s.touchpoints.map(g => g.type))] : [];
+  const legendHtml = usedTypes.length > 1
+    ? `<div class="m-tp-legend">${tpLegendDefs.filter(d => usedTypes.includes(d.type)).map(d =>
+        `<div class="m-tp-legend-item"><div class="m-tp-legend-dot" style="background:${d.color}"></div>${d.label}</div>`
+      ).join('')}</div>`
+    : '';
   const touchpointsHtml = s.touchpoints && s.touchpoints.length
-    ? `<div class="m-tp-groups">
+    ? `${legendHtml}<div class="m-tp-groups">
         ${s.touchpoints.map(g => `
           <div class="m-tp-group">
             <div class="m-tp-group-label">${g.group}</div>
