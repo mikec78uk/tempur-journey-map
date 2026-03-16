@@ -1166,7 +1166,7 @@ function drawCurve() {
     const cx = xs[i];
     const emotions = s.emotions
       ? s.emotions
-      : [{ score: s.emotionScore, label: s.emotionLabel, position: 0.5, desc: s.emotionDesc || s.overview || '' }];
+      : [{ score: s.emotionScore, label: s.emotionLabel, position: 0.5, desc: s.emotionDesc || s.overview || '', range: s.emotionRange || false }];
     emotions.forEach(em => {
       const colLeft  = cx - colW / 2 + INSET;
       const colRight = cx + colW / 2 - INSET;
@@ -1231,7 +1231,7 @@ function drawCurve() {
   dotsG.innerHTML = curvePoints.map((p, i) => {
     const x = p.x.toFixed(1);
     const y = p.y.toFixed(1);
-    const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+    const scoreColor = p.em.range ? '#C89246' : p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
     return `
       <g class="wave-dot" data-id="${i}" data-stage="${p.stageIdx}" style="cursor:pointer;opacity:0" onclick="openModal(${p.stageIdx})">
         <circle class="dot-ring" cx="${x}" cy="${y}" r="8" fill="${scoreColor}" fill-opacity=".18" stroke="${scoreColor}" stroke-opacity=".5" stroke-width="1"/>
@@ -1309,7 +1309,7 @@ function drawCurve() {
   if (!wrapEl._bubblesCreated) {
     // Create bubbles once on first draw
     curvePoints.forEach((p) => {
-      const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+      const scoreColor = p.em.range ? '#C89246' : p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
       const bubble = document.createElement('div');
       bubble.className = 'wave-bubble';
       bubble.innerHTML = `
@@ -1355,7 +1355,7 @@ function drawCurve() {
 
   dots.forEach((dot, i) => {
     const p = curvePoints[i];
-    const scoreColor = p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
+    const scoreColor = p.em.range ? '#C89246' : p.em.score >= 65 ? '#5C9E72' : p.em.score <= 45 ? '#B05450' : '#C89246';
     dot.addEventListener('mouseenter', (ev) => {
       tipStage.textContent = `${String(p.stageIdx + 1).padStart(2,'0')} / 07 · ${p.stage.name}`;
       tipLabel.textContent = p.em.label || '';
