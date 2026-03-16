@@ -89,7 +89,8 @@ body{
   backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
 }
-.hero-inner{display:flex;align-items:flex-end;gap:0;flex-wrap:wrap;}
+.hero-inner{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:space-between;}
+.hero-brand{display:flex;align-items:flex-end;gap:0;}
 .hero-logo{flex-shrink:0;padding-bottom:6px;}
 .hero-logo img{height:50px;display:block;}
 .hero-logo-sep{width:1px;background:var(--border);align-self:stretch;margin:0 24px;flex-shrink:0;}
@@ -145,32 +146,28 @@ body{
   border-bottom:1px solid var(--border);
 }
 .scroll-hint{
-  position:fixed;z-index:190;
-  pointer-events:none;
-  display:flex;align-items:center;
-  opacity:1;transition:opacity .4s ease;
+  display:none;opacity:0;transition:opacity .4s ease;
+  flex-shrink:0;
 }
-.scroll-hint.hidden{opacity:0;}
-.scroll-hint-fade{
-  width:80px;height:100%;
-  background:linear-gradient(to right, transparent, rgba(9,9,9,.85) 70%);
-  display:flex;align-items:center;justify-content:flex-end;
-  padding-right:14px;
+.scroll-hint.show{display:flex;opacity:1;}
+.scroll-hint-btn{
+  display:flex;flex-direction:row;align-items:center;gap:7px;
+  background:var(--gold);
+  border-radius:999px;
+  padding:8px 14px 8px 12px;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);
 }
-.scroll-hint-arrow{
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-}
-.scroll-hint-arrow svg{
-  width:18px;height:18px;color:var(--gold);
+.scroll-hint-btn svg{
+  width:15px;height:15px;color:#1A1209;flex-shrink:0;
   animation:scrollPulse 1.4s ease-in-out infinite;
 }
-.scroll-hint-arrow span{
-  font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--gold-light);opacity:.8;white-space:nowrap;
+.scroll-hint-btn span{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:#1A1209;white-space:nowrap;
 }
 @keyframes scrollPulse{
-  0%,100%{transform:translateX(0);opacity:.5;}
-  50%{transform:translateX(5px);opacity:1;}
+  0%,100%{transform:translateX(0);}
+  50%{transform:translateX(4px);}
 }
 .scroll-wrap::-webkit-scrollbar{height:3px;}
 .scroll-wrap::-webkit-scrollbar-track{background:var(--bg);}
@@ -663,6 +660,7 @@ body{
 <!-- ═══════════════════════════════════════ HERO -->
 <div class="hero">
   <div class="hero-inner">
+    <div class="hero-brand">
     <div class="hero-logo">
       <img src="https://uk.tempur.com/on/demandware.static/-/Sites-tem_uk-Library/default/dweae2548d/images/site_logos/tempur-logo-white.svg" alt="Tempur" onerror="this.style.display='none'"/>
     </div>
@@ -672,19 +670,18 @@ body{
       <h1 class="hero-h1"><span class="hero-flag"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#hf_clip)"><mask id="hf_m0" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="-4" y="0" width="32" height="24"><rect x="-4" width="32" height="24" fill="white"/></mask><g mask="url(#hf_m0)"><path fill-rule="evenodd" clip-rule="evenodd" d="M-4 0V24H28V0H-4Z" fill="#2E42A5"/><mask id="hf_m1" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="-4" y="0" width="32" height="24"><path fill-rule="evenodd" clip-rule="evenodd" d="M-4 0V24H28V0H-4Z" fill="white"/></mask><g mask="url(#hf_m1)"><mask id="hf_m2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="-4" y="0" width="32" height="24"><rect x="-4" width="32" height="24" fill="white"/></mask><g mask="url(#hf_m2)"><path d="M-7.563 22.285L-0.521 25.264L28.16 3.238L31.874-1.188L24.344-2.183L12.646 7.308L3.23 13.704L-7.563 22.285Z" fill="white"/><path d="M-6.599 24.372L-3.012 26.1L30.54-1.599H25.503L-6.599 24.372Z" fill="#F50100"/><path d="M31.563 22.285L24.521 25.264L-4.16 3.238L-7.874-1.188L-0.344-2.183L11.354 7.308L20.77 13.704L31.563 22.285Z" fill="white"/><path d="M31.323 23.783L27.735 25.511L13.449 13.652L9.213 12.327L-8.232-1.172H-3.194L14.24 12.006L18.871 13.595L31.323 23.783Z" fill="#F50100"/><mask id="hf_p10" fill="white"><path d="M15.778 8H30.028V16H15.778V26H8.222V16H-5.972V8H8.222V-2H15.778V8Z"/></mask><path d="M15.778 8H30.028V16H15.778V26H8.222V16H-5.972V8H8.222V-2H15.778V8Z" fill="#F50100"/><path d="M15.778 8H13.778V10H15.778V8ZM30.028 8H32.028V6H30.028V8ZM30.028 16V18H32.028V16H30.028ZM15.778 16V14H13.778V16H15.778ZM15.778 26V28H17.778V26H15.778ZM8.222 26H6.222V28H8.222V26ZM8.222 16H10.222V14H8.222V16ZM-5.972 16H-7.972V18H-5.972V16ZM-5.972 8V6H-7.972V8H-5.972ZM8.222 8V10H10.222V8H8.222ZM8.222-2V-4H6.222V-2H8.222ZM15.778-2H17.778V-4H15.778V-2ZM15.778 8V10H30.028V8V6H15.778V8ZM30.028 8H28.028V16H30.028H32.028V8H30.028ZM30.028 16V14H15.778V16V18H30.028V16ZM15.778 16H13.778V26H15.778H17.778V16H15.778ZM15.778 26V24H8.222V26V28H15.778V26ZM8.222 26H10.222V16H8.222H6.222V26H8.222ZM8.222 16V14H-5.972V16V18H8.222V16ZM-5.972 16H-3.972V8H-5.972H-7.972V16H-5.972ZM-5.972 8V10H8.222V8V6H-5.972V8ZM8.222 8H10.222V-2H8.222H6.222V8H8.222ZM8.222-2V0H15.778V-2V-4H8.222V-2ZM15.778-2H13.778V8H15.778H17.778V-2H15.778Z" fill="white" mask="url(#hf_p10)"/></g></g></g></g><defs><clipPath id="hf_clip"><rect width="24" height="24" rx="12" fill="white"/></clipPath></defs></svg></span><span>Purchasing a <strong>new mattress</strong></span></h1>
 
     </div>
+    </div><!-- /.hero-brand -->
+    <div id="scrollHint" class="scroll-hint" aria-hidden="true">
+      <div class="scroll-hint-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        <span>Scroll</span>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════ SUMMARY BAND -->
 <!-- ═══════════════════════════════════════ SCROLL CONTAINER -->
-<div id="scrollHint" class="scroll-hint hidden" aria-hidden="true">
-  <div class="scroll-hint-fade">
-    <div class="scroll-hint-arrow">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      <span>Scroll</span>
-    </div>
-  </div>
-</div>
 <div class="scroll-wrap" id="scrollWrap">
   <div class="scroll-inner" id="scrollInner">
 
@@ -1736,16 +1733,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollWrapEl = document.getElementById('scrollWrap');
   const hint = document.getElementById('scrollHint');
   function updateScrollHint() {
-    const r = scrollWrapEl.getBoundingClientRect();
     const hasOverflow = scrollWrapEl.scrollWidth > scrollWrapEl.clientWidth + 4;
     const atEnd = scrollWrapEl.scrollLeft + scrollWrapEl.clientWidth >= scrollWrapEl.scrollWidth - 4;
-    if (!hasOverflow || atEnd) {
-      hint.classList.add('hidden');
+    if (hasOverflow && !atEnd) {
+      hint.style.display = 'flex';
+      requestAnimationFrame(() => hint.classList.add('show'));
     } else {
-      hint.classList.remove('hidden');
-      hint.style.right  = (window.innerWidth - r.right) + 'px';
-      hint.style.top    = r.top + 'px';
-      hint.style.height = Math.min(r.height, 300) + 'px';
+      hint.classList.remove('show');
+      hint.style.display = 'none';
     }
   }
   scrollWrapEl.addEventListener('scroll', updateScrollHint, {passive:true});
