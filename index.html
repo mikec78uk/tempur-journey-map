@@ -656,7 +656,18 @@ body{
   .m-hdr{padding:18px;flex-wrap:wrap;}
   .m-stat-grid{grid-template-columns:1fr 1fr;}
   .summary-grid{grid-template-columns:1fr 1fr;}
-  .hero-h1{font-size:22px;}
+
+  /* Hero: stacked mobile layout */
+  .hero-inner{flex-direction:column;align-items:stretch;gap:10px;padding:14px 16px;}
+  .hero-brand{flex-direction:column;align-items:flex-start;gap:8px;}
+  .hero-logo{padding-bottom:0;}
+  .hero-logo img{height:34px;}
+  .hero-logo-sep{display:none;}
+  .hero-left{display:flex;flex-direction:column;gap:3px;}
+  .hero-eyebrow{margin-bottom:0;}
+  .hero-h1{font-size:20px;}
+  .hero-right{justify-content:flex-end;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;margin-top:2px;}
+  [data-theme="light"] .hero-right{border-top-color:rgba(0,0,0,.08);}
 
   /* Modal: single scrollable column on mobile */
   .modal{overflow-y:auto;display:block;}
