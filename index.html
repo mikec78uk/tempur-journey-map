@@ -426,6 +426,8 @@ body{
 }
 .modal.open{transform:translateY(0);}
 
+.m-drag-handle{display:none;}/* hidden on desktop, shown via media query */
+
 /* Modal top nav */
 .m-topnav{
   display:flex;align-items:center;
@@ -662,9 +664,13 @@ body{
     border-bottom:1px solid var(--border);padding-right:52px;}
   .m-body{overflow-y:visible;flex:none;}
 
-  /* Close button: hide topnav version, use overlay-level fixed one instead */
+  /* Hide both close buttons on mobile — swipe down to close instead */
   .m-close{display:none;}
-  .m-close-mobile{display:flex;}
+  .m-close-mobile{display:none;}
+  /* Drag handle — mobile only */
+  .m-drag-handle{display:flex;justify-content:center;padding:10px 0 2px;}
+  .m-drag-handle-bar{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);}
+  [data-theme="light"] .m-drag-handle-bar{background:rgba(0,0,0,.15);}
 
   /* Stack doing cards vertically */
   .m-doing-cards{flex-direction:column;overflow-x:visible;gap:8px;padding-bottom:0;}
@@ -870,6 +876,7 @@ body{
 <!-- ═══════════════════════════════════════ MODAL -->
 <div class="m-overlay" id="overlay">
   <div class="modal" id="modal">
+    <div class="m-drag-handle" id="mDragHandle"><div class="m-drag-handle-bar"></div></div>
     <div class="m-topnav" id="mTopNav"></div>
     <div class="m-hdr" id="mHdr"></div>
     <div class="m-doing-strip" id="mDoingStrip"></div>
@@ -1775,6 +1782,42 @@ function closeModal() {
   document.querySelectorAll('.hdr-pill').forEach(p => p.classList.remove('active'));
   setTimeout(() => { _suppressRedraw = false; }, 300);
 }
+
+// ── Swipe down to close (mobile) ───────────────────
+(function(){
+  const modalEl = document.getElementById('modal');
+  let startY = 0, startScrollTop = 0, dragging = false;
+  const THRESHOLD = 80; // px swipe needed to trigger close
+
+  modalEl.addEventListener('touchstart', function(e){
+    startY = e.touches[0].clientY;
+    startScrollTop = modalEl.scrollTop;
+    dragging = true;
+    modalEl.style.transition = 'none';
+  }, {passive:true});
+
+  modalEl.addEventListener('touchmove', function(e){
+    if (!dragging) return;
+    const dy = e.touches[0].clientY - startY;
+    // Only allow drag-down when already scrolled to top
+    if (dy > 0 && startScrollTop <= 0) {
+      modalEl.style.transform = `translateY(${Math.min(dy, 220)}px)`;
+    }
+  }, {passive:true});
+
+  modalEl.addEventListener('touchend', function(e){
+    if (!dragging) return;
+    dragging = false;
+    const dy = e.changedTouches[0].clientY - startY;
+    modalEl.style.transition = '';
+    if (dy > THRESHOLD && startScrollTop <= 0) {
+      modalEl.style.transform = '';
+      closeModal();
+    } else {
+      modalEl.style.transform = '';
+    }
+  }, {passive:true});
+})();
 
 // Close on overlay click
 document.getElementById('overlay').addEventListener('click', e => {
