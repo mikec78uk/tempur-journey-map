@@ -642,6 +642,17 @@ body{
   .m-stat-grid{grid-template-columns:1fr 1fr;}
   .summary-grid{grid-template-columns:1fr 1fr;}
   .hero-h1{font-size:22px;}
+
+  /* Modal: single scrollable column on mobile */
+  .modal{overflow-y:auto;display:block;}
+  .m-topnav{position:sticky;top:0;z-index:20;background:var(--bg-modal);
+    border-bottom:1px solid var(--border);}
+  .m-body{overflow-y:visible;flex:none;}
+
+  /* Stack doing cards vertically */
+  .m-doing-cards{flex-direction:column;overflow-x:visible;gap:8px;padding-bottom:0;}
+  .m-doing-card{width:100%;flex:0 0 auto;display:flex;align-items:center;}
+  .m-doing-arrow{display:none;}
 }
 @media(max-width:480px){
   .summary-grid{grid-template-columns:1fr;}
