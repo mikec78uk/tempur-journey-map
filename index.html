@@ -646,8 +646,12 @@ body{
   /* Modal: single scrollable column on mobile */
   .modal{overflow-y:auto;display:block;}
   .m-topnav{position:sticky;top:0;z-index:20;background:var(--bg-modal);
-    border-bottom:1px solid var(--border);}
+    border-bottom:1px solid var(--border);padding-right:52px;}
   .m-body{overflow-y:visible;flex:none;}
+
+  /* Close button always visible — fixed to viewport top-right on mobile */
+  .m-close{position:fixed;right:12px;top:12px;z-index:30;
+    background:var(--bg-modal);border-color:var(--border);}
 
   /* Stack doing cards vertically */
   .m-doing-cards{flex-direction:column;overflow-x:visible;gap:8px;padding-bottom:0;}
