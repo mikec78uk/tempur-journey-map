@@ -454,6 +454,17 @@ body{
   transition:border-color .2s,color .2s;
 }
 .m-close:hover{border-color:#B05450;color:#B05450;}
+.m-close-mobile{
+  display:none;/* hidden on desktop */
+  position:fixed;top:12px;right:12px;z-index:300;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg-card);border:1px solid var(--border);
+  color:var(--text-muted);font-size:16px;
+  align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color .2s,color .2s;
+}
+.m-close-mobile:hover{border-color:#B05450;color:#B05450;}
+[data-theme="light"] .m-close-mobile:hover{border-color:#BE1A2D;color:#BE1A2D;}
 
 /* Modal header */
 .m-hdr{
@@ -649,13 +660,13 @@ body{
     border-bottom:1px solid var(--border);padding-right:52px;}
   .m-body{overflow-y:visible;flex:none;}
 
-  /* Close button always visible — fixed to viewport top-right on mobile */
-  .m-close{position:fixed;right:12px;top:12px;z-index:30;
-    background:var(--bg-modal);border-color:var(--border);}
+  /* Close button: hide topnav version, use overlay-level fixed one instead */
+  .m-close{display:none;}
+  .m-close-mobile{display:flex;}
 
   /* Stack doing cards vertically */
   .m-doing-cards{flex-direction:column;overflow-x:visible;gap:8px;padding-bottom:0;}
-  .m-doing-card{width:100%;flex:0 0 auto;display:flex;align-items:center;text-align:left;}
+  .m-doing-card{width:100%;flex:0 0 auto;display:flex;align-items:flex-start;text-align:left;}
   .m-doing-card-text{text-align:left;}
   .m-doing-arrow{display:none;}
 }
@@ -856,6 +867,7 @@ body{
 
 <!-- ═══════════════════════════════════════ MODAL -->
 <div class="m-overlay" id="overlay">
+  <button class="m-close-mobile" onclick="closeModal()" title="Close">✕</button>
   <div class="modal" id="modal">
     <div class="m-topnav" id="mTopNav"></div>
     <div class="m-hdr" id="mHdr"></div>
