@@ -605,6 +605,8 @@ body{
 .m-tkwy:has(.m-card-quote.stakeholder),.m-tkwy-stakeholder{background:rgba(107,163,190,.08);border-color:rgba(107,163,190,.30);}
 .m-tkwy:has(.m-card-quote.stakeholder) .m-tkwy-title,.m-tkwy-stakeholder .m-tkwy-title{color:#6BA3BE;}
 
+.m-tkwy-note{font-size:12px;color:var(--text-muted);line-height:1.5;margin-top:10px;padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.04);border-left:2px solid var(--border);}
+[data-theme="light"] .m-tkwy-note{background:rgba(0,0,0,.03);}
 /* Modal stats */
 .m-stat-grid{display:grid;grid-template-columns:1fr;gap:12px;}
 .m-stat-card{
@@ -1005,6 +1007,12 @@ const STAGES = [
         "I was seriously considering [TEMPUR]. But the website put me off a bit - it\u2019s got so much information on each page - limited time offer etc. etc. I\u2019m just looking for simple.",
         "Some of [content on the TEMPUR website] could have been simpler. There were massive blurbs where you could tone it down into a simpler format.",
       ]},
+      {title:"Customers often want guidance, not just a product list", body:"A common service query is essentially \u201cjust tell me where to start.\u201d People struggle to translate broad needs into the right mattress without help.", stakeholder:true, quotes:[
+        {text:"We don\u2019t help our customers buy the right item, we just list the items.", type:"stakeholder"},
+      ]},
+      {title:"The website does not guide like customer service", body:"Customer service already uses a simple needs-based conversation to help narrow the range. The website could do some of the same work before customers feel the need to call. It does not need to be over-engineered \u2014 just enough to give people a clearer starting point and some practical guidance.", stakeholder:true, quotes:[
+        {text:"Even if we can just have three questions that says, right, let me introduce you to this mattress.", type:"stakeholder"},
+      ]},
     ],
     stats:[
       {n:"48%", l:"of buyers chose TEMPUR because of previous experience or brand loyalty.", src:"Source: Post Purchase Survey March 2026"},
@@ -1228,6 +1236,15 @@ const STAGES = [
       {title:"Better sleep is not seen as product-only", body:"This study suggests that some customers recognise that the mattress helps, but still see sleep quality as dependent on wider routines and habits too.", quotes:[
         {text:"The work doesn't stop once the mattress is on the bed... requires discipline to wind down at night.", type:"customer"},
       ]},
+      {title:"Many early post-purchase concerns are about adaptation rather than product failure", body:"Customers sometimes call soon after delivery because the mattress feels firmer, hotter or smellier than expected, when in many cases the product simply needs time to settle and the customer needs time to adjust.", stakeholder:true, note:"Customer service cannot currently provide detailed enquiry breakdowns because calls and emails are managed through basic systems without CRM or structured call routing.", quotes:[
+        {text:"They\u2019ll say, the mattress is too firm\u2026 I have to say give it a chance to open up.", type:"stakeholder"},
+        {text:"People are like, oh no, it stinks\u2026 it will go, give it a couple of days.", type:"stakeholder"},
+      ]},
+      {title:"For some customers, the trial period becomes part of the decision", body:"Even after researching or trying in store, some customers only know whether a mattress is right once they have slept on it at home. In practice, the 100-night trial is not just reassurance \u2014 it often becomes part of how customers confirm, refine or correct their choice through exchanges or returns.", stakeholder:true, quotes:[
+        {text:"A lot of people go \u2018this was too soft\u2019 or \u2018too firm\u2019. Can I get a different one?", type:"stakeholder"},
+        {text:"We advertise it\u2026 as risk-free buying. We want people to buy, we have to then accept that they will return.", type:"stakeholder"},
+      ]},
+      {title:"Customer service has limited visibility into why people are contacting them", body:"Without CRM and proper call routing, support cannot easily track patterns, triage efficiently or train people around the most common issues.", stakeholder:true, quotes:[]},
     ],
     stats:[],
     quotes:[],
@@ -1658,6 +1675,7 @@ function renderModalBody(s) {
       <div class="m-tkwy${t.stakeholder ? ' m-tkwy-stakeholder' : ''}">
         <div class="m-tkwy-title">${t.title}</div>
         <div class="m-tkwy-body">${t.body}</div>
+        ${t.note ? `<div class="m-tkwy-note">⚑ ${t.note}</div>` : ''}
         ${t.quotes && t.quotes.length ? `
         <div class="m-card-quotes">
           ${t.quotes.map(q => `
