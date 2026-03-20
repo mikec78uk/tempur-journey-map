@@ -601,9 +601,9 @@ body{
 .m-tkwy:last-child{margin-bottom:0;}
 .m-tkwy-title{font-size:15px;font-weight:600;color:var(--gold);margin-bottom:5px;}
 .m-tkwy-body{font-size:15px;color:var(--text-sub);line-height:1.6;}
-/* Stakeholder-sourced takeaways — blue treatment (dark mode) */
-.m-tkwy:has(.m-card-quote.stakeholder),.m-tkwy-stakeholder{background:rgba(107,163,190,.08);border-color:rgba(107,163,190,.30);}
-.m-tkwy:has(.m-card-quote.stakeholder) .m-tkwy-title,.m-tkwy-stakeholder .m-tkwy-title{color:#6BA3BE;}
+/* Stakeholder-sourced takeaways — blue treatment (explicit flag only) */
+.m-tkwy-stakeholder{background:rgba(107,163,190,.08);border-color:rgba(107,163,190,.30);}
+.m-tkwy-stakeholder .m-tkwy-title{color:#6BA3BE;}
 
 .m-tkwy-note{font-size:12px;color:var(--text-muted);line-height:1.5;margin-top:10px;padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.04);border-left:2px solid var(--border);}
 [data-theme="light"] .m-tkwy-note{background:rgba(0,0,0,.03);}
@@ -761,8 +761,8 @@ body{
 [data-theme="light"] .m-card-quote-type.customer{background:rgba(61,90,153,.10);color:#3D5A99;}
 [data-theme="light"] .m-card-quote-type.stakeholder{background:rgba(47,96,128,.10);color:#2D6080;}
 /* Stakeholder takeaway — light mode blue treatment */
-[data-theme="light"] .m-tkwy:has(.m-card-quote.stakeholder),[data-theme="light"] .m-tkwy-stakeholder{background:rgba(47,96,128,.06);border-color:rgba(47,96,128,.25);}
-[data-theme="light"] .m-tkwy:has(.m-card-quote.stakeholder) .m-tkwy-title,[data-theme="light"] .m-tkwy-stakeholder .m-tkwy-title{color:#2D6080;}
+[data-theme="light"] .m-tkwy-stakeholder{background:rgba(47,96,128,.06);border-color:rgba(47,96,128,.25);}
+[data-theme="light"] .m-tkwy-stakeholder .m-tkwy-title{color:#2D6080;}
 /* Layout structure */
 [data-theme="light"] .col{border-right-color:#E3E6EA;}
 [data-theme="light"] .col-hdr{border-bottom-color:#E3E6EA;background:#FFFFFF;}
