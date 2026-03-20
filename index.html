@@ -601,6 +601,9 @@ body{
 .m-tkwy:last-child{margin-bottom:0;}
 .m-tkwy-title{font-size:15px;font-weight:600;color:var(--gold);margin-bottom:5px;}
 .m-tkwy-body{font-size:15px;color:var(--text-sub);line-height:1.6;}
+/* Stakeholder-sourced takeaways — blue treatment (dark mode) */
+.m-tkwy:has(.m-card-quote.stakeholder){background:rgba(107,163,190,.08);border-color:rgba(107,163,190,.30);}
+.m-tkwy:has(.m-card-quote.stakeholder) .m-tkwy-title{color:#6BA3BE;}
 
 /* Modal stats */
 .m-stat-grid{display:grid;grid-template-columns:1fr;gap:12px;}
@@ -755,6 +758,9 @@ body{
 [data-theme="light"] .m-card-quote.stakeholder{background:rgba(47,96,128,.05);}
 [data-theme="light"] .m-card-quote-type.customer{background:rgba(61,90,153,.10);color:#3D5A99;}
 [data-theme="light"] .m-card-quote-type.stakeholder{background:rgba(47,96,128,.10);color:#2D6080;}
+/* Stakeholder takeaway — light mode blue treatment */
+[data-theme="light"] .m-tkwy:has(.m-card-quote.stakeholder){background:rgba(47,96,128,.06);border-color:rgba(47,96,128,.25);}
+[data-theme="light"] .m-tkwy:has(.m-card-quote.stakeholder) .m-tkwy-title{color:#2D6080;}
 /* Layout structure */
 [data-theme="light"] .col{border-right-color:#E3E6EA;}
 [data-theme="light"] .col-hdr{border-bottom-color:#E3E6EA;background:#FFFFFF;}
@@ -1135,7 +1141,7 @@ const STAGES = [
         "I bought it early because it was part of Black Friday. I then picked the delivery date that was furthest away and kept delaying it until I was ready.",
         "I chose a delivery date that was as close to my moving in date as possible.",
       ]},
-      {title:"Finance matters, but it is hard to access", body:"Finance is relevant for some customers, but the current finance calculator is too hidden and creates friction for people wanting to explore repayment options before purchasing.", quotes:[
+      {title:"Finance matters, but it is hard to access before checkout", body:"Finance is relevant for some customers, but the current finance calculator is too hidden and creates friction for people wanting to explore repayment options before purchasing.", quotes:[
         "I paid monthly\u2026a lot of our savings went on moving house.",
       ]},
     ],
