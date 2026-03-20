@@ -329,6 +329,8 @@ body{
 .tkwy-card:last-child{margin-bottom:0;}
 .tkwy-title{font-size:13px;font-weight:600;color:var(--gold);margin-bottom:3px;}
 .tkwy-body{font-size:13px;color:var(--text-sub);line-height:1.45;}
+.tkwy-card-stakeholder{background:rgba(107,163,190,.08);border-color:rgba(107,163,190,.30);}
+.tkwy-card-stakeholder .tkwy-title{color:#6BA3BE;}
 
 /* Stats */
 .stat-row{display:flex;flex-direction:column;gap:2px;margin-bottom:10px;}
@@ -770,6 +772,8 @@ body{
 /* Cards */
 [data-theme="light"] .tkwy-card{background:#FFFFFF;border-color:#E3E6EA;}
 [data-theme="light"] .tkwy-card:hover{border-color:rgba(61,90,153,.35);background:#FAFBFF;}
+[data-theme="light"] .tkwy-card-stakeholder{background:rgba(47,96,128,.06);border-color:rgba(47,96,128,.25);}
+[data-theme="light"] .tkwy-card-stakeholder .tkwy-title{color:#2D6080;}
 [data-theme="light"] .m-tkwy{background:#F1F2F4;border-color:#E3E6EA;}
 [data-theme="light"] .stat-card{background:#FFFFFF;border-color:#E3E6EA;}
 /* Modal */
@@ -1264,7 +1268,7 @@ function renderGrid() {
   grid.innerHTML = STAGES.map(s => {
     const tkwyHtml = s.takeaways.length
       ? s.takeaways.map(t => `
-        <div class="tkwy-card">
+        <div class="tkwy-card${t.stakeholder ? ' tkwy-card-stakeholder' : ''}">
           <div class="tkwy-title">${t.title}</div>
         </div>
       `).join('')
