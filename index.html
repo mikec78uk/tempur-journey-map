@@ -480,6 +480,7 @@ body{
   justify-content:space-between;
   padding:24px 28px 20px;
   border-bottom:1px solid var(--border);
+  position:sticky;top:53px;z-index:9;background:var(--bg-modal);
   flex-shrink:0;gap:16px;
 }
 .m-hdr-left{display:flex;align-items:flex-start;gap:16px;flex:1;min-width:0;}
@@ -683,6 +684,7 @@ body{
 
   /* Modal mobile overrides */
   .m-topnav{padding-right:52px;}
+  .m-hdr{position:static;}
 
   /* Hide both close buttons on mobile — swipe down to close instead */
   .m-close{display:none;}
